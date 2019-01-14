@@ -1,0 +1,375 @@
+<admintpl file="header"/>
+<link href="__PUBLIC__/simpleboot/bootstrap/css/bootstrap.min.css"  rel="stylesheet" type="text/css">
+</head>
+<style>
+.vehicle_car{margin:10px;}
+</style>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a>{:L('ACTIVITY_ROUTE_PLANNING_EDIT')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+			<div class="row-fluid">
+				<input type="hidden" name="id" id="id" value="{$id}" />
+				<table class="table table-bordered">
+					<tr>
+						<th style="width:100px;height:35px;line-height:35px;">{:L('ACTIVITY_ROUTE_PLANNING_NAME')}</th>
+						<td>
+							<input type="text" style="width:350px;height:35px;" id="line_name" name="line_name" value="{$line_plan.line_name}" placeholder="{:L('ACTIVITY_ROUTE_PLANNING_NAME')}"/>
+						</td>
+					</tr>
+					<tr>
+						<th width="100">{:L('ACTIVITY_ROUTE_PLANNING_CONTENT')}</th>
+						<td>
+							<script type="text/plain" id="line_content" name="line_content">{$line_plan.line_content}</script>
+						</td>
+					</tr>
+					<tr>
+						<th width="100">{:L('ACTIVITY_ROUTE_PLANNING_VEHICLE')}</th>
+						<td>
+							<php>
+								$status_yes=$line_plan['vehicle_flg']==1?"checked":"";
+								$status_no=$line_plan['vehicle_flg']==0?"checked":"";
+							</php>
+							<input type="radio" id="vehicle_flg" name="vehicle_flg" value="0" {$status_no}>&nbsp;&nbsp;{:L('NO_NEED')}
+							<input type="radio" id="vehicle_flg" name="vehicle_flg" value="1" {$status_yes}>&nbsp;&nbsp;{:L('NEED')}
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="vehicle" style="display:none">
+				<div class="vehicle_car">
+					<php>
+						$car=$line_plan['flg']==0?"checked":"";
+						$train=$line_plan['flg']==1?"checked":"";
+						$airplan=$line_plan['flg']==2?"checked":"";
+					</php>
+					<input type="radio" id="car_flg" name="flg" value="0" {$car}>
+					<label for="car">{:L('ACTIVITY_ROUTE_PLANNING_BUS')}</label>
+					<input type="radio" id="train_flg" name="flg" value="1" {$train}>
+					<label for="train">{:L('ACTIVITY_ROUTE_PLANNING_TRAIN')}</label>
+					<input type="radio" id="airplan_flg" name="flg" value="2" {$airplan}>
+					<label for="airplan">{:L('ACTIVITY_ROUTE_PLANNING_AIRPLANE')}</label>
+				</div>
+				<div id="car">
+				<table class="table table-bordered">
+					<tr>
+						<th style="width:100px;">{:L('ACTIVITY_MEMBER_LIMIT')}</th>
+						<td>
+							{$activity.people_limit} {:L('ACTIVITY_ROUTE_PLANNING_PEOPLE')}
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">{:L('ACTIVITY_ROUTE_PLANNING_SELECTED_TRAINS')}</td>
+					</tr>
+					<foreach name="sizeListSelected" item="sizeSelected">
+					<tr>
+						<th style="width:100px;">{$sizeSelected.car_size} {:L('ACTIVITY_ROUTE_PLANNING_SEAT')}：</th>
+						<td>
+							<foreach name="vehicleListSelected" item="vehicleSelected">
+								<if condition="$vehicleSelected['car_size'] eq $sizeSelected['car_size']">
+										<input type="checkbox" class="vehicle_car" id="{$vehicleSelected.car_number}" name="ids[]" value="{$vehicleSelected.id}" checked>
+										<label for="{$vehicleSelected.car_number}" class="vehicle_car">{$vehicleSelected.car_models}-{$vehicleSelected.car_number}</label>
+								</if>
+							</foreach>
+						</td>
+					</tr>
+					</foreach>
+					<tr>
+						<td colspan="2">{:L('ACTIVITY_ROUTE_PLANNING_OPTIONAL_TRAINS')}</td>
+					</tr>
+					<foreach name="sizeList" item="size">
+					<tr>
+						<th style="width:100px;">{$size.car_size} {:L('ACTIVITY_ROUTE_PLANNING_SEAT')}：</th>
+						<td>
+							<foreach name="vehicleList" item="vehicle">
+								<if condition="$vehicle['car_size'] eq $size['car_size']">
+										<input type="checkbox" class="vehicle_car" id="{$vehicle.car_number}" name="ids[]" value="{$vehicle.id}">
+										<label for="{$vehicle.car_number}" class="vehicle_car">{$vehicle.car_models}-{$vehicle.car_number}</label>
+								</if>
+							</foreach>
+						</td>
+					</tr>
+					</foreach>
+				</table>
+			</div>
+			<div id="train" style="display:none;">
+				<table class="table table-bordered">
+					<tr>
+						<th style="width:100px;">{:L('ACTIVITY_MEMBER_LIMIT')}</th>
+						<td>
+							{$activity.people_limit} {:L('ACTIVITY_ROUTE_PLANNING_PEOPLE')}
+						</td>
+					</tr>
+					<tr>
+						<th style="">{:L('ACTIVITY_ROUTE_PLANNING_TRAIN')}</th>
+						<td>
+							<notempty name="line_plan.train_name">
+								{:L('ACTIVITY_ROUTE_PLANNING_ORIGINAL_FILE')}：<a href="{$line_plan.train}">{$line_plan.train_name}</a><br />
+								<input type="file" name="train" accept=".xls,.xlsx" />{:L('ACTIVITY_ROUTE_PLANNING_UPLOAD')}
+							<else/>
+								<input type="file" name="train" accept=".xls,.xlsx" />{:L('ACTIVITY_ROUTE_PLANNING_UPLOAD')}
+							</notempty>
+						</td>
+					</tr>
+				</table>
+				<a href="">{:L('ACTIVITY_ROUTE_PLANNING_DOWNLOAD')}</a>
+			</div>
+			<div id="airplan" style="display:none;">
+				<table class="table table-bordered">
+					<tr>
+						<th style="width:100px;">{:L('ACTIVITY_MEMBER_LIMIT')}</th>
+						<td>
+							{$activity.people_limit} {:L('ACTIVITY_ROUTE_PLANNING_PEOPLE')}
+						</td>
+					</tr>
+					<tr>
+						<th style="">{:L('ACTIVITY_ROUTE_PLANNING_AIRPLANE')}</th>
+						<td>
+							<notempty name="line_plan.airplan_name">
+								{:L('ACTIVITY_ROUTE_PLANNING_ORIGINAL_FILE')}：<a href="{$line_plan.airplan}">{$line_plan.airplan_name}</a><br />
+								<input type="file" name="airplan" accept=".xls,.xlsx" />{:L('ACTIVITY_ROUTE_PLANNING_UPLOAD')}
+							<else/>
+								<input type="file" name="airplan" accept=".xls,.xlsx" />{:L('ACTIVITY_ROUTE_PLANNING_UPLOAD')}
+							</notempty>
+						</td>
+					</tr>
+				</table>
+				<a href="">{:L('ACTIVITY_ROUTE_PLANNING_DOWNLOAD')}</a>
+			</div>
+		</div>
+		<div class="form-actions">
+			<button class="btn btn-primary js-ajax-submit" type="submit" onclick="return checkUedit();">{:L('SAVE')}</button>
+		</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript">
+		//编辑器路径定义
+		var editorURL = GV.WEB_ROOT;
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/simpleboot/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			vehicle_flg();
+			vehicle();
+			$("input[name=vehicle_flg]").click(function(){
+				vehicle_flg();
+			});
+			$("input[name=flg]").click(function(){
+				vehicle();
+			});
+			$(".js-ajax-close-btn").on('click', function(e) {
+				e.preventDefault();
+				Wind.use("artDialog", function() {
+					art.dialog({
+						id : "question",
+						icon : "question",
+						fixed : true,
+						lock : true,
+						background : "#CCCCCC",
+						opacity : 0,
+						content : "{:L('CLOSE_PAGE')}",
+						ok : function() {
+							setCookie("refersh_time", 1);
+							window.close();
+							return true;
+						}
+					});
+				});
+			});
+			Wind.use('validate','ajaxForm','artDialog',function() {
+				//编辑器
+				editorcontent = new baidu.editor.ui.Editor();
+				editorcontent.render('line_content');
+				try {
+					editorcontent.sync();
+				} catch (err) {}
+				//增加编辑器验证规则
+				jQuery.validator.addMethod('editorcontent',function() {
+					try {
+						editorcontent.sync();
+					} catch (err) {}
+					return editorcontent.hasContents();
+				});
+				
+				var form = $('form.js-ajax-forms');
+				//ie处理placeholder提交问题
+				if ($.browser && $.browser.msie) {
+					form.find('[placeholder]').each(function() {
+						var input = $(this);
+						if (input.val() == input.attr('placeholder')) {
+							input.val('');
+						}
+					});
+				}
+				//表单验证开始
+				form.validate({
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//是否在敲击键盘时验证
+					onkeyup : false,
+					//当鼠标掉级时验证
+					onclick : false,
+					//验证错误
+					showErrors : function(errorMap,errorArr) {
+						//errorMap {'name':'错误信息'}
+						//errorArr [{'message':'错误信息',element:({})}]
+						try {
+							$(errorArr[0].element).focus();
+							art.dialog({
+								id : 'error',
+								icon : 'error',
+								lock : true,
+								fixed : true,
+								background : "#CCCCCC",
+								opacity : 0,
+								content : errorArr[0].message,
+								cancelVal : "{:L('OK')}",
+								cancel : function() {
+									$(errorArr[0].element).focus();
+								}
+							});
+						} catch (err) {}
+					},
+					//验证规则
+					rules : {
+						'line_name' : { required : 1 },
+						'line_content' : { required : 1 }
+					},
+					//验证未通过提示消息
+					messages : {
+						'line_name' : { required : "{:L('ACTIVITY_ROUTE_PLANNING_NAME')}" },
+						'line_content' : { required : "{:L('ACTIVITY_ROUTE_PLANNING_CONTENT')}" }
+					},
+					//给未通过验证的元素加效果,闪烁等
+					highlight : false,
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//验证通过，提交表单
+					submitHandler : function(forms) {
+						$(forms).ajaxSubmit({
+							url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+							dataType : 'json',
+							beforeSubmit : function(arr,$form,options) {
+	
+							},
+							success : function(data,statusText,xhr,$form) {
+								if (data.status) {
+									setCookie("refersh_time",10);
+									//添加成功
+									Wind.use("artDialog",function() {
+										art.dialog({
+											id : "succeed",
+											icon : "succeed",
+											fixed : true,
+											lock : true,
+											background : "#CCCCCC",
+											opacity : 0,
+											content : data.info,
+											button : [
+											{
+												name : "{:L('CONTINUE')}",
+												callback : function() {
+													reloadPage(window);
+													return true;
+												},
+												focus : true
+											},
+											{
+												name : "{:L('RETURN')}",
+												callback : function() {
+													location.href = "{:U('activity/line_plan',array('id'=>$aid))}";
+													return true;
+												}
+											}
+											]
+										});
+									});
+								} else {
+									alert(data.info);
+								}
+							}
+						});
+					}
+				});
+			});
+		});
+		function checkUedit() {
+			var value = UE.getEditor('line_content').getContent();
+			if(value == "" || value == null){
+				alert("{:L('ACTIVITY_ROUTE_PLANNING_CONTENT')} {:L('NOT_NULL')}");
+				return false;
+			}else{
+				return true;
+			}
+		}
+		function vehicle_flg() {
+			 var vehicle_flg = document.getElementsByName("vehicle_flg");
+			 for(var i=0;i<vehicle_flg.length;i++){
+			  	if(vehicle_flg[i].checked==true){
+			  		if(i == 0){
+			  			 var ui =document.getElementById("vehicle");
+						 ui.style.display="none";
+						 var b =document.getElementsByName("ids[]");
+						 for(var i=0;i<b.length;i++){
+							 if(b[i].checked==true){
+								 b[i].checked=false
+							 }
+						 }
+			  		}else{
+			  			 var ui =document.getElementById("vehicle");
+						 ui.style.display="block";
+			  		}
+			  		break;
+			  	}
+			 }
+		}
+		function vehicle() {
+			 var flg = document.getElementsByName("flg");
+			 for(var i=0;i<flg.length;i++){
+			  	if(flg[i].checked==true){
+			  		if(i == 0){
+			  			 var car =document.getElementById("car");
+			  			 car.style.display="block";
+						 var train =document.getElementById("train");
+						 train.style.display="none";
+						 var airplan =document.getElementById("airplan");
+						 airplan.style.display="none";
+			  		}else if(i == 1){
+			  			 var car =document.getElementById("car");
+			  			 car.style.display="none";
+						 var train =document.getElementById("train");
+						 train.style.display="block";
+						 var airplan =document.getElementById("airplan");
+						 airplan.style.display="none";
+						 var b =document.getElementsByName("ids[]");
+						 for(var i=0;i<b.length;i++){
+							 if(b[i].checked==true){
+								 b[i].checked=false
+							 }
+						 }
+			  		}else{
+			  			 var car =document.getElementById("car");
+			  			 car.style.display="none";
+						 var train =document.getElementById("train");
+						 train.style.display="none";
+						 var airplan =document.getElementById("airplan");
+						 airplan.style.display="block";
+						 var b =document.getElementsByName("ids[]");
+						 for(var i=0;i<b.length;i++){
+							 if(b[i].checked==true){
+								 b[i].checked=false
+							 }
+						 }
+			  		}
+			  		break;
+			  	}
+			 }
+		}
+	</script>
+</body>
+</html>

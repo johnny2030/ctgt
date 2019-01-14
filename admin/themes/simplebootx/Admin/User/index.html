@@ -1,0 +1,82 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('user/index')}">{:L('ADMIN_USER_INDEX')}</a></li>
+			<li><a href="{:U('user/add')}">{:L('ADMIN_USER_ADD')}</a></li>
+		</ul>
+        <form class="well form-search" method="post" action="{:U('User/index')}">
+            {:L('USERNAME')}:
+            <input type="text" name="user_login" style="width: 100px;" value="{:I('request.user_login/s','')}" placeholder="{:L('USERNAME')}">
+            <!-- {:L('EMAIL')}:
+            <input type="text" name="user_email" style="width: 100px;" value="{:I('request.user_email/s','')}" placeholder="{:L('EMAIL')}"> -->
+            <input type="submit" class="btn btn-primary" value="{:L('SEARCH')}" />
+            <a class="btn btn-danger" href="{:U('User/index')}">{:L('EMPTY')}</a>
+        </form>
+		<table class="table table-hover table-bordered">
+			<thead>
+				<tr>
+					<th width="50">ID</th>
+					<th>{:L('USERNAME')}</th>
+					<th>{:L('ROLE')}</th>
+					<th>{:L('EMAIL')}</th>
+					<th>{:L('LAST_LOGIN_IP')}</th>
+					<th>{:L('LAST_LOGIN_TIME')}</th>
+					<th>{:L('STATUS')}</th>
+					<th width="120">{:L('ACTIONS')}</th>
+				</tr>
+			</thead>
+			<tbody>
+				<php>$user_statuses=array("0"=>L('USER_STATUS_BLOCKED'),"1"=>L('USER_STATUS_ACTIVATED'),"2"=>L('USER_STATUS_UNVERIFIED'));</php>
+				<foreach name="users" item="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td><if condition="$vo['user_url']"><a href="{$vo.user_url}" target="_blank" title="{$vo.signature}">{$vo.user_login}</a><else />{$vo.user_login}</if></td>
+					<php>
+						$email_conf = D('EmailConf')->where(array('admin_id' => $vo['id']))->find();
+						$email = empty($vo['user_email']) ? $email_conf['email_address'] : $vo['user_email'];
+						$role_users = D('Role')->alias('r')->join('__ROLE_USER__ ru ON ru.role_id=r.id')->where(array('ru.user_id' => $vo['id']))->select();
+						$role_user_arr = array();
+						foreach ($role_users as $role_user) $role_user_arr[] = $role_user['name'];
+						$role_user_str = implode(',',$role_user_arr);
+					</php>
+					<td>{$role_user_str}</td>
+					<td>{$email}</td>
+					<td>{$vo.last_login_ip}</td>
+					<td>
+						<if condition="$vo['last_login_time'] eq 0">
+							{:L('USER_HAVENOT_LOGIN')}
+						<else />
+							{$vo.last_login_time}
+						</if>
+					</td>
+					
+					<td>{$user_statuses[$vo['user_status']]}</td>
+					<td>
+						<if condition="$vo['id'] eq 1 || $vo['id'] eq sp_get_current_admin_id()">
+						<font color="#cccccc">{:L('EDIT')}</font> | <font color="#cccccc">{:L('DELETE')}</font> |
+							<if condition="$vo['user_status'] eq 1">
+								<font color="#cccccc">{:L('BLOCK_USER')}</font>
+							<else />
+								<font color="#cccccc">{:L('ACTIVATE_USER')}</font>
+							</if>
+						<else />
+							<a href='{:U("user/edit",array("id"=>$vo["id"]))}'>{:L('EDIT')}</a> |
+							<if condition="$vo['user_status'] eq 1">
+								<a href="{:U('user/ban',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="{:L('BLOCK_USER_CONFIRM_MESSAGE')}">{:L('BLOCK_USER')}</a> | 
+							<else />
+								<a href="{:U('user/cancelban',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="{:L('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:L('ACTIVATE_USER')}</a> | 
+							</if>
+							<a class="js-ajax-delete" href="{:U('user/delete',array('id'=>$vo['id']))}" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</a>
+						</if>
+					</td>
+				</tr>
+				</foreach>
+			</tbody>
+		</table>
+		<div class="pagination">{$page}</div>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

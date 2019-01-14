@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>CIEE RESUME</title>
+		<tc_include file="Public:head" />
+		<style>
+			body{ background: #fff}
+			table{ width: 100%;  margin: 0 auto;  border-collapse:collapse;}
+			table td { text-align: center;border: 1px solid black;width: 107.5px;  height: 66px;}
+			.apply-title{ height: 92px; line-height: 92px;  font-size: 28px; text-align: center; border-right: 1px solid black}
+			table th img{  width: 90%; padding-left: 8%}
+			.apply{ width: 1002px; height: 1418px; margin: 0 auto}
+			.one-inch-photo{ width: 138px;}
+			.one-inch-photo img{ width: 100%;}
+			.describe{ height: 250px}
+			.small-title{background: #007ac3; color: #fff}
+			.apply-subtitle{ background: #dff3ff}
+			.notes{ background-color: #ef7d3d; color: #fff; text-align: left}
+			.notes span{ padding: 0 10px; display: block}
+		</style>
+	</head>
+
+	<body>
+		<div class="apply">
+			<if condition="$recruit_member['status'] eq 1">
+				<table>
+					<tr style="border: 1px solid black">
+						<th><img src="__TMPL__Public/images/logo-sa.png"></th>
+						<th class="apply-title" colspan="8">{$recruit.recruit_name}</th>
+					</tr>
+					<tr>
+						<td class="apply-subtitle">姓 名</td>
+						<td>{$recruit_member.name}</td>
+						<td class="apply-subtitle">性  别</td>
+						<td>
+							<if condition="$recruit_member['gender'] eq 1">男</if>
+							<if condition="$recruit_member['gender'] eq 2">女</if>
+						</td>
+						<td class="apply-subtitle">出生年月</td>
+						<td>{$recruit_member.birth_of_date}</td>
+						<td class="apply-subtitle">籍  贯</td>
+						<td>{$recruit_member.native_place}</td>
+						<td class="one-inch-photo" colspan="3" rowspan="3">
+							<php>$avatar = json_decode($recruit_member['avatar'],true);</php>
+							<img src="__ROOT__{$avatar.url}">
+						</td>
+					</tr>
+					<tr>
+						<td class="apply-subtitle">年    级</td>
+						<td colspan="3">{$recruit_member.grade}</td>
+						<td class="apply-subtitle">专    业</td>
+						<td colspan="3">{$recruit_member.speciality}</td>
+					</tr>
+					<tr>
+						<td class="apply-subtitle">手    机</td>
+						<td colspan="3">{$recruit_member.phone}</td>
+						<td class="apply-subtitle">E-mail</td>
+						<td colspan="3">{$recruit_member.email}</td>
+					</tr>
+					<tr>
+						<td class="apply-subtitle">家庭住址</td>
+						<td colspan="3">{$recruit_member.home_address}</td>
+						<td class="apply-subtitle">现住地址</td>
+						<td colspan="4">{$recruit_member.present_address}</td>
+					</tr>
+					<tr>
+						<td class="apply-subtitle">辅导员姓名</td>
+						<td colspan="3">{$recruit_member.counselor}</td>
+						<td class="apply-subtitle">联系方式</td>
+						<td colspan="4">电话：{$recruit_member.counselor_phone} 邮箱：{$recruit_member.counselor_email}</td>
+					</tr>
+					<tr>
+						<td colspan="9">
+							<span>
+								<notempty name="recruit_member.renew_status">
+									（注：除个人基本信息外，辅导员及其联系方式也为必填项，“申请续住理由”必须包括参加CIEE的活动、值班、语言辅导等内容，以作考评续住资格的参照依据）
+								<else/>
+									注：除个人基本信息外，辅导员及其联系方式也为必填项，“兴趣爱好/特长”填写的内容须符合真实情况，在参加中国同屋项目期间，会根据需要安排有特长或才艺的学生做助教的工作，“申请理由”填写时，若有出国留学，与留学生文化交流或辅导经验为佳。
+								</notempty>
+							</span>
+						</td>
+					</tr>
+					<tr>
+						<td class="small-title" colspan="10">生活作息</td>
+					</tr>
+					<tr>
+						<td class="apply-subtitle">起床时间</td>
+						<td colspan="3">{:date('H:i',strtotime($recruit_member['wakeup_time']))}</td>
+						<td class="apply-subtitle">就寝时间</td>
+						<td colspan="4">{:date('H:i',strtotime($recruit_member['bedtime']))}</td>
+					</tr>
+					<empty name="recruit_member.renew_status">
+						<tr>
+							<td class="apply-subtitle">是否抽烟</td>
+							<td colspan="3">
+								<if condition="$recruit_member['smoking_status'] eq 1">否</if>
+								<if condition="$recruit_member['smoking_status'] eq 2">是</if>
+							</td>
+							<td class="apply-subtitle">打扫房间频率</td>
+							<td colspan="4">{$recruit_member.frequency_of_cleaning}</td>
+						</tr>
+					</empty>
+					<tr>
+						<td class="small-title" colspan="10">
+							<notempty name="recruit_member.renew_status">
+								和同屋的活动
+							<else/>
+								兴趣爱好/特长
+							</notempty>
+						</td>
+					</tr>
+					<tr>
+						<td class="describe" colspan="9">{$recruit_member.hobby}</td>
+					</tr>
+					<tr>
+						<td class="small-title" colspan="10">
+							<notempty name="recruit_member.renew_status">
+								申请续住理由
+							<else/>
+								申请理由
+							</notempty>
+						</td>
+					</tr>
+					<tr>
+						<td class="describe" colspan="9">{$recruit_member.reason}</td>
+					</tr>
+				</table>
+			</if>
+			<if condition="$recruit_member['status'] eq 2">
+				<table>
+					<tr style="border: 1px solid black">
+						<th><img src="__TMPL__Public/images/logo-sa.png"></th>
+						<th class="apply-title" colspan="8">{$recruit.recruit_name}</th>
+					</tr>
+					<tr>
+						<td class="apply-subtitle">姓 名</td>
+						<td>{$recruit_member.name}</td>
+						<td class="apply-subtitle">性  别</td>
+						<td>
+							<if condition="$recruit_member['gender'] eq 1">男</if>
+							<if condition="$recruit_member['gender'] eq 2">女</if>
+						</td>
+						<td class="apply-subtitle">出生年月</td>
+						<td>{$recruit_member.birth_of_date}</td>
+						<td class="apply-subtitle">籍  贯</td>
+						<td>{$recruit_member.native_place}</td>
+						<td class="one-inch-photo" colspan="3" rowspan="3">
+							<php>$avatar = json_decode($recruit_member['avatar'],true);</php>
+							<img src="__ROOT__/{$avatar.url}">
+						</td>
+					</tr>
+					<tr>
+						<td class="apply-subtitle">学    历</td>
+						<td colspan="3">
+							<if condition="$recruit_member['education'] eq 1">博士</if>
+							<if condition="$recruit_member['education'] eq 2">硕士</if>
+							<if condition="$recruit_member['education'] eq 3">本科</if>
+							<if condition="$recruit_member['education'] eq 4">专科</if>
+							<if condition="$recruit_member['education'] eq 5">高中</if>
+							<if condition="$recruit_member['education'] eq 6">初中</if>
+						</td>
+						<td class="apply-subtitle">专    业</td>
+						<td colspan="3">{$recruit_member.speciality}</td>
+					</tr>
+					<tr>
+						<td class="apply-subtitle">手    机</td>
+						<td colspan="3">{$recruit_member.phone}</td>
+						<td class="apply-subtitle">E-mail</td>
+						<td colspan="3">{$recruit_member.email}</td>
+					</tr>
+					<tr>
+						<td class="apply-subtitle">学    校</td>
+						<td colspan="3">{$recruit_member.school}</td>
+						<td class="apply-subtitle">现住地址</td>
+						<td colspan="4">{$recruit_member.present_address}</td>
+					</tr>
+					<tr>
+						<td class="apply-subtitle">工作经验</td>
+						<td colspan="3">{$recruit_member.experience}</td>
+						<td class="apply-subtitle"></td>
+						<td colspan="4"></td>
+					</tr>
+				</table>
+			</if>
+		</div>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+	</body>
+</html>

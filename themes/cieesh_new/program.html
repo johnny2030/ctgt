@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>{$program}</title>
+		<tc_include file="Public:head" />
+		<style>
+			body{ background: #fff}
+			.pic{ width: 1012px; height: auto; margin: 0 auto}
+			.pic h3{font-size:16px;height: 18px;overflow: hidden;margin:5px 0;text-align: left;}
+			.pic p{font-size:14px;height: 38px;overflow: hidden;margin:0;}
+		</style>
+	</head>
+
+	<body>
+		<div class="pic container-fluid">
+			<div class="row">
+				<h1 style="text-align:center;margin-bottom:30px;float:none;font-size:2.25em">{$program}</h1>
+				<volist name="program_students" id="vo">
+					<php>$avatar = json_decode($vo['avatar'],true);</php>
+					<div class="col-sm-3 col-md-3 col-xs-3" style="padding-left:5px;padding-right:5px;">
+						<div class="thumbnail">
+							<notempty name="avatar.url">
+								<img style="width:100%;" src="{:sp_get_image_preview_url($avatar['url'])}" />
+							<else/>
+								<img style="width:100%;" src="__PUBLIC__/images/headicon.png" />
+							</notempty>
+							<div class="caption">
+								<h3>{$vo.full_name}</h3>
+								<p>{$vo.institution}</p>
+							</div>
+						</div>
+					</div>
+				</volist>
+			</div>
+		</div>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+	</body>
+</html>

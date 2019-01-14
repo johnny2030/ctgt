@@ -1,0 +1,372 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+	<ul class="nav nav-tabs">
+		<li><a href="{:U('accommodation/housing',array('check' => 1))}">{:L('ACCOMMODATION_INFO_LIST')}</a></li>
+		<li class="active"><a href="javascript:void(0);">{:L('ACCOMMODATION_CHINESE_ROOMMATE_EDIT')}</a></li>
+	</ul>
+	<form method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$id}">
+		<div class="row-fluid">
+			<div class="span9">
+				<table class="table table-bordered">
+					<tr></tr>
+					<tr>
+						<th width="100">基本信息</th>
+						<td>
+							<table class="table table-bordered">
+								<tr>
+									<th width="110">姓名</th>
+									<td>
+										<input type="text" style="width:400px;" id="name" name="name" value="{$name}" placeholder="姓名"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">出生年月</th>
+									<td>
+										<input type="date" style="width:200px;" id="birth_of_date" name="birth_of_date" value="{$birth_of_date}" placeholder="出生年月">
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">性别</th>
+									<td>
+										<input type="radio" name="gender" value="1" <?php echo $gender == 1 ? 'checked' : '' ?> /> 男 &nbsp;
+										<input type="radio" name="gender" value="2" <?php echo $gender == 2 ? 'checked' : '' ?> /> 女 &nbsp;
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">籍贯</th>
+									<td>
+										<input type="text" style="width:400px;" id="native_place" name="native_place" value="{$native_place}" placeholder="籍贯"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">年级</th>
+									<td>
+										<input type="text" style="width:400px;" id="grade" name="grade" value="{$grade}" placeholder="年级"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">专业</th>
+									<td>
+										<input type="text" style="width:400px;" id="speciality" name="speciality" value="{$speciality}" placeholder="专业"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">手机</th>
+									<td>
+										<input type="text" style="width:400px;" id="phone" name="phone" value="{$phone}" placeholder="手机"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Email</th>
+									<td>
+										<input type="text" style="width:400px;" id="email" name="email" value="{$email}" placeholder="Email"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">家庭住址</th>
+									<td>
+										<input type="text" style="width:400px;" id="home_address" name="home_address" value="{$home_address}" placeholder="家庭住址"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								
+								<tr>
+									<th width="110">现居地址</th>
+									<td>
+										<input type="text" style="width:400px;" id="present_address" name="present_address" value="{$present_address}" placeholder="现居地址"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">辅导员姓名</th>
+									<td>
+										<input type="text" style="width:400px;" id="counselor" name="counselor" value="{$counselor}" placeholder="辅导员姓名"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">辅导员手机</th>
+									<td>
+										<input type="text" style="width:400px;" id="counselor_phone" name="counselor_phone" value="{$counselor_phone}" placeholder="辅导员手机"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">辅导员Email</th>
+									<td>
+										<input type="text" style="width: 400px;" id="counselor_email" name="counselor_email" value="{$counselor_email}" placeholder="辅导员Email"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<th width="100">生活作息</th>
+						<td>
+							<table class="table table-bordered">
+								<tr>
+									<th width="110">起床时间</th>
+									<td>
+										<input type="time" id="wakeup_time" name="wakeup_time" value="{:date('H:i',strtotime($wakeup_time))}" placeholder="起床时间"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">就寝时间</th>
+									<td>
+										<input type="time" id="bedtime" name="bedtime" value="{:date('H:i',strtotime($bedtime))}" placeholder="就寝时间"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">是否抽烟</th>
+									<td>
+										<input type="radio" name="smoking_status" value="1" <?php echo $smoking_status == 1 ? 'checked' : '' ?> /> 否 &nbsp;
+										<input type="radio" name="smoking_status" value="2" <?php echo $smoking_status == 2 ? 'checked' : '' ?> /> 是 &nbsp;
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">打扫房间频率</th>
+									<td>
+										<input type="text" style="width:400px;" id="frequency_of_cleaning" name="frequency_of_cleaning" value="{$frequency_of_cleaning}" placeholder="打扫房间频率"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<th width="100">其他信息</th>
+						<td>
+							<table class="table table-bordered">
+								<tr>
+									<th width="110">兴趣爱好/同屋活动</th>
+									<td>
+										<textarea name="hobby" id="hobby" style="width: 98%; height: 50px;" placeholder="兴趣爱好/同屋活动">{$hobby}</textarea>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">申请/续住理由</th>
+									<td>
+										<textarea name="reason" id="reason" style="width: 98%; height: 50px;" placeholder="申请/续住理由">{$reason}</textarea>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<!-- <div class="span3">
+				<table class="table table-bordered">
+					<tr>
+						<th>Chinese Address</th>
+					</tr>
+					<tr>
+						<td>
+							<input type="text" style="width:400px;" id="chinese_address" name="chinese_address" value="{$chinese_address}" onblur="getAddress();" placeholder="Chinese Address"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+				</table>
+				<div id="container" ></div>
+			</div>  -->
+		</div>
+		<div class="form-actions">
+			<button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
+			<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+		</div>
+	</form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript">
+$(function() {
+	$(".js-ajax-close-btn").on('click', function(e) {
+		e.preventDefault();
+		Wind.use("artDialog", function() {
+			art.dialog({
+				id : "question",
+				icon : "question",
+				fixed : true,
+				lock : true,
+				background : "#CCCCCC",
+				opacity : 0,
+				content : "{:L('CLOSE_PAGE')}",
+				ok : function() {
+					setCookie("refersh_time", 1);
+					window.close();
+					return true;
+				}
+			});
+		});
+	});
+	/////---------------------
+	Wind.use('validate','ajaxForm','artDialog',function() {
+		//编辑器
+		//editorcontent = new baidu.editor.ui.Editor();
+		//editorcontent.render('course_content');
+		try {
+			editorcontent.sync();
+		} catch (err) {}
+		//增加编辑器验证规则
+		jQuery.validator.addMethod('editorcontent',function() {
+			try {
+				editorcontent.sync();
+			} catch (err) {}
+			return editorcontent.hasContents();
+		});
+		
+		var form = $('form.js-ajax-forms');
+		//ie处理placeholder提交问题
+		if ($.browser && $.browser.msie) {
+			form.find('[placeholder]').each(function() {
+				var input = $(this);
+				if (input.val() == input
+						.attr('placeholder')) {
+					input.val('');
+				}
+			});
+		}
+		//表单验证开始
+		form.validate({
+			//是否在获取焦点时验证
+			onfocusout : false,
+			//是否在敲击键盘时验证
+			onkeyup : false,
+			//当鼠标掉级时验证
+			onclick : false,
+			//验证错误
+			showErrors : function(errorMap,errorArr) {
+				//errorMap {'name':'错误信息'}
+				//errorArr [{'message':'错误信息',element:({})}]
+				try {
+					$(errorArr[0].element).focus();
+					art.dialog({
+						id : 'error',
+						icon : 'error',
+						lock : true,
+						fixed : true,
+						background : "#CCCCCC",
+						opacity : 0,
+						content : errorArr[0].message,
+						cancelVal : "{:L('OK')}",
+						cancel : function() {
+							$(errorArr[0].element).focus();
+						}
+					});
+				} catch (err) {}
+			},
+			//验证规则
+			rules : {
+				'name' : { required : 1 },
+				'birth_of_date' : { required : 1 },
+				'gender' : { required : 1 },
+				'native_place' : { required : 1 },
+				'grade' : { required : 1 },
+				'speciality' : { required : 1 },
+				'phone' : { required : 1 },
+				'email' : { required : 1 },
+				'home_address' : { required : 1 },
+				'present_address' : { required : 1 },
+				'counselor' : { required : 1 },
+				'counselor_phone' : { required : 1 },
+				'counselor_email' : { required : 1 },
+				'wakeup_time' : { required : 1 },
+				'bedtime' : { required : 1 },
+				'smoking_status' : { required : 1 },
+				'frequency_of_cleaning' : { required : 1 },
+				'hobby' : { required : 1 },
+				'reason' : { required : 1 }
+			},
+			//验证未通过提示消息
+			messages : {
+				'name' : { required : "请填写姓名" },
+				'birth_of_date' : { required : "请填写出生年月" },
+				'gender' : { required : "请选择性别" },
+				'native_place' : { required : "请填写籍贯" },
+				'grade' : { required : "请填写年级" },
+				'speciality' : { required : "请填写专业" },
+				'phone' : { required : "请填写手机号" },
+				'email' : { required : "请填写邮箱" },
+				'home_address' : { required : "请填写家庭住址" },
+				'present_address' : { required : "请填写现居地址" },
+				'counselor' : { required : "请填写辅导员姓名" },
+				'counselor_phone' : { required : "请填写辅导员手机号" },
+				'counselor_email' : { required : "请填写辅导员邮箱" },
+				'wakeup_time' : { required : "请填写起床时间" },
+				'bedtime' : { required : "请填写就寝时间" },
+				'smoking_status' : { required : "请选择是否抽烟" },
+				'frequency_of_cleaning' : { required : "请填写打扫房间频率" },
+				'hobby' : { required : "请填写兴趣爱好/同屋活动" },
+				'reason' : { required : "请填写申请/续住理由" }
+			},
+			//给未通过验证的元素加效果,闪烁等
+			highlight : false,
+			//是否在获取焦点时验证
+			onfocusout : false,
+			//验证通过，提交表单
+			submitHandler : function(forms) {
+				$(forms).ajaxSubmit({
+					url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+					dataType : 'json',
+					beforeSubmit : function(arr,$form,options) {
+
+					},
+					success : function(data,statusText,xhr,$form) {
+						if (data.status) {
+							setCookie("refersh_time",1);
+							//添加成功
+							Wind.use("artDialog",function() {
+								art.dialog({
+									id : "succeed",
+									icon : "succeed",
+									fixed : true,
+									lock : true,
+									background : "#CCCCCC",
+									opacity : 0,
+									content : data.info,
+									button : [
+									{
+										name : "{:L('REEDIT')}",
+										callback : function() {
+											reloadPage(window);
+											return true;
+										},
+										focus : true
+									},
+									{
+										name : "{:L('RETURN')}",
+										callback : function() {
+											location.href = "{:U('accommodation/housing',array('check' => 1))}";
+											return true;
+										}
+									}
+									]
+								});
+							});
+						} else {
+							alert(data.info);
+						}
+					}
+				});
+			}
+		});
+	});
+});
+</script>
+</body>
+</html>

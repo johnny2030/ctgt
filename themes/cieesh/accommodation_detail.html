@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>HouseName Housing Information {$site_name}</title>
+	
+		<tc_include file='Public:head' />
+		<link href="__TMPL__Public/css/style.css" rel="stylesheet">
+		<link href="__TMPL__Public/res/flexslider/flexslider.css" rel="stylesheet">
+	</head>
+	<body>
+		<tc_include file="Public:nav" />
+
+		<!--content-->
+		<div class="container">
+			<div class="my-page">
+				
+				<div class="my-title">
+					<h3>Housing Information</h3>
+				</div>
+				<div class="my-content">
+					<div class="row" id="infos">
+						<div class="house-title">
+							<h3>[{$house_city}-{$house_district}]小区名称x楼x室    
+								<if condition="$status eq 0">
+									<span class="btn btn-success btn-xs">可入住</span>
+								</if>
+								<if condition="$status eq 1">
+									<span class="btn btn-danger btn-xs">不可入住</span>
+								</if>
+								<if condition="$status eq 2">
+									<span class="btn btn-warning btn-xs">已住满</span>
+								</if>
+							</h3>
+							<p>This is a house description</p>
+						</div>
+						<dl class="house-money"><dt>租金</dt><dd>{$house_money}元/月</dd></dl>
+						<div class="col-md-6">
+							<div class="text">
+								<dl><dt>租金押付</dt><dd>交三押一</dd></dl>
+								<dl><dt>房型</dt><dd>{$house_size}</dd></dl>
+								<dl><dt>租赁方式</dt><dd>合租</dd></dl>
+								<dl><dt>可租厅室</dt><dd>{$house_lease}</dd></dl>
+								<dl><dt>所在小区</dt><dd>小区名称</dd></dl>
+								<dl><dt>位置</dt><dd>{$house_city} {$house_district} {$house_address}</dd></dl>
+								<dl><dt>联系人</dt><dd>{$contact_name}</dd></dl>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="text">
+								<dl><dt>装修</dt><dd>精装修</dd></dl>
+								<dl><dt>面积</dt><dd>{$house_area}平米</dd></dl>
+								<dl><dt>朝向</dt><dd>{$house_exposure}</dd></dl>
+								<dl><dt>楼层</dt><dd>3/8</dd></dl>
+								<dl><dt>类型</dt><dd>{$property_nature}</dd></dl>
+								<dl><dt>交通方式</dt><dd>{$house_traffic}</dd></dl>
+								<dl><dt>联系方式</dt><dd>{$contact_phone}</dd></dl>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="my-title">
+					<h3>Housing Content</h3>
+				</div>
+				<div class="my-content">
+					<div class="row">
+						<div class="col-md-12">
+							{$house_content}
+						</div>
+					</div>
+				</div>
+				<div class="my-title">
+					<h3>Housing Album</h3>
+				</div>
+				<div class="my-content" >
+					<div class="row">
+						<div class="col-md-12">
+							<div id="slider" class="flexslider">
+								<ul class="slides">
+									<li class="flex-active-slide" >
+										<img src="__TMPL__Public/img/house1.jpg" draggable="false">
+										<div class="txt"><div class="txt-wrap">卫生间</div></div>
+									</li>
+									<li class="" style="">
+										<img src="__TMPL__Public/img/house2.jpg" draggable="false">
+										<div class="txt"><div class="txt-wrap">平面图</div></div>
+									</li>
+								</ul>
+								<ul class="flex-direction-nav">
+									<li>
+										<a class="flex-prev" href="#">Previous</a>
+									</li>
+									<li>
+										<a class="flex-next" href="#">Next</a>
+									</li>
+								</ul>
+							</div>
+							<div id="carousel" class="flexslider">
+								<ul class="slides" >
+									<li class="flex-active-slide"><img src="__TMPL__Public/img/house1.jpg"  alt="卫生间" draggable="false"></li>
+									<li class=""><img src="__TMPL__Public/img/house2.jpg"  alt="平面图" draggable="false"></li>
+								</ul>
+								<ul class="flex-direction-nav">
+									<li>
+										<a class="flex-prev flex-disabled" href="#" tabindex="-1">Previous</a>
+									</li>
+									<li>
+										<a class="flex-next" href="#" tabindex="-1">Next</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<img src="__TMPL__Public/img/logo-sa.png" class="center-block my-logo" />
+		</div>
+		<!-- FOOTER -->
+		<tc_include file="Public:footer" />
+		<tc_include file="Public:scripts" />
+		<script src="__TMPL__Public/res/flexslider/jquery.flexslider-min.js"></script>
+		<script>
+			$('#carousel').flexslider({
+				animation: "slide",
+				controlNav: false,
+				animationLoop: false,
+				slideshow: false,
+				itemWidth: 75,
+				itemMargin: 5,
+				asNavFor: '#slider'
+			});
+		
+			$('#slider').flexslider({
+				animation: "slide",
+				controlNav: false,
+				animationLoop: false,
+				slideshow: false,
+				smoothHeight: true,
+				sync: "#carousel",
+				start: function(slider){
+				  $('body').removeClass('loading');
+				}
+			});
+		</script>
+	</body>
+
+</html>

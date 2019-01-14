@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>{$assessment_name} Evaluation detail {$site_name}</title>
+	
+		<tc_include file='Public:head' />
+	</head>
+
+	<body>
+		<div id="con">
+			<tc_include file="Public:nav" />
+			<tc_include file="Public:subpage_banner" />
+			
+			<!--Breadcrumb-->
+			<div class="page-header title-area style-1">
+				<div class="breadcrumb-area">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<nav class="breadcrumb">
+									<a class="home" href="__ROOT__/" ><span>Home</span></a>
+									<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>
+									<span>Evaluation detail</span>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Breadcrumb  end-->
+			
+			<!--Evaluayion-detail1 begin-->
+			<div class="Evaluayion-detail">
+				<div class="container">
+					<div class="projectdiscp paddbtm30">
+						<div class="fh-section-title clearfix  text-left style-1 version-dark">
+							<h2>{$assessment_name}</h2>
+						</div>
+						<p>{$assessment_description}</p>
+						<php>
+							$userid = sp_get_current_userid();
+						</php>
+						<if condition="$userid">
+							<a href="#evaluation" class="btn btn-lg btn-primary" data-toggle="modal" data-target="#evaluation">Evaluate</a>
+						<else/>
+							<a href="#login" data-toggle="modal" data-target="#login" class="btn btn-lg btn-primary">Evaluate</a>
+						</if>
+						<!-- Modal  begin-->
+						<div class="modal fade" id="evaluation" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+							<div class="modal-dialog" role="document">
+								<form method="post">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+											<h4 class="modal-title" id="myModalLabel">{$assessment_name}</h4>
+										</div>
+										<div class="modal-body">
+											<if condition="$headteacher_ids OR $parttimeteacher_ids">
+												<div class="form-group">
+													<if condition="$headteacher_ids">
+														<div class="btn-group">
+															<div class="dropdown">
+																<select name="headteacher" class="form-control">{$headteacher_html}</select>
+															</div>
+														</div>
+													</if>
+													<if condition="$parttimeteacher_ids">
+														<div class="btn-group">
+															<div class="dropdown">
+																<select name="parttimeteacher" class="form-control">{$parttimeteacher_html}</select>  
+															</div>
+														</div>
+													</if>
+													<p style="color:red;margin-top:10px;">Tip:Only one of them can be chosen</p>
+												</div>
+											</if>
+											<php>$index = 0;</php>
+											<!-- 单选 -->
+											<notempty name="assessment_questions1">
+												<volist name="assessment_questions1" id="aq1">
+													<php>
+														$index++;
+														$assessment_option_arr = array();
+														$assessment_option_arr = explode(',',$aq1['assessment_option']);
+													</php>
+													<div class="form-group">
+														<label for="recipient-name" class="control-label">{$index}.{$aq1.assessment_question}</label>
+													</div>
+													<div class="form-group">
+														<foreach name="assessment_option_arr" item="ao" key="k">
+															<label class="radio-inline">
+																<input type="radio" name="danxuan{$aq1.id}" value="{$ao}"> {$ao}
+															</label>
+														</foreach>
+													</div>
+												</volist>
+											</notempty>
+											<!-- 多选 -->
+											<notempty name="assessment_questions2">
+												<volist name="assessment_questions2" id="aq2">
+													<php>
+														$index++;
+														$assessment_option_arr = array();
+														$assessment_option_arr = explode(',',$aq2['assessment_option']);
+													</php>
+													<div class="form-group">
+														<label for="recipient-name" class="control-label">{$index}.{$aq2.assessment_question}</label>
+													</div>
+													<div class="form-group">
+														<foreach name="assessment_option_arr" item="ao" key="k">
+															<label class="checkbox-inline">
+																<input type="checkbox" name="duoxuan{$aq2.id}[]" value="{$ao}"> {$ao}
+															</label>
+														</foreach>
+													</div>
+												</volist>
+											</notempty>
+											<!-- 问答 -->
+											<notempty name="assessment_questions3">
+												<volist name="assessment_questions3" id="aq3">
+													<php>$index++;</php>
+													<div class="form-group">
+														<label for="message-text" class="control-label">{$index}.{$aq3.assessment_question}</label>
+														<textarea class="form-control" id="message-text" rows="3" name="wenda{$aq3.id}"></textarea>
+													</div>
+												</volist>
+											</notempty>
+										</div>
+										<div class="modal-footer">
+											<button type="submit" class="btn btn-primary">Submit</button>
+											<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+						<!-- Modal  end-->
+					</div>
+					<div class="Evaluation-content">
+						<div class="fh-section-title clearfix  text-left style-1 version-dark">
+							<h2>Evaluation <span class="main-color">Content</span></h2>
+							{$assessment_content}
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Evaluayion-detail1 end-->
+			
+			<tc_include file="Public:footer" />
+			<div class="bg"></div>
+		</div>
+		<tc_include file="Public:scripts" />
+	</body>
+</html>

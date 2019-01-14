@@ -1,0 +1,577 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('course/index')}">{:L('COURSE_LIST')}</a></li>
+			<li class="active"><a href="javascript:void(0);">{:L('COURSE_EDIT')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+			<input type="hidden" name="id" value="{$id}">
+			<div class="row-fluid">
+				<div class="span9">
+					<table class="table table-bordered">
+						<tr>
+							<th width="100">{:L('COURSE_CATEGORY')}</th>
+							<td>
+								<select name="course_type" style="width:150px;">
+									<option value="1" <?php echo $course_type==1 ? 'selected' : '' ?> >{:L('COURSE_SPECIALIZED')}</option>
+									<option value="2" <?php echo $course_type==2 ? 'selected' : '' ?> >{:L('COURSE_CHINESE')}</option>
+								</select>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('COURSE_CODE')}</th>
+							<td>
+								<input type="text" style="width: 500px;" id="course_code" name="course_code" value="{$course_code}" placeholder="{:L('COURSE_CODE')}"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('COURSE_NAME')}</th>
+							<td>
+								<input type="text" style="width: 500px;" id="course_name" name="course_name" value="{$course_name}" placeholder="{:L('COURSE_NAME')}"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('COURSE_STAFF')}</th>
+							<php>
+								$radio_style = "";
+								$text_style = "";
+								$select_style = 0;
+								if(empty($headteacher_id)) {
+									$radio_style = "hide";
+									$select_style = 2;
+								}
+								if(empty($headteacher_name)) {
+									$text_style = "hide";
+									$select_style = 1;
+								}
+							</php>
+							<td id="radio_style" class="{$radio_style}">
+								<volist name="lead_teachers" id="vo">
+									<php>$check_yes = "";</php>
+									<if condition="$vo['teacher_id'] eq $headteacher_id">
+										<php>$check_yes = "checked";</php>
+									</if>
+									<span style="font-size:14px;display:inline-block;width:24%">
+										<input type="radio" name="headteacher_id" value="{$vo.teacher_id}" {$check_yes}/> {$vo.full_name} &nbsp;
+									</span>
+								</volist>
+								<span class="form-required" style="color:red;"> *</span>
+								<!-- <input type="button" id="change_text" class="btn btn-primary btn-small" value="{:L('COURSE_MUNUAL_INPUT')}"/> -->
+							</td>
+							<td id="text_style" class="{$text_style}">
+								<input type="text" name="headteacher_name" value="{$headteacher_name}" /> &nbsp;
+								<span class="form-required" style="color:red;"> *</span>
+								<input type="button" id="change_radio" class="btn btn-primary btn-small" value="{:L('COURSE_GO_CHECK')}"/>
+							</td>
+							<input type="hidden" id="select_style" name="select_style" value="{$select_style}"/>
+						</tr>
+						<tr>
+							<th width="100">{:L('COURSE_TEACHER')}<br>({:L('MULTIPLE_CHOICES')})</th>
+							<td>
+								<volist name="part_time_teachers" id="vo">
+									<php>
+										$check_yes = "";
+										$course_parttime_teacher_ids = explode(',',$parttimeteacher_id);
+										if (in_array($vo['teacher_id'],$course_parttime_teacher_ids)) $check_yes = "checked";
+									</php>
+									<span style="font-size:14px;display:inline-block;width:24%">
+										<input type="checkbox" name="parttimeteacher_id[]" value="{$vo.teacher_id}" {$check_yes}/> {$vo.full_name} &nbsp;
+									</span>
+								</volist>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('COURSE_CREDIT')}</th>
+							<td>
+								<input type="text" style="width: 200px;" id="course_credit" name="course_credit" value="{$course_credit}" placeholder="{:L('COURSE_CREDIT')}" onblur= "if( /^\d*(\.\d{1,2})?$/.test(this.value)){if(this.value<0){alert('只能输入非负数，小数点后最多保留两位');this.value='';}}else{alert('只能输入非负数，小数点后最多保留两位');this.value='';}"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('COURSE_CLASS_HOUR')}(h)</th>
+							<td>
+								<input type="text" style="width: 200px;" id="course_academic_hour" name="course_academic_hour" value="{$course_academic_hour}" placeholder="{:L('COURSE_CLASS_HOUR')}" onblur= "if( /^\d*(\.\d{1,2})?$/.test(this.value)){if(this.value<0){alert('只能输入非负数，小数点后最多保留两位');this.value='';}}else{alert('只能输入非负数，小数点后最多保留两位');this.value='';}"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<!-- <tr>
+							<th width="100">{:L('COURSE_LIMIT')}</th>
+							<td>
+								<input type="number" style="width: 200px;" id="course_signup_limit" name="course_signup_limit" value="{$course_signup_limit}" placeholder="{:L('COURSE_LIMIT')}"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr> -->
+						<tr>
+							<th width="100">{:L('COURSE_ADDRESS')}</th>
+							<td>
+								<input type="text" style="width: 500px;" id="course_address" name="course_address" value="{$course_address}" placeholder="{:L('COURSE_ADDRESS')}"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('COURSE_TEACHERING_TIME')}</th>
+							<!--<td>
+								<volist name="time_zones" id="vo">
+									<php>
+										$check_yes = "";
+										$timezones_ids = explode(',',$timezones_id);
+									</php>
+									<volist name="timezones_ids" id="tz" key="k">
+										<if condition="$vo['id'] eq $tz[k]">
+											<php>$check_yes = "checked";</php>
+										</if>
+									</volist>
+									<span style="font-size:14px;display:inline-block;">
+										<input type="checkbox" name="timezones_id[]" value="{$vo.id}" {$check_yes}/> {$vo.time_zones} &nbsp;
+									</span>
+								</volist>
+								<span class="form-required" style="color:red;"> *</span>
+								 <table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>{:L('COURSE_START_TIME')}</th>
+											<th>{:L('COURSE_END_TIME')}</th>
+											<th>{:L('ACTIONS')}</th>
+										</tr>
+									</thead>
+									<tbody id="course_time">
+										<volist name="course_times" id="vo">
+											<tr>
+												<input type="hidden" name="course_time_id[]" value="{$vo.id}">
+												<td><input type="text" name="course_start_time[]" value="{:date('Y-m-d H:i',strtotime($vo['course_start_time']))}" class="js-datetime"/><span class="form-required" style="color:red;"> *</span></td>
+												<td><input type="text" name="course_end_time[]" value="{:date('Y-m-d H:i',strtotime($vo['course_end_time']))}" class="js-datetime" /><span class="form-required" style="color:red;"> *</span></td>
+												<td><a href="javascript:;" onclick="deleteCourseTime(this)">{:L('DELETE')}</a></td>
+											</tr>
+										</volist>
+									</tbody>
+								</table>
+								<button class="btn btn-primary" type="button" onclick="addCourseTimes();">+{:L('COURSE_ADD_TEACHERING_TIME')}</button>
+							</td> -->
+							<td>
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>{:L('COURSE_WEEK')}</th>
+											<th>{:L('COURSE_TIME_ZONES')}</th>
+											<th width="30">{:L('ACTIONS')}</th>
+										</tr>
+									</thead>
+									<tbody>
+										<volist name="course_times" id="vo">
+											<php>
+												$time_zone_ids = explode(',',$vo['time_zone_ids']);
+												$count = count($time_zone_ids);
+											</php>
+											<tr>
+												<input type="hidden" name="time_zone_count[]" value="{$count}">
+												<input type="hidden" name="course_time_id[]" value="{$vo.id}">
+												<td>
+													<select name="course_week[]" style="width:100px;">
+														<option value="">Weekdays</option>
+														<option value="1" <?php echo $vo['course_week'] == 1 ? 'selected' : '' ?> >Monday</option>
+														<option value="2" <?php echo $vo['course_week'] == 2 ? 'selected' : '' ?>>Tuesday</option>
+														<option value="3" <?php echo $vo['course_week'] == 3 ? 'selected' : '' ?>>Wednesday</option>
+														<option value="4" <?php echo $vo['course_week'] == 4 ? 'selected' : '' ?>>Thursday</option>
+														<option value="5" <?php echo $vo['course_week'] == 5 ? 'selected' : '' ?>>Friday</option>
+													</select>
+												</td>
+												<td>
+													<volist name="time_zones" id="vo">
+														<php>$check_yes = "";</php>
+														<volist name="time_zone_ids" id="tz">
+															<if condition="$vo['id'] eq $tz">
+																<php>$check_yes = "checked";</php>
+															</if>
+														</volist>
+														<span style="font-size:14px;display:inline-block;width:19%">
+															<input type="checkbox" name="timezones_id[]" value="{$vo.id}" {$check_yes} onclick="javascript:$(this).parent().parent().parent().find('input:first').val($(this).parent().parent().find('input:checked').length);"/> {$vo.time_zones} &nbsp;
+														</span>
+													</volist>
+												</td>
+												<td><a href="javascript:;" onclick="if ($(this).parent().parent().siblings().length <= 0) { alert('{:L('DELETE_LAST_MESSAGE')}'); return false; } if (window.confirm('{:L('DELETE_CONFIRM_MESSAGE')}')) $(this).parent().parent().remove();">{:L('DELETE')}</a></td>
+											</tr>
+										</volist>
+										<empty name="course_times">
+											<tr>
+												<input type="hidden" name="time_zone_count[]" value="">
+												<input type="hidden" name="course_time_id[]" value="">
+												<td>
+													<select name="course_week[]" style="width:100px;">
+														<option value="">{:L('PLEASE_SELECT')}</option>
+														<option value="1">Monday</option>
+														<option value="2">Tuesday</option>
+														<option value="3">Wednesday</option>
+														<option value="4">Thursday</option>
+														<option value="5">Friday</option>
+													</select>
+												</td>
+												<td>
+													<volist name="time_zones" id="vo">
+														<span style="font-size:14px;display:inline-block;">
+															<input type="checkbox" name="timezones_id[]" value="{$vo.id}" {$check_yes} onclick="javascript:$(this).parent().parent().parent().find('input:first').val($(this).parent().parent().find('input:checked').length);"/> {$vo.time_zones} &nbsp;
+														</span>
+													</volist>
+												</td>
+												<td><a href="javascript:;" onclick="if ($(this).parent().parent().siblings().length <= 0) { alert('{:L('DELETE_LAST_MESSAGE')}'); return false; } if (window.confirm('{:L('DELETE_CONFIRM_MESSAGE')}')) $(this).parent().parent().remove();">{:L('DELETE')}</a></td>
+											</tr>
+										</empty>
+									</tbody>
+								</table>
+								<button class="btn btn-primary" type="button" onclick="$(this).prev().find('tbody tr:last').clone(true).appendTo($(this).prev().find('tbody')).find('input:first').val('');$(this).prev().find('tbody tr:last').find('input').attr('checked',false);$(this).prev().find('tbody tr:last').find('select').val('');$(this).prev().find('tbody tr:last').find('input:eq(1)').val('');">+{:L('COURSE_ADD_TEACHERING_TIME')}</button>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('COURSE_REQUIREMENT_KEY')}</th>
+							<td>
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>{:L('COURSE_REQUIREMENT')}</th>
+											<th>{:L('COURSE_REQUIREMENT_DESCRIPTION')}</th>
+											<th>{:L('COURSE_PERCENT_OF_GRADE')}(%)</th>
+											<th>{:L('COURSE_TYPE')}</th>
+											<th>{:L('COURSE_POINTS_SYSTEM')}</th>
+											<th width="30">{:L('ACTIONS')}</th>
+										</tr>
+									</thead>
+									<tbody>
+										<volist name="course_requirements" id="vo">
+											<tr>
+												<input type="hidden" name="requirement_id[]" value="{$vo.id}">
+												<td><input type="text" name="requirement_key[]" value="{$vo.requirement_key}" style="width:50px;"/></td>
+												<td><input type="text" name="requirement_description[]" value="{$vo.requirement_description}" style="width:200px;"/></td>
+												<td><input type="number" name="requirement_grade_percent[]" value="{$vo.requirement_grade_percent}" style="width:100px;"/></td>
+												<td>
+													<select name="requirement_type[]" style="width:100px;">
+														<option value="">{:L('PLEASE_SELECT')}</option>
+														<option value="1" <?php echo $vo['requirement_type'] == 1 ? 'selected' : '' ?> >{:L('COURSE_NORMAL')}</option>
+														<option value="2" <?php echo $vo['requirement_type'] == 2 ? 'selected' : '' ?> >{:L('COURSE_ATTENDANCE')}</option>
+													</select>
+												</td>
+												<td>
+													<select name="requirement_points_system[]" style="width:100px;">
+														<option value="">{:L('PLEASE_SELECT')}</option>
+														<option value="1" <?php echo $vo['requirement_points_system'] == 1 ? 'selected' : '' ?> >{:L('COURSE_HUNDRED_MARK_SYSTEM')}</option>
+														<option value="10" <?php echo $vo['requirement_points_system'] == 10 ? 'selected' : '' ?> >{:L('COURSE_TEN_POINTS_SYSTEM')}</option>
+													</select>
+												</td>
+												<td>
+													<a href="javascript:;" onclick="if ($(this).parent().parent().siblings().length <= 0) { alert('{:L('DELETE_LAST_MESSAGE')}'); return false; } if (window.confirm('{:L('DELETE_CONFIRM_MESSAGE')}')) $(this).parent().parent().remove();">{:L('DELETE')}</a>
+												</td>
+											</tr>
+										</volist>
+										<empty name="course_requirements">
+											<tr>
+												<td><input type="text" name="requirement_key[]" value="" style="width:50px;"/></td>
+												<td><input type="text" name="requirement_description[]" value="" style="width:200px;"/></td>
+												<td><input type="number" name="requirement_grade_percent[]" value="" style="width:100px;"/></td>
+												<td>
+													<select name="requirement_type[]" style="width:100px;">
+														<option value="">{:L('PLEASE_SELECT')}</option>
+														<option value="1">{:L('COURSE_NORMAL')}</option>
+														<option value="2">{:L('COURSE_ATTENDANCE')}</option>
+													</select>
+												</td>
+												<td>
+													<select name="requirement_points_system[]" style="width:100px;">
+														<option value="">{:L('PLEASE_SELECT')}</option>
+														<option value="1">{:L('COURSE_HUNDRED_MARK_SYSTEM')}</option>
+														<option value="10">{:L('COURSE_TEN_POINTS_SYSTEM')}</option>
+													</select>
+												</td>
+												<td><a href="javascript:;" onclick="if ($(this).parent().parent().siblings().length <= 0) { alert('{:L('DELETE_LAST_MESSAGE')}'); return false; } if (window.confirm('{:L('DELETE_CONFIRM_MESSAGE')}')) $(this).parent().parent().remove();">{:L('DELETE')}</a></td>
+											</tr>
+										</empty>
+									</tbody>
+								</table>
+								<button class="btn btn-primary" type="button" onclick="$(this).prev().find('tbody tr:last').clone(true).appendTo($(this).prev().find('tbody')).find('input').val('');">+{:L('COURSE_ADD_REQUIREMENT')}</button>
+								<span class="form-required" style="color:red;"> Tip:课程要求为非必填项，但是一经填写，五项都不能为空。</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('COURSE_DOWNLOAD_URL')}</th>
+							<td>
+								<input type="text" style="width: 500px;" id="course_download_url" name="course_download_url" value="{$course_download_url}" placeholder="{:L('COURSE_DOWNLOAD_URL')}"/>
+								<span class="form-required" style="color:red;"> Tip:网址前必须带上http://或者https://</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('COURSE_ABSTRACT')}</th>
+							<td>
+								<textarea name="course_description" id="course_description" style="width: 98%; height: 50px;" placeholder="{:L('COURSE_ABSTRACT')}">{$course_description}</textarea>
+							</td>
+						</tr>
+						<tr>
+							<th>{:L('COURSE_DETAILS')}</th>
+							<td>
+								<script type="text/plain" id="course_content" name="course_content">{$course_content}</script>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<script type="text/javascript">
+					function addCourseTimes() {
+						var addCourseTime = '<tr>';
+						addCourseTime += '<td><input type="text" name="course_start_time[]" value="" class="js-datetime data" /></td>';
+						addCourseTime += '<td><input type="text" name="course_end_time[]" value="" class="js-datetime data" /></td>';
+						addCourseTime += '<td><a href="javascript:;" onclick="deleteCourseTime(this)">{:L("DELETE")}</a></td>';
+						addCourseTime += '</tr>';
+						//alert(addscene);
+						$('#course_time').append(addCourseTime);
+						//日期+时间选择器
+						var dateTimeInput = $("input.js-datetime");
+						if (dateTimeInput.length) {
+							Wind.use('datePicker', function () {
+								dateTimeInput.datePicker({
+									time: true
+								});
+							});
+						}
+					}
+					function deleteCourseTime(obj) {
+						var tb = obj.parentNode;//当前表格
+						var row = obj.parentNode.parentNode; //A标签所在行
+						var rows =  $("#course_time").find("tr").length;//总行数
+						var rowIndex = row.rowIndex; //A标签所在行下标
+						if (rows <= 1) { 
+							alert("{:L('DELETE_LAST_MESSAGE')}"); return false; 
+						} 
+						if (window.confirm("{:L('DELETE_CONFIRM_MESSAGE')}")) row.remove(); 
+					}
+				</script>
+				<div class="span3">
+					<table class="table table-bordered">
+						<tr>
+							<th>{:L('POSTER')}(500*500)</th>
+						</tr>
+						<tr>
+							<td>
+								<div style="text-align: center;">
+									<php>$smeta=json_decode($smeta,true);</php>
+									<input type="hidden" name="smeta[thumb]" id="thumb" value="{$smeta.thumb|default=''}">
+									<a href="javascript:upload_one_image('{:L('IMAGE_UPLOAD')}','#thumb');">
+										<if condition="empty($smeta['thumb'])">
+											<img src="__TMPL__Public/assets/images/default-thumbnail.png" id="thumb-preview" width="135" style="cursor: hand"/>
+										<else />
+											<img src="{:sp_get_image_preview_url($smeta['thumb'])}" id="thumb-preview" width="135" style="cursor: hand"/>
+										</if>
+									</a>
+									<input type="button" class="btn btn-small" onclick="$('#thumb-preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="{:L('CANCEL')}">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>{:L('PUBDATE')}</th>
+						</tr>
+						<tr>
+							<td>
+								<input type="text" id="course_modify_time" name="course_modify_time" value="{$course_modify_time}" class="js-datetime">
+							</td>
+						</tr>
+						<tr>
+							<th>{:L('STATUS')}</th>
+						</tr>
+						<tr>
+							<td>
+								<php>
+									$status_yes=$course_status==1?"checked":"";
+									$status_no=$course_status==0?"checked":"";
+									$recommended_yes=$course_recommended==1?"checked":"";
+									$recommended_no=$course_recommended==0?"checked":""; 
+								</php>
+								<label class="radio"><input type="radio" name="course_status" value="1" {$status_yes}>{:L('DISPLAY')}</label>
+								<label class="radio"><input type="radio" name="course_status" value="0" {$status_no}>{:L('HIDE')}</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label class="radio"><input type="radio" name="course_recommended" value="1" {$recommended_yes}>{:L('RECOMMEND')}</label>
+								<label class="radio"><input type="radio" name="course_recommended" value="0" {$recommended_no}>{:L('NOT_RECOMMENDED')}</label>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="form-actions">
+				<button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript">
+		//编辑器路径定义
+		var editorURL = GV.WEB_ROOT;
+		
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			
+			$('#change_text').click(function(){
+				$('#radio_style').addClass('hide');
+				$('#text_style').removeClass('hide');
+				$('#select_style').val(2);
+			});
+			$('#change_radio').click(function(){
+				$('#text_style').addClass('hide');
+				$('#radio_style').removeClass('hide');
+				$('#select_style').val(1);
+			});
+			
+			$(".js-ajax-close-btn").on('click', function(e) {
+				e.preventDefault();
+				Wind.use("artDialog", function() {
+					art.dialog({
+						id : "question",
+						icon : "question",
+						fixed : true,
+						lock : true,
+						background : "#CCCCCC",
+						opacity : 0,
+						content : "{:L('CLOSE_PAGE')}",
+						ok : function() {
+							setCookie("refersh_time", 1);
+							window.close();
+							return true;
+						}
+					});
+				});
+			});
+			/////---------------------
+			Wind.use('validate','ajaxForm','artDialog',function() {
+				//编辑器
+				editorcontent = new baidu.editor.ui.Editor();
+				editorcontent.render('course_content');
+				try {
+					editorcontent.sync();
+				} catch (err) {}
+				//增加编辑器验证规则
+				jQuery.validator.addMethod('editorcontent',function() {
+					try {
+						editorcontent.sync();
+					} catch (err) {}
+					return editorcontent.hasContents();
+				});
+				
+				var form = $('form.js-ajax-forms');
+				//ie处理placeholder提交问题
+				if ($.browser && $.browser.msie) {
+					form.find('[placeholder]').each(function() {
+						var input = $(this);
+						if (input.val() == input
+								.attr('placeholder')) {
+							input.val('');
+						}
+					});
+				}
+				//表单验证开始
+				form.validate({
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//是否在敲击键盘时验证
+					onkeyup : false,
+					//当鼠标掉级时验证
+					onclick : false,
+					//验证错误
+					showErrors : function(errorMap,errorArr) {
+						//errorMap {'name':'错误信息'}
+						//errorArr [{'message':'错误信息',element:({})}]
+						try {
+							$(errorArr[0].element).focus();
+							art.dialog({
+								id : 'error',
+								icon : 'error',
+								lock : true,
+								fixed : true,
+								background : "#CCCCCC",
+								opacity : 0,
+								content : errorArr[0].message,
+								cancelVal : "{:L('OK')}",
+								cancel : function() {
+									$(errorArr[0].element).focus();
+								}
+							});
+						} catch (err) {}
+					},
+					//验证规则
+					rules : {
+						'course_code' : { required : 1 },
+						'course_name' : { required : 1 },
+						'course_academic_hour' : { required : 1 },
+						'course_credit' : { required : 1 },
+						'course_address' : { required : 1 },
+						'timezones_id[]' : { required : 1 }
+					},
+					//验证未通过提示消息
+					messages : {
+						'course_code' : { required : "{:L('COURSE_CODE')}" },
+						'course_name' : { required : "{:L('COURSE_NAME')}" },
+						'course_academic_hour' : { required : "{:L('COURSE_CLASS_HOUR')}" },
+						'course_credit' : { required : "{:L('COURSE_CREDIT')}" },
+						'course_address' : { required : "{:L('COURSE_ADDRESS')}" },
+						'timezones_id[]' : { required : "{:L('COURSE_TIME_ZONES')}" }
+					},
+					//给未通过验证的元素加效果,闪烁等
+					highlight : false,
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//验证通过，提交表单
+					submitHandler : function(forms) {
+						$(forms).ajaxSubmit({
+							url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+							dataType : 'json',
+							beforeSubmit : function(arr,$form,options) {
+	
+							},
+							success : function(data,statusText,xhr,$form) {
+								if (data.status) {
+									setCookie("refersh_time",1);
+									//添加成功
+									Wind.use("artDialog",function() {
+										art.dialog({
+											id : "succeed",
+											icon : "succeed",
+											fixed : true,
+											lock : true,
+											background : "#CCCCCC",
+											opacity : 0,
+											content : data.info,
+											button : [
+												{
+													name : "{:L('REEDIT')}",
+													callback : function() {
+														reloadPage(window);
+														return true;
+													},
+													focus : true
+												},
+												{
+													name : "{:L('RETURN')}",
+													callback : function() {
+														location.href = "javascript:history.back(-1);";
+														return true;
+													}
+												}
+											]
+										});
+									});
+								} else {
+									alert(data.info);
+								}
+							}
+						});
+					}
+				});
+			});
+		////-------------------------
+		});
+	</script>
+</body>
+</html>

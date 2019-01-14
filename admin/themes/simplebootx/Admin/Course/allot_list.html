@@ -1,0 +1,94 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<div class="form-actions" >
+			<span style="color:blue;"> {$term_year_sess} </span>{:L('COURSE_ALLOT_LIST_HEAD')} >> &nbsp;
+			<a class="btn btn-success btn-small" href="{:U('course/allot_list',array('cmd' => 'export','year' => str_replace('&','*',trim($year)),'term' => str_replace('&','*',trim($term)),'session' => str_replace('&','*',trim($session)),'program' => str_replace('&','*',trim($program))))}">{:L('EXPORT')}</a>
+		</div>
+		<form class="js-ajax-form" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="30">{:L('NO')}</th>
+						<th width="100">{:L('COURSE_CODE')}</th>
+						<th width="100">{:L('COURSE_NAME')}</th>
+						<th width="100">{:L('COURSE_CATEGORY')}</th>
+						<th width="100">{:L('COURSE_ADDRESS')}</th>
+						<th width="100">{:L('COURSE_TEACHERING_TIME')}</th>
+						<th width="70">{:L('COURSE_STUDENT_SIGNUP_INFO')}</th>
+						<th width="50">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<php>$index=0;</php>
+				<volist name="term_courses" id="vo">
+					<php>$index++;</php>
+					<tr>
+						<td>{$index}</td>
+						<td>{$vo.course_code}</td>
+						<td>{$vo.course_name}</td>
+						<td>
+							<if condition="$vo['course_type'] eq 1">{:L('COURSE_SPECIALIZED')}</if>
+							<if condition="$vo['course_type'] eq 2">{:L('COURSE_CHINESE')}</if>
+						</td>
+						<td>{$vo.course_address}</td>
+						<td>
+							<php>
+								$course_times = D('CourseTime')->where(array('course_id' => $vo['id']))->select();
+							</php>
+							<volist name="course_times" id="course_time">
+								<if condition="$course_time.course_week eq 0">Weekdays</if>
+								<if condition="$course_time.course_week eq 1">Monday</if>
+								<if condition="$course_time.course_week eq 2">Tuesday</if>
+								<if condition="$course_time.course_week eq 3">Wednesday</if>
+								<if condition="$course_time.course_week eq 4">Thursday</if>
+								<if condition="$course_time.course_week eq 5">Friday</if>
+								<php>$time_zones = D('TimeZones')->where(array('id' => array('in',$course_time['time_zone_ids'])))->order('time_zones asc')->select();</php>
+								<volist name="time_zones" id="time_zone">
+									&nbsp;{$time_zone.time_zones} &nbsp;
+								</volist>
+								<br>
+							</volist>
+						</td>
+						<php>
+							$where = array();
+							$where['csr.course_id'] = $vo['id'];
+							$where['csr.course_student_status'] = 1;
+							if($year) $where['u.year'] = $year;
+							if($term) $where['u.term'] = $term;
+							if($sess) $where['u.session'] = $sess;
+							if($program) $where['u.program'] = $program;
+							$course_students = D('Users')->alias('u')->join('__COURSE_STUDENT_RELATIONSHIP__ csr ON csr.student_id=u.id')->where($where)->select();
+							$course_student_count = count($course_students);
+						</php>
+						<notempty name="course_students">
+							<td><a class="btn btn-info btn-small" target="_blank" href="{:U('portal/course/roster',array('id' => $vo['id'], 'term' => str_replace('&','*',trim($term)), 'year' => str_replace('&','*',trim($year)), 'session' => str_replace('&','*',trim($sess)), 'program' => str_replace('&','*',trim($program))))}">{:L('VIEW')}( {$course_student_count} )</a></td>
+						<else/>
+							<td>{:L('NO_DATA')}</td>
+						</notempty>
+						<td><a href="javascript:open_iframe_dialog('{:U('mailer/allotlist_send_mails',array('id' => $vo['id'], 'term' => str_replace('&','*',trim($term)), 'year' => str_replace('&','*',trim($year)), 'session' => str_replace('&','*',trim($sess)), 'program' => str_replace('&','*',trim($program))))}','{:L('SEND_MAIL')}')" class="btn btn-warning btn-small">{:L('SEND_MAIL')}</a></td>
+					</tr>
+				</volist>
+			</table>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+		});
+	</script>
+</body>
+</html>

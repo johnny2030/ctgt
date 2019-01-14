@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>Courses {$site_name}</title>
+		<tc_include file="Public:head" />
+	</head>
+
+	<body>
+		<div id="con">
+			<tc_include file="Public:nav" />
+			<tc_include file="Public:subpage_banner" />
+			
+			<!--Breadcrumb-->
+			<div class="page-header title-area style-1">
+				<div class="breadcrumb-area">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<nav class="breadcrumb">
+									<a class="home" href="__ROOT__/" ><span>Home</span></a>
+									<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>
+									<span>Course Lists</span>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Breadcrumb  end-->
+			
+			<!--page-content-->
+			<div class="pagewrapper">
+				<div class="container">
+					<div class="all-project">
+						<div class="row">
+							<div class="list-project">
+								<volist name="list" id="vo">
+									<php>$smeta = json_decode($vo['smeta'],true);</php>
+									<div class="project-wrapper col-xs-12 col-sm-6 col-md-4">
+										<div class="project-thumbnail">
+											<a href="{:U('course/detail',array('id'=>$vo['id']))}" class="pro-link"></a>
+											<a href="{:U('course/detail',array('id'=>$vo['id']))}">
+												<notempty name="smeta.thumb">
+													<img src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="{$vo.course_name}" />
+												<else/>
+													<img src="__TMPL__Public/assets/images/default-thumbnail.png" alt="{$vo.course_name}" />
+												</notempty>
+											</a>
+										</div>
+										<div class="project-summary">
+											<h2 class="project-title"><a href="{:U('course/detail',array('id'=>$vo['id']))}">{$vo.course_name}</a></h2>
+											<div class="project-cat">
+												<a href="{:U('course/detail',array('id'=>$vo['id']))}" class="cat">Teacher:{$vo.full_name}</a>, <a href="{:U('course/detail',array('id'=>$vo['id']))}" class="cat">Address:{$vo.course_address}</a>
+											</div>
+										</div>
+									</div>
+								</volist>
+								<!-- #project-## -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<nav>
+					<ul class="pager">
+						{$page}
+					</ul>
+				</nav>
+			</div>
+			<!--page-content end-->
+
+			<tc_include file="Public:footer" />
+			<div class="bg"></div>
+		</div>
+		<tc_include file="Public:scripts" />
+	</body>
+</html>

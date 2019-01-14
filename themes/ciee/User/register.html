@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>{$site_name}</title>
+		<meta name="keywords" content="{$site_seo_keywords}" />
+		<meta name="description" content="{$site_seo_description}">
+		<meta name="author" content="ccdc">
+		<tc_include file="Public:head" />
+	</head>
+	<body>
+		<tc_include file="Public:nav" />
+		<tc_include file="Public:subpage_banner" />
+		<!--content-->
+		<div class="container">
+			<div class="my-page">
+				<div class="my-title">
+					<h3>REGISTER</h3>
+				</div>
+				<div class="my-content" id="signin-content">
+					<div class="row">
+						<div class="col-md-12">
+						
+							<tc_include file="Public:form_result" />
+							
+							<form id="registerForm" method="post" class="form-horizontal" action="{:leuu('user/register/index')}">
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="username1"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></label>
+									<div class="col-sm-6">
+										<input type="text" class="form-control" id="username1" name="username1" placeholder="Login name" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="password1"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></label>
+									<div class="col-sm-6">
+										<input type="password" class="form-control" id="password1" name="password1" placeholder="Password" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="confirm_password"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></label>
+									<div class="col-sm-6">
+										<input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm password" />
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-3"></div>
+									<div class="col-sm-2 col-xs-6">
+										<input type="radio" id="user_type" name="user_type" value="3" checked/>User
+									</div>
+									<div class="col-sm-2 col-xs-6">
+										<input type="radio" id="user_type" name="user_type" value="1"/>Teacher
+									</div>
+									<div class="col-sm-5"></div>
+								</div>
+								<div class="form-group">
+									<div class="col-sm-6 col-sm-offset-3">
+										<div class="checkbox">
+											<label>
+												<input type="checkbox" id="agree" name="agree" value="agree" />Please agree to our <a href="{:leuu('portal/page/index',array('id'=>12))}" target="_blank">policy</a>
+											</label>
+										</div>
+									</div>
+								</div>
+								
+								<div class="form-group text-center">
+									<div class="col-sm-12">
+										<button type="submit" class="btn btn-lg btn-primary center-block">Register</button>
+										<p>*已有账户，点击<a href="{:leuu('user/login/index')}">立即登录</a></p>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<img src="__TMPL__Public/img/logo-sa.png" class="center-block" />
+		</div>
+		<!-- FOOTER -->
+		<tc_include file="Public:footer" />
+		<tc_include file="Public:scripts" />
+	</body>
+</html>

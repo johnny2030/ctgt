@@ -1,0 +1,84 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('log/index')}">{:L('LOG_LIST')}</a></li>
+		</ul>
+		<form class="well form-search" method="post" id="cid-form" >
+			<input type="text" name="keyword" style="width: 200px;" value="{$keyword}" placeholder="{:L('LOG_OPERATER')}">
+			<button class="btn btn-primary">{:L('SEARCH')}</button>
+			<a class="btn btn-danger" href="{:U('log/index')}">{:L('EMPTY')}</a>
+		</form>
+		<form class="js-ajax-form" method="post">
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('log/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+			</div> 
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">{:L('ID')}</th>
+						<th width="100">{:L('LOG_SERVICE_NAME')}</th>
+						<th width="100">{:L('LOG_SERVICE_KEY')}</th>
+						<th width="50">{:L('LOG_OPERATER')}</th>
+						<th width="100">{:L('LOG_OPERATION_TIME')}</th>
+						<th width="100">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<foreach name="logs" item="vo">
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+					<td>{$vo.id}</td>
+					<td>{$vo.menu_name}</td>
+					<td>{$vo.object}</td>
+					<td>{$vo.user_login}</td>
+					<td>{:date('Y-m-d H:i',$vo['last_time'])}</td>
+					<td>
+						<if condition="$vo['type'] eq 3">
+							<a href="{:U($vo['menu_model'].'/'.$vo['menu_action'],array('id'=>$vo['id'],'object'=>$vo['object'],'restore'=>1))}">{:L('RESTORE')}</a>
+							<a href="{:U($vo['menu_model'].'/'.$vo['menu_action'],array('id'=>$vo['id'],'object'=>$vo['object'],'complete_delete'=>1))}" class="js-ajax-delete">{:L('COMPLETE_DELETE')}</a>
+						<elseif condition="$vo['type'] eq 4"/>
+							{:L('RESTORED')}
+						<elseif condition="$vo['type'] eq 5"/>
+							{:L('COMPLETE_DELETED')}
+						<else/>
+							--
+						</if>
+						<br />
+					</td>
+				</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">{:L('ID')}</th>
+						<th width="100">{:L('LOG_SERVICE_NAME')}</th>
+						<th width="100">{:L('LOG_SERVICE_KEY')}</th>
+						<th width="50">{:L('LOG_OPERATER')}</th>
+						<th width="100">{:L('LOG_OPERATION_TIME')}</th>
+						<th width="100">{:L('ACTIONS')}</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('log/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+			</div> 
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+	</script>
+</body>
+</html>

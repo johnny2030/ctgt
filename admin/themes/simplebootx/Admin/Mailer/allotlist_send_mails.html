@@ -1,0 +1,214 @@
+<admintpl file="header" />
+<style>
+<!--
+form {margin-bottom:0;}
+.table {margin-bottom:1px;}
+.form-actions {margin-top:0;margin-bottom:0;}
+.wrap {padding-bottom:0;padding-top:10px;}
+-->
+</style>
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<form method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+			<input type="hidden" id="course_id" name="course_id" value="{$course_id}"/>
+			<input type="hidden" name="term" value="{$term}"/>
+			<input type="hidden" name="year" value="{$year}"/>
+			<input type="hidden" name="sess" value="{$sess}"/>
+			<input type="hidden" name="program" value="{$program}"/>
+			<div class="row-fluid">
+				<div class="span9">
+					<table class="table table-bordered">
+						<tr>
+							<th width="100">{:L('INBOX')}</th>
+							<td>
+								<!-- <notempty name="staff_id">
+									<span style="font-size:14px;display:inline-block;" title="{$staff_name}">
+										<input type="checkbox" name="email[]" value="{$staff_id}" /> CIEE Staff &nbsp;
+									</span>
+								</notempty> -->
+								<notempty name="teacher_ids">
+									<span style="font-size:14px;display:inline-block;" title="{$teacher_names_str}">
+										<input type="radio" name="inbox" value="{$teacher_ids}" checked/> CIEE Teacher
+									</span>
+								</notempty>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('TITLE')}</th>
+							<td>
+								<input type="text" style="width: 400px;" id="subject" name="subject" value="{$course.course_name}" placeholder="{:L('TITLE')}"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('CONTENT')}</th>
+							<td colspan="3">
+								<script type="text/plain" id="content" name="content" style="height: 200px;"></script>
+								<span class="form-required" style="color:red;"> *</span> {:L('SENDER_NAME')} : {$email_sender} < {$email_address} >
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="span3">
+					<table class="table table-bordered">
+						<tr>
+							<th>{:L('TEMPLATE_SELECTION')}</th>
+						</tr>
+						<tr>
+							<td>
+								<select id="email_model" name="email_model" style="width: 215px;" onchange="select_email();">
+									{$email_html}
+								</select>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="form-actions">
+				<button class="btn btn-primary js-ajax-submit" type="submit">{:L('SEND')}</button>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript">
+		//编辑器路径定义
+		var editorURL = GV.WEB_ROOT;
+		
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(".js-ajax-close-btn").on('click', function(e) {
+				e.preventDefault();
+				Wind.use("artDialog", function() {
+					art.dialog({
+						id : "question",
+						icon : "question",
+						fixed : true,
+						lock : true,
+						background : "#CCCCCC",
+						opacity : 0,
+						content : "{:L('CLOSE_PAGE')}",
+						ok : function() {
+							setCookie("refersh_time", 1);
+							window.close();
+							return true;
+						}
+					});
+				});
+			});
+			/////---------------------
+			Wind.use('validate','ajaxForm','artDialog',function() {
+				//编辑器
+				editorcontent = new baidu.editor.ui.Editor();
+				editorcontent.render('content');
+/* 				editorcontent.getEditor("content",{
+					toolbars: [[
+						'fullscreen', 'source', '|', 'undo', 'redo', '|',
+						'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'superscript', 'subscript', 'removeformat', 'formatmatch', 'autotypeset', 'blockquote', 'pasteplain', '|', 'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', 'selectall', 'cleardoc', '|',
+						'rowspacingtop', 'rowspacingbottom', 'lineheight', '|'
+					]]
+				});
+ */				try {
+					editorcontent.sync();
+				} catch (err) {}
+				//增加编辑器验证规则
+				jQuery.validator.addMethod('editorcontent',function() {
+					try {
+						editorcontent.sync();
+					} catch (err) {}
+					return editorcontent.hasContents();
+				});
+
+				var form = $('form.js-ajax-forms');
+				//ie处理placeholder提交问题
+				if ($.browser && $.browser.msie) {
+					form.find('[placeholder]').each(function() {
+						var input = $(this);
+						if (input.val() == input
+								.attr('placeholder')) {
+							input.val('');
+						}
+					});
+				}
+				//表单验证开始
+				form.validate({
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//是否在敲击键盘时验证
+					onkeyup : false,
+					//当鼠标掉级时验证
+					onclick : false,
+					//验证错误
+					showErrors : function(errorMap,errorArr) {
+						//errorMap {'name':'错误信息'}
+						//errorArr [{'message':'错误信息',element:({})}]
+						try {
+							$(errorArr[0].element).focus();
+							art.dialog({
+								id : 'error',
+								icon : 'error',
+								lock : true,
+								fixed : true,
+								background : "#CCCCCC",
+								opacity : 0,
+								content : errorArr[0].message,
+								cancelVal : "{:L('OK')}",
+								cancel : function() {
+									$(errorArr[0].element).focus();
+								}
+							});
+						} catch (err) {}
+					},
+					//验证规则
+					rules : {
+						'inbox' : { required : 1 },
+						'subject' : { required : 1 },
+						'content' : {required : 1}
+					},
+					//验证未通过提示消息
+					messages : {
+						'inbox' : { required : "{:L('INBOX')} {:L('NOT_NULL')}" },
+						'subject' : { required : "{:L('TITLE')} {:L('NOT_NULL')}" },
+						'content' : { required : "{:L('CONTENT')} {:L('NOT_NULL')}" }
+					},
+					//给未通过验证的元素加效果,闪烁等
+					highlight : false,
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//验证通过，提交表单
+					submitHandler : function(forms) {
+						$(forms).ajaxSubmit({
+							url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+							dataType : 'json',
+							beforeSubmit : function(arr,$form,options) {
+								sendLoading();//发送邮件等待
+							},
+							success : function(data,statusText,xhr,$form) {
+								removeSendLoading();//移出发送邮件等待div
+								if (data.status) {
+									setCookie("refersh_time",1);
+									sendSuccess();//发送邮件成功
+								} else {
+									//alert(data.info);
+									sendFailed();//发送邮件失败
+								}
+							}
+						});
+					}
+				});
+			});
+		////-------------------------
+		});
+		function select_email() {
+			var email_id = $('#email_model option:selected') .val();
+			$.post('{:U("mailer/select_email")}', {email_id: email_id}, function(data){
+				editorcontent.setContent(data.email_content);
+			});
+		}
+	</script>
+</body>
+</html>

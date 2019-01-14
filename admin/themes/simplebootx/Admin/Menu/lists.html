@@ -1,0 +1,59 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('menu/index')}">{:L('ADMIN_MENU_INDEX')}</a></li>
+			<li><a href="{:U('menu/add')}">{:L('ADMIN_MENU_ADD')}</a></li>
+			<li class="active"><a href="{:U('menu/lists')}">{:L('ADMIN_MENU_LISTS')}</a></li>
+		</ul>
+		<form class="form-horizontal js-ajax-form" action="{:U('Menu/listorders')}" method="post">
+			<div class="table-actions">
+				<a class="btn btn-primary btn-small js-ajax-dialog-btn" href="{:U('menu/restore_menu')}" data-msg="{:L('MENU_RESTORE_MSG')}">{:L('MENU_RESTORE')}</a>
+				<a class="btn btn-primary btn-small js-ajax-dialog-btn" href="{:U('menu/backup_menu')}" data-msg="{:L('MENU_BACKUP_MSG')}">{:L('MENU_BACKUP')}</a>
+				<a class="btn btn-primary btn-small js-ajax-dialog-btn" href="{:U('menu/export_menu_lang')}" data-msg="{:L('EXPORT_MENU_LANG_MSG')}">{:L('EXPORT_MENU_LANG')}</a>
+				<a class="btn btn-warning btn-small" href="{:U('menu/getactions')}">{:L('IMPORT_NEW_MENU')}</a>
+			</div>
+			<div class="alert alert-warning" style="margin: 0 0 5px 0;">
+				{:L('WARNING_MSG')}
+			</div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="50">ID</th>
+						<th>{:L('MENU_NAME')}</th>
+						<th width="40">{:L('STATUS')}</th>
+						<th width="80">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<foreach name="menus" item="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td>{$vo.name}:{$vo.app}/{$vo.model}/{$vo.action}</td>
+					<td>
+					<if condition="$vo['status'] eq 1"> 
+					{:L('DISPLAY')}
+					<else /> 
+					{:L('HIDE')}
+					</if>
+					</td>
+					<td>
+						<a href="{:U('menu/edit',array('id'=>$vo['id']))}">{:L('EDIT')}</a> | 
+						<a class="js-ajax-delete" href="{:U('menu/delete',array('id'=>$vo['id']))}" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</a>
+					</td>
+				</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						<th width="50">ID</th>
+						<th>{:L('MENU_NAME')}</th>
+						<th width="40">{:L('STATUS')}</th>
+						<th width="80">{:L('ACTIONS')}</th>
+					</tr>
+				</tfoot>
+			</table>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

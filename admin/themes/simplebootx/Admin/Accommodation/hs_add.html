@@ -1,0 +1,508 @@
+<admintpl file="header" />
+<style type="text/css">  
+	body, html{width: 100%;height: 100%;margin:0;font-family:"微软雅黑";}
+	#container {height: 400px;}
+	dl,dt,dd,ul,li{margin:0;padding:0;list-style:none;}
+	dt{font-size:14px;font-family:"微软雅黑";font-weight:bold;border-bottom:1px dotted #000;padding:5px 0 5px 5px;margin:5px 0;}
+	dd{padding:5px 0 0 5px;}
+	li{line-height:28px;}
+	ul.BMapLib_nav_tab_content li{padding:0;}
+	ul.BMapLib_nav_tab_content li input {padding:0;}
+	.pic-list li {margin-bottom: 5px;}
+	.btn-group {border: 1px solid #e9eef3;border-radius: 3px;}
+	.btn-group.open .btn.dropdown-toggle {background-color:#fff;}
+	.btn-group>.btn {background-color:#fff;color:#a6b3b9;}
+	.caret {border-top: 4px solid #a6b3b9;}
+	.dropdown-menu {background-color:#fff;}
+	.multiselect-container>li>a>label.checkbox {margin-left:0;color:#a6b3b9;}
+	.multiselect-container>li.active>a>label.checkbox {margin-left:0;color:#fff;}
+</style>
+<link rel="stylesheet" href="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css" />
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=8iDO1cf5Ou8CDVHARnj8lnhw4n4jVxmN"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.js"></script>
+<script type="text/html" id="photos-item-wrapper">
+	<li id="savedimage{id}">
+		<input id="photo-{id}" type="hidden" name="photos_url[]" value="{filepath}"> 
+		<input id="photo-{id}-name" type="text" name="photos_alt[]" value="{name}" style="width: 160px;" title="图片名称">
+		<img id="photo-{id}-preview" src="{url}" style="height:36px;width: 36px;" onclick="parent.image_preview_dialog(this.src);">
+		<a href="javascript:upload_one_image('图片上传','#photo-{id}');">替换</a>
+		<a href="javascript:(function(){$('#savedimage{id}').remove();})();">移除</a>
+	</li>
+</script>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+	<ul class="nav nav-tabs">
+		<li><a href="{:U('accommodation/housing',array('check' => 2))}">{:L('ACCOMMODATION_INFO_LIST')}</a></li>
+		<li class="active"><a href="javascript:void(0);">{:L('ACCOMMODATION_HOST_FAMILY_ADD')}</a></li>
+	</ul>
+	<form method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+		<div class="row-fluid">
+			<div class="span7">
+				<table class="table table-bordered">
+					<tr></tr>
+					<tr>
+						<th width="100">Basic Info</th>
+						<td>
+							<table class="table table-bordered">
+								<tr>
+									<th width="110">Term</th>
+									<td>
+										<select name="term_year[]" id="term_year" multiple="multiple">{$term_year_html}</select>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<script type="text/javascript">
+									//多选下拉框
+									//定义参数，更多参数查询bootstrap-mutiselect组件api
+									$('#term_year').multiselect({
+										nonSelectedText: "Please Select",
+										buttonWidth:"215px"
+									});
+									
+								</script>
+								<tr>
+									<th width="110">Host Family</th>
+									<td>
+										<input type="text" style="width:200px;" id="name" name="name" value="{$name}" placeholder="Host Family"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Address</th>
+									<td>
+										<input type="text" style="width:400px;" id="address" name="address" value="{$address}" placeholder="Address"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Mobile</th>
+									<td>
+										<input type="text" style="width:200px;" id="mobile" name="mobile" value="{$mobile}" placeholder="Mobile"/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Family Member:1</th>
+									<td>
+										<input type="text" style="width:200px;" id="family_member_1" name="family_member_1" value="{$family_member_1}" placeholder="Family Member:1"/>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Family Member:2</th>
+									<td>
+										<input type="text" style="width:200px;" id="family_member_2" name="family_member_2" value="{$family_member_2}" placeholder="Family Member:2"/>
+									</td>
+								</tr>
+								<!-- <tr>
+									<th width="110">{:L('ACCOMMODATION_GENDER')}</th>
+									<td>
+										<input type="radio" name="gender" value="1"/> {:L('ACCOMMODATION_GENDER_MALE')} &nbsp;
+										<input type="radio" name="gender" value="2"/> {:L('ACCOMMODATION_GENDER_FEMALE')} &nbsp;
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr> -->
+								<tr>
+									<th width="110">Zip/Postal Code</th>
+									<td>
+										<input type="text" style="width:200px;" id="postcode" name="postcode" value="{$postcode}" placeholder="Zip/Postal Code"/>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Email</th>
+									<td>
+										<input type="text" style="width:200px;" id="email" name="email" value="{$email}" placeholder="Email"/>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Phone</th>
+									<td>
+										<input type="text" style="width:200px;" id="phone" name="phone" value="{$phone}" placeholder="Phone"/>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Occupation of Parents</th>
+									<td>
+										<input type="text" style="width:200px;" id="profession" name="profession" value="{$profession}" placeholder="Occupation of Parents"/>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Ages of parent/s</th>
+									<td>
+										<input type="text" style="width:200px;" id="ages_of_parents" name="ages_of_parents" value="{$ages_of_parents}" placeholder="Ages of parent/s"/>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Ages of children in the home</th>
+									<td>
+										<input type="text" style="width:200px;" id="ages_of_children" name="ages_of_children" value="{$ages_of_children}" placeholder="Ages of children in the home"/>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Who else lives in the home</th>
+									<td>
+										<input type="text" style="width: 400px;" id="other_family" name="other_family" value="{$other_family}" placeholder="Who else lives in the home"/>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Hobbies of host family</th>
+									<td>
+										<textarea name="family_hobby" id="family_hobby" style="width: 98%; height: 50px;" placeholder="Hobbies of host family">{$family_hobby}</textarea>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Pets</th>
+									<td>
+										<input type="text" style="width: 400px;" id="pets" name="pets" value="{$pets}" placeholder="Pets"/>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Any Smokers</th>
+									<td>
+										<input type="text" style="width: 400px;" id="any_smokers" name="any_smokers" value="{$any_smokers}" placeholder="Any Smokers"/>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Usual dinner time </th>
+									<td>
+										<input type="time" id="suppertime" name="suppertime" placeholder="Usual dinner time "/>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Usual Bed time</th>
+									<td>
+										<input type="time" id="bedtime" name="bedtime" placeholder="Usual Bed time"/>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Transportation</th>
+									<td>
+										<textarea name="transportation" id="transportation" style="width: 98%; height: 50px;" placeholder="Transportation">{$transportation}</textarea>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Photo</th>
+									<td>
+										<ul id="photos" class="pic-list unstyled"></ul>
+										<a href="javascript:upload_multi_image('{:L('IMAGE_UPLOAD')}','#photos','photos-item-wrapper');" class="btn btn-small">{:L('SELECT_IMAGE')}</a>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<th width="100">HF Request</th>
+						<td>
+							<table class="table table-bordered">
+								<tr>
+									<th width="110">Number of Students this family can host </th>
+									<td>
+										<input type="number" min="1" value="1" style="width:200px;" id="number_of_people" name="number_of_people" value="{$number_of_people}" placeholder="Number of Students this family can host "/>
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Gender of students this family can host</th>
+									<td>
+										<input type="radio" name="in_gender" value="1"/> Male &nbsp;
+										<input type="radio" name="in_gender" value="2"/> Female &nbsp;
+										<input type="radio" name="in_gender" value="3"/> Both For Women & Men &nbsp;
+										<span class="form-required" style="color:red;"> *</span>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">HF Request</th>
+									<td>
+										<textarea name="hf_request" id="hf_request" style="width: 98%; height: 50px;" placeholder="HF Request">{$hf_request}</textarea>
+									</td>
+								</tr>
+								
+								<!-- <tr>
+									<th width="110">{:L('ACCOMMODATION_POLICE_STATION')}</th>
+									<td>
+										<input type="text" style="width:400px;" id="police_station" name="police_station" value="{$police_station}" placeholder="{:L('ACCOMMODATION_POLICE_STATION')}"/>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">{:L('ACCOMMODATION_FAMILY_MEMBER')}</th>
+									<td>
+										<table class="table table-bordered">
+											<thead>
+												<tr>
+													<th>{:L('ACCOMMODATION_NAME')}</th>
+													<th>{:L('ACCOMMODATION_EMAIL')}</th>
+													<th>{:L('ACCOMMODATION_PHONE')}</th>
+													<th>{:L('ACCOMMODATION_PROFESSION')}</th>
+													<th>{:L('ACCOMMODATION_AGE')}</th>
+													<th>{:L('ACCOMMODATION_FAMILY_TIES')}</th>
+													<th>{:L('ACTIONS')}</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td><input type="text" name="family_name[]" value="" style="width:40px;"/></td>
+													<td><input type="text" name="family_email[]" value="" style="width:40px;"/></td>
+													<td><input type="text" name="family_phone[]" value="" style="width:40px;"/></td>
+													<td><input type="text" name="family_profession[]" value="" style="width:40px;"/></td>
+													<td><input type="text" name="family_age[]" value="" style="width:40px;"/></td>
+													<td><input type="text" name="family_ties[]" value="" style="width:40px;"/></td>
+													<td><a href="javascript:;" onclick="if ($(this).parent().parent().siblings().length <= 0) { alert('{:L('DELETE_LAST_MESSAGE')}'); return false; } if (window.confirm('{:L('DELETE_CONFIRM_MESSAGE')}')) $(this).parent().parent().remove();">{:L('DELETE')}</a></td>
+												</tr>
+											</tbody>
+										</table>
+										<button class="btn btn-primary" type="button" onclick="$(this).prev().find('tbody tr:last').clone(true).appendTo($(this).prev().find('tbody')).find('input').val('');">+{:L('ACCOMMODATION_FAMILY_MEMBER_ADD')}</button>
+									</td>
+								</tr> -->
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<th width="100">Bank Info</th>
+						<td>
+							<table class="table table-bordered">
+								<tr>
+									<th width="110">Bank Account（ICBC）</th>
+									<td>
+										<input type="text" style="width:400px;" id="bank_account" name="bank_account" value="{$bank_account}" placeholder="Bank Account（ICBC）"/>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">Account Name</th>
+									<td>
+										<input type="text" style="width:200px;" id="account_holder" name="account_holder" value="{$account_holder}" placeholder="Account Name"/>
+									</td>
+								</tr>
+								<tr>
+									<th width="110">ID Number</th>
+									<td>
+										<input type="text" style="width:400px;" id="id_number" name="id_number" value="{$id_number}" placeholder="ID Number"/>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="span5">
+				<table class="table table-bordered">
+					<tr>
+						<th>Chinese Address</th>
+					</tr>
+					<tr>
+						<td>
+							<input type="text" style="width:400px;" id="chinese_address" name="chinese_address" value="{$chinese_address}" onblur="getAddress();" placeholder="Chinese Address"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+				</table>
+				<div id="container" ></div>
+			</div> 
+		</div>
+		<div class="form-actions">
+			<button class="btn btn-primary js-ajax-submit" type="submit">{:L('ADD')}</button>
+			<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+		</div>
+	</form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$(".js-ajax-close-btn").on('click', function(e) {
+			e.preventDefault();
+			Wind.use("artDialog", function() {
+				art.dialog({
+					id : "question",
+					icon : "question",
+					fixed : true,
+					lock : true,
+					background : "#CCCCCC",
+					opacity : 0,
+					content : "{:L('CLOSE_PAGE')}",
+					ok : function() {
+						setCookie("refersh_time", 1);
+						window.close();
+						return true;
+					}
+				});
+			});
+		});
+		/////---------------------
+		Wind.use('validate','ajaxForm','artDialog',function() {
+			//编辑器
+			//editorcontent = new baidu.editor.ui.Editor();
+			//editorcontent.render('course_content');
+			try {
+				editorcontent.sync();
+			} catch (err) {}
+			//增加编辑器验证规则
+			jQuery.validator.addMethod('editorcontent',function() {
+				try {
+					editorcontent.sync();
+				} catch (err) {}
+				return editorcontent.hasContents();
+			});
+			
+			var form = $('form.js-ajax-forms');
+			//ie处理placeholder提交问题
+			if ($.browser && $.browser.msie) {
+				form.find('[placeholder]').each(function() {
+					var input = $(this);
+					if (input.val() == input
+							.attr('placeholder')) {
+						input.val('');
+					}
+				});
+			}
+			//表单验证开始
+			form.validate({
+				//是否在获取焦点时验证
+				onfocusout : false,
+				//是否在敲击键盘时验证
+				onkeyup : false,
+				//当鼠标掉级时验证
+				onclick : false,
+				//验证错误
+				showErrors : function(errorMap,errorArr) {
+					//errorMap {'name':'错误信息'}
+					//errorArr [{'message':'错误信息',element:({})}]
+					try {
+						$(errorArr[0].element).focus();
+						art.dialog({
+							id : 'error',
+							icon : 'error',
+							lock : true,
+							fixed : true,
+							background : "#CCCCCC",
+							opacity : 0,
+							content : errorArr[0].message,
+							cancelVal : "{:L('OK')}",
+							cancel : function() {
+								$(errorArr[0].element).focus();
+							}
+						});
+					} catch (err) {}
+				},
+				//验证规则
+				rules : {
+					'name' : { required : 1 },
+					'address' : { required : 1 },
+					'chinese_address' : { required : 1 },
+					'mobile' : { required : 1 },
+					'number_of_people' : { required : 1 },
+					'in_gender' : { required : 1 }
+				},
+				//验证未通过提示消息
+				messages : {
+					'name' : { required : "Please enter a Host Family" },
+					'address' : { required : "Please enter a Address" },
+					'chinese_address' : { required : "Please enter a Chinese Address" },
+					'mobile' : { required : "Please enter a Mobile" },
+					'number_of_people' : { required : "Please enter a Number of Students this family can host" },
+					'in_gender' : { required : "Please enter a Gender of students this family can host" }
+				},
+				//给未通过验证的元素加效果,闪烁等
+				highlight : false,
+				//是否在获取焦点时验证
+				onfocusout : false,
+				//验证通过，提交表单
+				submitHandler : function(forms) {
+					$(forms).ajaxSubmit({
+						url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+						dataType : 'json',
+						beforeSubmit : function(arr,$form,options) {
+
+						},
+						success : function(data,statusText,xhr,$form) {
+							if (data.status) {
+								setCookie("refersh_time",1);
+								//添加成功
+								Wind.use("artDialog",function() {
+									art.dialog({
+										id : "succeed",
+										icon : "succeed",
+										fixed : true,
+										lock : true,
+										background : "#CCCCCC",
+										opacity : 0,
+										content : data.info,
+										button : [
+										{
+											name : "{:L('CONTINUE')}",
+											callback : function() {
+												reloadPage(window);
+												return true;
+											},
+											focus : true
+										},
+										{
+											name : "{:L('RETURN')}",
+											callback : function() {
+												location.href = "{:U('accommodation/housing',array('check' => 2))}";
+												return true;
+											}
+										}
+										]
+									});
+								});
+							} else {
+								alert(data.info);
+							}
+						}
+					});
+				}
+			});
+		});
+	});
+	//创建地图
+	var map = new BMap.Map("container");
+	//设置中心点坐标
+	var point = new BMap.Point(121.412, 31.233); 
+	//地图初始化，同时设置地图展示级别
+	map.centerAndZoom(point, 16); 
+	map.enableScrollWheelZoom(true);//开启滚轮缩放
+	//添加控件
+	map.addControl(new BMap.NavigationControl());//平移缩放控件
+	map.addControl(new BMap.ScaleControl());//比例尺
+	map.addControl(new BMap.OverviewMapControl());//缩略地图
+	map.addControl(new BMap.MapTypeControl()); //地图类型
+	
+	function getAddress() {
+		var home_name = $('#name').val() + " Host Family";
+		var home_chinese_address = $('#chinese_address').val();
+		var home_address = "Address : " + $('#address').val() + " ( " + home_chinese_address + " )";
+		if (home_address != "") {
+			map.clearOverlays();
+			// 创建地址解析器实例     
+			var myGeo = new BMap.Geocoder();
+			// 将地址解析结果显示在地图上，并调整地图视野    
+			myGeo.getPoint(home_chinese_address, function(point){
+				if (point) {
+					//添加标注
+					var myIcon = new BMap.Icon("__PUBLIC__/images/home_small.png", new BMap.Size(20,30));  //定义自己的标注
+					var marker = new BMap.Marker(point,{icon:myIcon});  // 创建标注
+					map.centerAndZoom(point, 16);
+					map.addOverlay(marker);// 将标注添加到地图中
+					//创建检索信息窗口对象
+					var searchInfoWindow = new BMapLib.SearchInfoWindow(map, home_address, {
+						title  : home_name,      //标题
+						width  : 290,             //宽度
+						height : 40,              //高度
+						panel  : "panel",         //检索结果面板
+						enableAutoPan : true,     //自动平移
+						searchTypes   :[
+							//BMAPLIB_TAB_SEARCH,   //周边检索
+							//BMAPLIB_TAB_FROM_HERE, //从这里出发
+							//BMAPLIB_TAB_TO_HERE  //到这里去
+						]
+					});
+					marker.addEventListener("click", function(e){
+						searchInfoWindow.open(marker);
+					});
+				}
+			}, 
+			"上海市"); 
+		}
+	}
+</script>
+</body>
+</html>

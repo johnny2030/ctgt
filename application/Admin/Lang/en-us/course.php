@@ -1,0 +1,61 @@
+<?php
+return array(
+		"COURSE_LIST" => 'Course List',
+		"COURSE_ADD" => 'Add Course',
+		"COURSE_EDIT" => 'Edit Course',
+		"COURSE_ID" => 'ID',
+		"COURSE_CATEGORY" => 'Course Category',
+		"COURSE_SPECIALIZED" => 'Specialized Course',
+		"COURSE_CHINESE" => 'Chinese Course',
+		"COURSE_CODE" => 'Course Code',
+		"COURSE_NAME" => 'Course Name',
+		"COURSE_STAFF" => 'CIEE Staff',
+		"COURSE_TEACHER" => 'CIEE Teacher',
+		"COURSE_CREDIT" => 'Credit',
+		"COURSE_CLASS_HOUR" => 'Class Hour',
+		"COURSE_LIMIT" => 'Max Players',
+		"COURSE_ADDRESS" => 'Teaching Location',
+		"COURSE_TEACHERING_TIME" => 'Teaching Time',
+		"COURSE_START_TIME" => 'Start Time',
+		"COURSE_END_TIME" => 'End Time',
+		"COURSE_ADD_TEACHERING_TIME" => 'Add Teaching Time',
+		"COURSE_REQUIREMENT_KEY" => 'Grade Break Down',
+		"COURSE_REQUIREMENT" => 'Requirement',
+		"COURSE_REQUIREMENT_DESCRIPTION" => 'Description',
+		"COURSE_PERCENT_OF_GRADE" => 'Percent of Grade',
+		"COURSE_ADD_REQUIREMENT" => 'Add Course Requirement Key',
+		"COURSE_DOWNLOAD_URL" => 'Download Url',
+		"COURSE_ABSTRACT" => 'Course Description',
+		"COURSE_DETAILS" => 'Course Details',
+		
+		"COURSE_TERM_LIST" => 'Term List',
+		"COURSE_TERM_SEARCH_HEAD" => 'The student details from the imported has searched the term information as follow',
+		"COURSE_ALLOT_DETAILS" => 'Allot Course Details',
+		"COURSE_PROGRAM_MEMBER" => 'Program Member',
+		"COURSE_ADJUST" => 'Adjust Course',
+		"COURSE_ALLOT" => 'Allot Course',
+		
+		"COURSE_TIME_ZONES" => 'Time Zones',
+		"COURSE_WEEK" => 'Week',
+		"COURSE_TIME_ZONES_ADD" => 'Add Time Zones',
+		
+		"COURSE_ALLOT_LIST_HEAD" => 'The list of selected courses is as follows',
+		"COURSE_STUDENT_SIGNUP_INFO" => 'Student Information',
+		
+		"COURSE_ALLOT_STUDENT_LIST_HEAD" => 'The list of students enrolled is as follows',
+		
+		"COURSE_MSG1" => 'The time of class is not less than the opening hours',
+		"COURSE_COPY_MSG" => 'Are you sure to copy the selected course?',
+		"COURSE_MSG2" => 'Leader teacher is not null',
+		"COURSE_MUNUAL_INPUT" => 'Munual input',
+		"COURSE_GO_CHECK" => 'Go to check',
+		
+		"COURSE_POINTS_SYSTEM" => 'Points System',
+		"COURSE_TEN_POINTS_SYSTEM" => 'Ten-points System',
+		"COURSE_HUNDRED_MARK_SYSTEM" => 'Hundred-mark System',
+		"COURSE_TYPE" => 'Type',
+		"COURSE_NORMAL" => 'Normal',
+		"COURSE_ATTENDANCE" => 'Attendance',
+		
+		
+);

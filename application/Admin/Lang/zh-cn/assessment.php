@@ -1,0 +1,40 @@
+<?php
+return array(
+		"ASSESSMENT_LIST" => '评估列表',
+		"ASSESSMENT_ADD" => '添加评估',
+		"ASSESSMENT_EDIT" => '编辑评估',
+		"ASSESSMENT_NAME" => '评估名称',
+		"ASSESSMENT_END_TIME" => '截止日期',
+		"ASSESSMENT_TERM" => '学季',
+		"ASSESSMENT_TYPE" => '评估类型',
+		"ASSESSMENT_TYPE_GENERAL" => '常规',
+		"ASSESSMENT_TYPE_TEACHER" => '教师',
+		"ASSESSMENT_TYPE_ROOMMATE" => '同屋',
+		"ASSESSMENT_CHINESE_ROOMMATE" => '中国同屋',
+		"ASSESSMENT_HOST_FAMILY" => '友好家庭',
+		"ASSESSMENT_ANONYMITY" => '匿名评估',
+		"ASSESSMENT_ANONYMITY_YES" => '是',
+		"ASSESSMENT_ANONYMITY_NO" => '否',
+		"ASSESSMENT_SINGLE_CHOICE" => '单选题',
+		"ASSESSMENT_MULTIPLE_CHOICE" => '多选题',
+		"ASSESSMENT_ESSAY_QUESTION" => '问答题',
+		"ASSESSMENT_ABSTRACT" => '评估摘要',
+		"ASSESSMENT_DETAILS" => '评估详情',
+		"ASSESSMENT_TEACHERS" => '教师指向',
+		"ASSESSMENT_QUESTION_MSG" => '可添加多个选项，选项之间以英文逗号(,)隔开',
+		"ASSESSMENT_TEACHERS_MSG" => '根据评估需求选择是否勾选',
+		"ASSESSMENT_RESULT" => '评估结果',
+		"ASSESSMENT_QUESTION_ADD" => '添加评估问题',
+		"ASSESSMENT_OPTION_ADD" => '添加选项',
+		"ASSESSMENT_RESULT_HEAD" => '评估详情如下',
+		"ASSESSMENT_RESULT_HEAD1" => '已评估人数',
+		"ASSESSMENT_CHART_STATISTICS" => '图表统计总计',
+		
+		"ASSESSMENT_MSG0" => '请至少选择一个学季',
+		"ASSESSMENT_MSG1" => '请填写评估名称',
+		"ASSESSMENT_MSG2" => '只能选择主导教师和兼职教师中的一种！',
+		"ASSESSMENT_MSG3" => '评估进行中...',
+		
+		
+		
+);

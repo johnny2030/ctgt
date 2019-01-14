@@ -1,0 +1,71 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('address/index')}">{:L('ADDRESS_LIST')}</a></li>
+			<li><a href="{:U('address/add')}">{:L('ADDRESS_ADD')}</a></li>
+		</ul>
+		<form class="well form-search" method="post" id="cid-form" >
+			<input type="text" name="keyword" style="width:300px;" value="{$keyword}" placeholder="{:L('ADDRESS_NAME')}">
+			<button class="btn btn-primary">{:L('SEARCH')}</button>
+			<a class="btn btn-danger" href="{:U('address/index')}">{:L('EMPTY')}</a>
+		</form>
+		<form class="js-ajax-form" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">{:L('ID')}</th>
+						<th width="150">{:L('ADDRESS_NAME')}</th>
+						<th width="100">{:L('ADDRESS_MEMBER_LIMIT')}</th>
+						<th width="100">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<foreach name="list" item="vo">
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+					<td>{$vo.id}</td>
+					<td>{$vo.address_name}</td>
+					<td>{$vo.member_limit}</td>
+					<td>
+						<a href="{:U('address/edit',array('id'=>$vo['id']))}">{:L('EDIT')}</a>
+						<a href="{:U('address/delete',array('id'=>$vo['id']))}" class="js-ajax-delete" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</a>
+						<br />
+					</td>
+				</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">{:L('ID')}</th>
+						<th width="150">{:L('ADDRESS_NAME')}</th>
+						<th width="100">{:L('ADDRESS_MEMBER_LIMIT')}</th>
+						<th width="100">{:L('ACTIONS')}</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+			//学季三级联动
+		});
+	</script>
+</body>
+</html>

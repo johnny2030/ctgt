@@ -1,0 +1,96 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('menu/index')}">{:L('ADMIN_MENU_INDEX')}</a></li>
+			<li class="active"><a href="{:U('menu/add')}">{:L('ADMIN_MENU_ADD')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('Menu/add_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">{:L('HIGHER_LEVEL')}:</label>
+					<div class="controls">
+						<select name="parentid">
+							<option value="0">{:L('FIRSE_ORDER_MENU')}</option>
+							{$select_categorys}
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('NAME')}:</label>
+					<div class="controls">
+						<input type="text" name="name">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('APP')}:</label>
+					<div class="controls">
+						<input type="text" name="app" id="app">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('CONTROLLER')}:</label>
+					<div class="controls">
+						<input type="text" name="model" id="model">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('METHOD')}:</label>
+					<div class="controls">
+						<input type="text" name="action" id="action">
+						<span class="form-required">*</span>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('PARAMETER')}:</label>
+					<div class="controls">
+						<input type="text" name="data">
+						例:id=3&amp;p=3
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('ICON')}:</label>
+					<div class="controls">
+						<input type="text" name="icon" id="action">
+						<a href="http://www.thinkcmf.com/font/icons" target="_blank">选择图标</a> 不带前缀fa-，如fa-user => user
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('REMARK')}:</label>
+					<div class="controls">
+						<textarea name="remark" rows="5" cols="57" style="width: 500px;"></textarea>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('STATUS')}:</label>
+					<div class="controls">
+						<select name="status">
+							<option value="1">{:L('DISPLAY')}</option>
+							<option value="0">{:L('HIDE')}</option>
+						</select>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('TYPE')}:</label>
+					<div class="controls">
+						<select name="type">
+							<option value="1" selected>{:L('AUTHENTICATE_MENU')}</option>
+							<option value="0">{:L('MENU_ONLY')}</option>
+						</select>
+						{:L('TYPE_TEXT')}
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('ADD')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

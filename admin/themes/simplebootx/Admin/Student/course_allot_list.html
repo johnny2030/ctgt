@@ -1,0 +1,124 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<div class="form-actions" >
+			<span style="color:blue;"> {$student.full_name} </span>{:L('COURSE_ALLOT_LIST_HEAD')}  >>
+			<a href="javascript:open_iframe_dialog('{:U('student/course_allot',array('student_id' => $student['id']))}','{:L('COURSE_EXCHANGE')}')" class="btn btn-warning btn-small"> {:L('COURSE_EXCHANGE')}</a>
+		</div>
+		<form class="js-ajax-form" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="10">{:L('NO')}</th>
+						<th width="100">{:L('COURSE_CODE')}</th>
+						<th width="100">{:L('COURSE_NAME')}</th>
+						<th width="100">{:L('COURSE_CATEGORY')}</th>
+						<th width="100">{:L('COURSE_ADDRESS')}</th>
+						<th width="100">{:L('COURSE_TEACHERING_TIME')}</th>
+					</tr>
+				</thead>
+				<php>$index = 0;</php>
+				<volist name="student_courses" id="vo">
+					<php>$index++;</php>
+					<tr>
+						<td>{$index}</td>
+						<td>{$vo.course_code}</td>
+						<td>{$vo.course_name}</td>
+						<td>
+							<if condition="$vo['course_type'] eq 1">{:L('COURSE_SPECIALIZED')}</if>
+							<if condition="$vo['course_type'] eq 2">{:L('COURSE_CHINESE')}</if>
+						</td>
+						<td>{$vo.course_address}</td>
+						<php>
+							$course_times = D('CourseTime')->where(array('course_id' => $vo['id']))->select();
+						</php>
+						<td>
+							<volist name="course_times" id="course_time">
+								<if condition="$course_time.course_week eq 0">Weekdays</if>
+								<if condition="$course_time.course_week eq 1">Monday</if>
+								<if condition="$course_time.course_week eq 2">Tuesday</if>
+								<if condition="$course_time.course_week eq 3">Wednesday</if>
+								<if condition="$course_time.course_week eq 4">Thursday</if>
+								<if condition="$course_time.course_week eq 5">Friday</if>
+								<php>$time_zones = D('TimeZones')->where(array('id' => array('in',$course_time['time_zone_ids'])))->order('time_zones asc')->select();</php>
+								<volist name="time_zones" id="time_zone">
+									&nbsp;{$time_zone.time_zones} &nbsp;
+								</volist>
+								<br>
+							</volist>
+						</td>
+					</tr>
+				</volist>
+			</table>
+		</form>
+		<notempty name="old_student_courses">
+			<div class="form-actions" >
+				{:L('STUDENT_COURSE_ALLOT_LIST_HEAD')}  >>
+			</div>
+			<form class="js-ajax-form" method="post">
+				<table class="table table-hover table-bordered table-list">
+					<thead>
+						<tr>
+							<th width="10">{:L('NO')}</th>
+							<th width="100">{:L('COURSE_CODE')}</th>
+							<th width="100">{:L('COURSE_NAME')}</th>
+							<th width="100">{:L('COURSE_CATEGORY')}</th>
+							<th width="100">{:L('COURSE_ADDRESS')}</th>
+							<th width="100">{:L('COURSE_TEACHERING_TIME')}</th>
+						</tr>
+					</thead>
+					<volist name="old_student_courses" id="vo">
+						<tr>
+							<td>{$i}</td>
+							<td>{$vo.course_code}</td>
+							<td>{$vo.course_name}</td>
+							<td>
+								<if condition="$vo['course_type'] eq 1">专业课</if>
+								<if condition="$vo['course_type'] eq 2">中文课</if>
+							</td>
+							<td>{$vo.course_address}</td>
+							<php>
+								$course_times = D('CourseTime')->where(array('course_id' => $vo['id']))->select();
+							</php>
+							<td>
+								<volist name="course_times" id="course_time">
+									<if condition="$course_time.course_week eq 0">Weekdays</if>
+									<if condition="$course_time.course_week eq 1">Monday</if>
+									<if condition="$course_time.course_week eq 2">Tuesday</if>
+									<if condition="$course_time.course_week eq 3">Wednesday</if>
+									<if condition="$course_time.course_week eq 4">Thursday</if>
+									<if condition="$course_time.course_week eq 5">Friday</if>
+									<php>$time_zones = D('TimeZones')->where(array('id' => array('in',$course_time['time_zone_ids'])))->order('time_zones asc')->select();</php>
+									<volist name="time_zones" id="time_zone">
+										&nbsp;{$time_zone.time_zones} &nbsp;
+									</volist>
+									<br>
+								</volist>
+							</td>
+						</tr>
+					</volist>
+				</table>
+			</form>
+		</notempty>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+		});
+	</script>
+</body>
+</html>

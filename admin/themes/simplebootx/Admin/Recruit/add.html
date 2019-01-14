@@ -1,0 +1,353 @@
+<admintpl file="header" />
+<style>
+<!--
+.btn-group {border: 1px solid #e9eef3;border-radius: 3px;}
+.btn-group.open .btn.dropdown-toggle {background-color:#fff;}
+.btn-group>.btn {background-color:#fff;color:#a6b3b9;}
+.caret {border-top: 4px solid #a6b3b9;}
+.dropdown-menu {background-color:#fff;}
+.multiselect-container>li>a>label.checkbox {margin-left:0;color:#a6b3b9;}
+.multiselect-container>li.active>a>label.checkbox {margin-left:0;color:#fff;}
+-->
+</style>
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('recruit/index')}">{:L('RECRUIT_LIST')}</a></li>
+			<li class="active"><a href="{:U('recruit/add')}">{:L('RECRUIT_ADD')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+			<div class="row-fluid">
+				<div class="span9">
+					<table class="table table-bordered">
+						<tr>
+							<th width="100">{:L('RECRUIT_TYPE')}</th>
+							<td>
+								<select name="recruit_type" style="width:150px;">
+									<option value="" >{:L('PLEASE_SELECT')}</option>
+									<option value="1" <?php echo $recruit_type == 1 ? 'selected' : '' ?> >{:L('RECRUIT_CHINESE_ROOMMATE')}</option>
+									<option value="2" <?php echo $recruit_type == 2 ? 'selected' : '' ?> >{:L('RECRUIT_PARTTIME_TEACHER')}</option>
+								</select>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('RECRUIT_TERM')}</th>
+							<td>
+								<select name="term_year[]" id="term_year" style="width:150px;" multiple="multiple">{$term_year_html}</select>
+							</td>
+						</tr>
+						<script type="text/javascript">
+							//多选下拉框
+							//定义参数，更多参数查询bootstrap-mutiselect组件api
+							$('#term_year').multiselect({
+								nonSelectedText: "{:L('PLEASE_SELECT')}",
+								buttonWidth:"215px"
+							});
+							
+						</script>
+						<tr>
+							<th width="100">{:L('RECRUIT_NAME')}</th>
+							<td>
+								<input type="text" style="width:400px;" id="recruit_name" name="recruit_name" value="{$recruit_name}" placeholder="{:L('RECRUIT_NAME')}"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('RECRUIT_WAGE')}</th>
+							<td>
+								<input type="text" style="width:200px;" id="recruit_wage" name="recruit_wage" value="{$recruit_wage}" placeholder="{:L('RECRUIT_WAGE')}"/>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('RECRUIT_PEOPLE')}</th>
+							<td>
+								<input type="number" style="width:150px;" id="recruit_people_number" name="recruit_people_number" value="{$recruit_people_number}" placeholder="{:L('RECRUIT_PEOPLE')}"/>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('RECRUIT_EDUCATION')}</th>
+							<td>
+								<input type="text" style="width:200px;" id="recruit_education" name="recruit_education" value="{$recruit_education}" placeholder="{:L('RECRUIT_EDUCATION')}"/>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('RECRUIT_EXPERIENCE')}</th>
+							<td>
+								<input type="text" style="width:200px;" id="recruit_experience" name="recruit_experience" value="{$recruit_experience}" placeholder="{:L('RECRUIT_EXPERIENCE')}"/>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('RECRUIT_INTERVIEW_ADDRESS')}</th>
+							<td>
+								<input type="text" style="width:400px;" id="recruit_address" name="recruit_address" value="{$recruit_address}" placeholder="{:L('RECRUIT_INTERVIEW_ADDRESS')}"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('RECRUIT_INTERVIEW_DATE')}</th>
+							<td>
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>{:L('RECRUIT_INTERVIEW_DATE')}</th>
+											<th>{:L('ACTIONS')}</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><input type="date" name="recruit_date[]" value="" /></td>
+											<td><a href="javascript:;" onclick="if ($(this).parent().parent().siblings().length <= 0) { alert('{:L('DELETE_LAST_MESSAGE')}'); return false; } if (window.confirm('{:L('DELETE_CONFIRM_MESSAGE')}')) $(this).parent().parent().remove();">{:L('DELETE')}</a></td>
+										</tr>
+										
+									</tbody>
+								</table>
+								<button class="btn btn-primary" type="button" onclick="$(this).prev().find('tbody tr:last').clone(true).appendTo($(this).prev().find('tbody')).find('input').val('');">+{:L('RECRUIT_INTERVIEW_DATE_ADD')}</button>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('RECRUIT_INTERVIEW_TIME')}</th>
+							<td>
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th>{:L('RECRUIT_INTERVIEW_START_TIME')}</th>
+											<th>{:L('RECRUIT_INTERVIEW_END_TIME')}</th>
+											<th>{:L('RECRUIT_INTERVIEW_PEOPLE_NUMBER')}</th>
+											<th>{:L('ACTIONS')}</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><input type="time" name="recruit_start_time[]" value=""/></td>
+											<td><input type="time" name="recruit_end_time[]" value=""/></td>
+											<td><input type="number" name="interview_people_number[]" value=""/></td>
+											<td><a href="javascript:;" onclick="if ($(this).parent().parent().siblings().length <= 0) { alert('{:L('DELETE_LAST_MESSAGE')}'); return false; } if (window.confirm('{:L('DELETE_CONFIRM_MESSAGE')}')) $(this).parent().parent().remove();">{:L('DELETE')}</a></td>
+										</tr>
+										
+									</tbody>
+								</table>
+								<button class="btn btn-primary" type="button" onclick="$(this).prev().find('tbody tr:last').clone(true).appendTo($(this).prev().find('tbody')).find('input').val('');">+{:L('RECRUIT_INTERVIEW_TIME_ADD')}</button>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('RECRUIT_TRAINING_TIME')}</th>
+							<td>
+								<input type="text" id="training_time" name="training_time" value="<?php echo $training_time ? date('Y-m-d H:i',strtotime($training_time)) : '' ?>" placeholder="{:L('RECRUIT_TRAINING_TIME')}" class="js-datetime"/>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('RECRUIT_TRAINING_ADDRESS')}</th>
+							<td>
+								<input type="text" style="width:400px;" id="training_address" name="training_address" value="{$training_address}" placeholder="{:L('RECRUIT_TRAINING_ADDRESS')}"/>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('RECRUIT_TRAINING_CONTENT')}</th>
+							<td>
+								<textarea name="training_content" id="training_content" style="width: 98%; height: 50px;" placeholder="{:L('RECRUIT_TRAINING_CONTENT')}">{$training_content}</textarea>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('RECRUIT_ABSTRACT')}</th>
+							<td>
+								<textarea name="recruit_description" id="recruit_description" style="width: 98%; height: 50px;" placeholder="{:L('RECRUIT_ABSTRACT')}">{$recruit_description}</textarea>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('RECRUIT_DETAILS')}</th>
+							<td colspan="3">
+								<script type="text/plain" id="recruit_content" name="recruit_content">{$recruit_content}</script>
+							</td>
+						</tr>
+						<!-- <tr>
+							<th width="100">简历模板</th>
+							<td colspan="3">
+								<input type="file" name="template" accept=".xls,.xlsx,.docx,.doc,.dot,.dotx,.docm" />上传简历模板
+							</td>
+						</tr> -->
+					</table>
+				</div>
+				<div class="span3">
+					<table class="table table-bordered">
+						<tr>
+							<th>{:L('PUBDATE')}</th>
+						</tr>
+						<tr>
+							<td>
+								<input type="text" id="recruit_modify_time" name="recruit_modify_time" value="{:date('Y-m-d H:i:s',time())}" class="js-datetime">
+							</td>
+						</tr>
+						<tr>
+							<th>{:L('STATUS')}</th>
+						</tr>
+						<tr>
+							<td>
+								<label class="radio"><input type="radio" name="recruit_status" value="1" checked>{:L('DISPLAY')}</label>
+								<label class="radio"><input type="radio" name="recruit_status" value="0">{:L('HIDE')}</label>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="form-actions">
+				<button class="btn btn-primary js-ajax-submit" type="submit">{:L('ADD')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript">
+		//编辑器路径定义
+		var editorURL = GV.WEB_ROOT;
+		
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(".js-ajax-close-btn").on('click', function(e) {
+				e.preventDefault();
+				Wind.use("artDialog", function() {
+					art.dialog({
+						id : "question",
+						icon : "question",
+						fixed : true,
+						lock : true,
+						background : "#CCCCCC",
+						opacity : 0,
+						content : "{:L('CLOSE_PAGE')}",
+						ok : function() {
+							setCookie("refersh_time", 1);
+							window.close();
+							return true;
+						}
+					});
+				});
+			});
+			/////---------------------
+			Wind.use('validate','ajaxForm','artDialog',function() {
+				//编辑器
+				editorcontent = new baidu.editor.ui.Editor();
+				editorcontent.render('recruit_content');
+				try {
+					editorcontent.sync();
+				} catch (err) {}
+				//增加编辑器验证规则
+				jQuery.validator.addMethod('editorcontent',function() {
+					try {
+						editorcontent.sync();
+					} catch (err) {}
+					return editorcontent.hasContents();
+				});
+				
+				var form = $('form.js-ajax-forms');
+				//ie处理placeholder提交问题
+				if ($.browser && $.browser.msie) {
+					form.find('[placeholder]').each(function() {
+						var input = $(this);
+						if (input.val() == input
+								.attr('placeholder')) {
+							input.val('');
+						}
+					});
+				}
+				//表单验证开始
+				form.validate({
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//是否在敲击键盘时验证
+					onkeyup : false,
+					//当鼠标掉级时验证
+					onclick : false,
+					ignore : [],
+					//验证错误
+					showErrors : function(errorMap,errorArr) {
+						//errorMap {'name':'错误信息'}
+						//errorArr [{'message':'错误信息',element:({})}]
+						try {
+							$(errorArr[0].element).focus();
+							art.dialog({
+								id : 'error',
+								icon : 'error',
+								lock : true,
+								fixed : true,
+								background : "#CCCCCC",
+								opacity : 0,
+								content : errorArr[0].message,
+								cancelVal : "{:L('OK')}",
+								cancel : function() {
+									$(errorArr[0].element).focus();
+								}
+							});
+						} catch (err) {}
+					},
+					//验证规则
+					rules : {
+						'recruit_type' : { required : 1 },
+						'recruit_name' : { required : 1 },
+						'recruit_address' : { required : 1 }
+					},
+					//验证未通过提示消息
+					messages : {
+						'recruit_type' : { required : "{:L('RECRUIT_TYPE')}" },
+						'recruit_name' : { required : "{:L('RECRUIT_NAME')}" },
+						'recruit_address' : { required : "{:L('RECRUIT_INTERVIEW_ADDRESS')}" }
+					},
+					//给未通过验证的元素加效果,闪烁等
+					highlight : false,
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//验证通过，提交表单
+					submitHandler : function(forms) {
+						$(forms).ajaxSubmit({
+							url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+							dataType : 'json',
+							beforeSubmit : function(arr,$form,options) {
+	
+							},
+							success : function(data,statusText,xhr,$form) {
+								if (data.status) {
+									setCookie("refersh_time",1);
+									//添加成功
+									Wind.use("artDialog",function() {
+										art.dialog({
+											id : "succeed",
+											icon : "succeed",
+											fixed : true,
+											lock : true,
+											background : "#CCCCCC",
+											opacity : 0,
+											content : data.info,
+											button : [
+											{
+												name : "{:L('CONTINUE')}",
+												callback : function() {
+													reloadPage(window);
+													return true;
+												},
+												focus : true
+											},
+											{
+												name : "{:L('RETURN')}",
+												callback : function() {
+													location.href = "{:U('recruit/index')}";
+													return true;
+												}
+											}
+											]
+										});
+									});
+								} else {
+									alert(data.info);
+								}
+							}
+						});
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

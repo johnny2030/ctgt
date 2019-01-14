@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+	<title>{$course_name} Course Detail {$site_name}</title>
+	
+		<tc_include file='Public:head' />
+	</head>
+
+	<body>
+		<div id="con">
+			<tc_include file="Public:nav" />
+			<tc_include file="Public:subpage_banner" />
+			
+			<!--Breadcrumb-->
+			<div class="page-header title-area style-1">
+				<div class="breadcrumb-area">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<nav class="breadcrumb">
+									<a class="home" href="__ROOT__/" ><span>Home</span></a>
+									<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>
+									<span>Course detail</span>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Breadcrumb  end-->
+			
+			<!--page-content-->
+			<div class="pagewrapper">
+				<div class="container">
+					<div class="single-project">
+						<div class="row paddbtm60">
+							<div class="col-lg-6 col-md-6 col-sm-12">
+								<div class="projectinfo">
+									<div class="fh-section-title clearfix  text-left style-1 version-dark">
+										<h2>{$course_name}</h2>
+									</div>
+									<p class="infotext">{$course_description}</p>
+									<div class="fh-project-meta ">
+										<div class="info clearfix">
+											<div class="meta-item">
+												<span class="fh-icon"><i class="fa fa-bell" aria-hidden="true"></i></span>
+												<h4 class="title">Course code</h4>
+												<div class="details"><a href="#" class="cat-project">{$course_code}</a></div>
+											</div>
+											<div class="meta-item">
+												<span class="fh-icon"><i class="fa fa-database" aria-hidden="true"></i></span>
+												<h4 class="title">Course credit</h4>
+												<div class="details"><a href="#" class="cat-project">{$course_credit}</a></div>
+											</div>
+											<div class="meta-item">
+												<span class="fh-icon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
+												<h4 class="title">Curriculum hours</h4>
+												<div class="details"><a href="#" class="cat-project">{$course_academic_hour} min</a></div>
+											</div>
+											<div class="meta-item">
+												<span class="fh-icon"><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+												<h4 class="title">Place</h4>
+												<div class="details"><a href="#" class="cat-project">{$course_address}</a></div>
+											</div>
+											<div class="meta-item">
+												<span class="fh-icon"><i class="fa fa-user" aria-hidden="true"></i></span>
+												<h4 class="title">Leading teacher</h4>
+												<div class="details"><a href="#" class="cat-project">{$full_name}</a></div>
+											</div>
+											<div class="meta-item">
+												<span class="fh-icon"><i class="fa fa-users" aria-hidden="true"></i></span>
+												<h4 class="title">Other teachers</h4>
+												<div class="details"><a href="#" class="cat-project">{$mentor_names}</a></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-6 col-md-6 col-sm-12">
+								<div class="pinfoimgbox">
+									<php> $smeta = json_decode($smeta,true);</php>
+									<notempty name="smeta.thumb">
+										<img width="100%" src="{:sp_get_asset_upload_path($smeta['thumb'])}" />
+									<else />
+										<img width="100%" src="__TMPL__Public/assets/images/default-thumbnail.png" />
+									</notempty>
+								</div>
+							</div>
+						</div>
+						
+						<div class="projectdiscp paddbtm30">
+							<div class="fh-section-title clearfix  text-left style-1 version-dark">
+								<h2>Course <span class="main-color">Plan</span></h2>
+							</div>
+							<table class="table table-hover">
+							<tr>
+								<th class="text-center success">Class begins</th>
+								<th class="text-center success">class end</th>
+							</tr>
+							<volist name="course_times" id="vo">
+								<tr>
+									<td class="active text-center">{:date('Y-m-d H:i',strtotime($vo['course_start_time']))}</td>
+									<td class="active text-center">{:date('Y-m-d H:i',strtotime($vo['course_end_time']))}</td>
+								</tr>
+							</volist>
+							</table>
+						</div>
+
+						<div class="projectdiscp paddbtm30">
+							<div class="fh-section-title clearfix  text-left style-1 version-dark">
+								<h2>Course <span class="main-color">Content</span></h2>
+							</div>
+							{$course_content}
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--page-content end-->
+
+			<tc_include file="Public:footer" />
+			<div class="bg"></div>
+		</div>
+		<tc_include file="Public:scripts" />
+	</body>
+</html>

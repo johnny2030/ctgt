@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+	<head>
+		<title>{$assessment_name} Evaluation detail {$site_name}</title>
+	
+		<tc_include file='Public:head' />
+	</head>
+
+	<body>
+		<div id="con">
+			<tc_include file="Public:nav" />
+			<tc_include file="Public:subpage_banner" />
+			
+			<!--Breadcrumb-->
+			<div class="page-header title-area style-1">
+				<div class="breadcrumb-area">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<nav class="breadcrumb">
+									<a class="home" href="__ROOT__/" ><span>Home</span></a>
+									<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>
+									<span>User center</span>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Breadcrumb  end-->
+			
+			<!-- User-Center star-->
+			<div class="User-Center">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-4 uc-left">
+							<div class="information">
+								<div class="inf-pic">
+									<figure>
+										<img src="__TMPL__Public/images/user/testimonial-01.png">
+									</figure>
+								</div>
+								<div class="inf-text">
+									<h4>Hello,{$full_name|default='null'}</h4>
+									<h5>Email</h5>
+									<p>{$email|default='null'}</p>
+								</div>
+							</div>
+							<div class="clearfix"></div>
+							<div class="Vertical-nav">
+								<ul>
+									<li class="this_on"><a href="#inf"><i class="fa fa-user"></i>Information</a></li>
+									<li><a href="#Course"><i class="fa fa-calendar"></i>Course</a></li>
+									<li><a href="#Activity"><i class="fa fa-binoculars"></i>Activity</a></li>
+									<li><a href="#Severs"><i class="fa fa-book"></i>Severs Learning</a></li>
+									<li><a href="#Score"><i class="fa fa-diamond"></i>Score</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-8 uc-right">
+							<div class="box information-detail">
+								<div>
+									<div class="fh-section-title clearfix text-left">
+										<h2>Userinfo <span class="main-color">Oneself</span></h2>
+									</div>
+									<div class="row fh-section-text">
+										<div class="col-md-6">
+											<p>Gender : {$gender|default='null'} </p>
+											<p>Location : {$location_city|default='null'} {$location_country|default='null'} </p>
+											<p>Date of Birth : {$date_of_birth|default='null'} </p>
+											<p>Location of Birth : {$city_of_birth|default='null'} {$state_of_birth|default='null'} {$country_of_birth|default='null'} </p>
+											<p>Ethnicity : {$ethnicity|default='null'}</p>
+											<p>Application Status : {$application_status|default='null'} </p>
+										</div>
+										<div class="col-md-6">
+											<p>Program : {$program|default='null'} </p>
+											<p>Program Location : {$program_location|default='null'} </p>
+											<p>Program Short Name : {$program_short_name|default='null'} </p>
+											<p>Passport Number : {$passport_number|default='null'} </p>
+											<p>Name on Passport : {$name_on_passport|default='null'} </p>
+											<p>Expiration Date: {$expiration_date|default='null'}</p>
+										</div>
+									</div>
+									<div class="fh-section-title clearfix  text-left">
+										<h2>Your <span class="main-color">Advisor</span></h2>
+									</div>
+									<div class="row fh-section-text">
+										<div class="col-md-6">
+											<p>Name : {$primary_advisor|default='null'} </p>
+											<p>Email : {$advisor_email|default='null'} </p>
+										</div>
+										<div class="col-md-6">
+											<p>Daytime Phone : {$advisor_daytime_phone|default='null'} </p>
+											<p>Evening Phone : {$advisor_evening_phone|default='null'} </p>
+										</div>
+									</div>
+									<div class="fh-section-title clearfix  text-left">
+										<h2>Primary Emergency <span class="main-color">Contact</span></h2>
+									</div>
+									<div class="row fh-section-text">
+										<div class="col-md-6">
+											<p>Name : {$primary_emergency_contact_first_name|default='null'} {$primary_emergency_contact_last_name} </p>
+											<p>Email : {$primary_emergency_contact_email|default='null'} </p>
+											<p>Relationship : {$primary_emergency_contact_relationship|default='null'} </p>
+										</div>
+										<div class="col-md-6">
+											<p>Daytime Phone : {$primary_emergency_contact_daytime_phone|default='null'} </p>
+											<p>Evening Phone : {$primary_emergency_contact_evening_phone|default='null'} </p>
+											<p>Mobile Phone : {$primary_emergency_contact_mobile_phone|default='null'} </p>
+										</div>
+									</div>
+									<div class="fh-section-title clearfix  text-left">
+										<h2>Alernate Emergency<span class="main-color">Contact</span></h2>
+									</div>
+									<div class="row  fh-section-text">
+										<div class="col-md-6">
+											<p>Name : {$alternate_emergency_contact_first_name|default='null'} {$alternate_emergency_contact_last_name} </p>
+											<p>Email : {$alternate_emergency_contact_email|default='null'} </p>
+											<p>Relationship : {$alternate_emergency_contact_relationship|default='null'} </p>
+										</div>
+										<div class="col-md-6">
+											<p>Daytime Phone : {$alternate_emergency_contact_daytime_phone|default='null'} </p>
+											<p>Evening Phone : {$alternate_emergency_contact_evening_phone|default='null'} </p>
+											<p>Mobile Phone : {$alternate_emergency_contact_mobile_phone|default='null'} </p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- course -->
+							<php>$courses = D('Course')->alias('c')->join('__COURSE_STUDENT_RELATIONSHIP__ cs ON cs.course_id=c.id')->where(array('cs.student_id' => $id,'course_student_status' => 1))->select();</php>
+							<div class="box information-detail">
+								<div class="center-course">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="list-project">
+												<volist name="courses" id="course" >
+													<php> $smeta = json_decode($course['smeta'],true); </php>
+													<div class="item-project project-wrapper col-xs-12 col-sm-6 col-md-4">
+														<div class="project-thumbnail">
+															<a href="{:U('portal/course/detail',array('id'=>$course['id']))}" class="pro-link"></a>
+															<a href="{:U('portal/course/detail',array('id'=>$course['id']))}">
+																<notempty name="smeta.thumb">
+																	<img width="100%" src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="{$course.course_name}">
+																<else />
+																	<img width="100%" src="__TMPL__Public/assets/images/default-thumbnail.png" alt="{$course.course_name}">
+																</notempty>
+															</a>
+														</div>
+														<div class="project-summary">
+															<h2 class="project-title"><a href="{:U('portal/course/detail',array('id'=>$course['id']))}">{$course.course_name}</a></h2>
+															<div class="project-cat">
+																<a href="{:U('portal/course/detail',array('id'=>$course['id']))}" class="cat">code:{$course.course_code}</a>
+															</div>
+														</div>
+													</div>
+												</volist>
+												<!-- #project-## -->
+											</div>
+
+	                                        <div>
+	                                            <!-- Nav tabs -->
+	                                            <ul class="nav nav-tabs myTabs  visible-md-block visible-lg-block" role="tablist">
+	                                                <li role="presentation" class="active"><a href="#monday" role="tab" data-toggle="tab">Monday</a></li>
+	                                                <li role="presentation"><a href="#Tuesday" role="tab" data-toggle="tab">Tuesday</a></li>
+	                                                <li role="presentation"><a href="#Wednesday" role="tab" data-toggle="tab">Wednesday</a></li>
+	                                                <li role="presentation"><a href="#Thursday" role="tab" data-toggle="tab">Thursday</a></li>
+	                                                <li role="presentation"><a href="#Friday" role="tab" data-toggle="tab">Friday</a></li>
+	                                            </ul>
+	                                            <ul class="nav nav-tabs myTabs  visible-xs-block visible-sm-block" role="tablist">
+	                                                <li role="presentation" class="active"><a href="#monday" role="tab" data-toggle="tab">Mon.</a></li>
+	                                                <li role="presentation"><a href="#Tuesday" role="tab" data-toggle="tab">Tue.</a></li>
+	                                                <li role="presentation"><a href="#Wednesday" role="tab" data-toggle="tab">Wed.</a></li>
+	                                                <li role="presentation"><a href="#Thursday" role="tab" data-toggle="tab">Thu.</a></li>
+	                                                <li role="presentation"><a href="#Friday" role="tab" data-toggle="tab">Fri.</a></li>
+	                                            </ul>
+	                                            <!-- Tab panes -->
+	                                            <div class="tab-content">
+	                                                <div role="tabpanel" class="tab-pane active" id="monday">
+	                                                    <div class="container-fluid">
+	                                                        <div class=" table-responsive">
+	                                                            <table class="table" border="0" cellpadding="20" cellspacing="10">
+	                                                                <tbody>
+	                                                                    <tr>
+	                                                                        <td class="time">8:00am~12:00am</td>
+	                                                                        <td class="time">10:00am~12:00am</td>
+	                                                                        <td class="time">1:00pm~4:00pm</td>
+	                                                                        <td class="time">4:00am~6:00am</td>
+	                                                                        <td class="time">4:00am~7:00am</td>
+	                                                                    </tr>
+	                                                                    <tr>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Intermation Rela-tions<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                    </tr>
+	                                                                    <tr>
+	                                                                        <td></td>
+	                                                                        <td></td>
+	                                                                        <td>chinese Intermation Rela-tions<br/><span>GEB 508</span></td>
+	                                                                        <td></td>
+	                                                                        <td></td>
+	                                                                    </tr>
+	                                                                    <tr>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Intermation Rela-tions<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                    </tr>
+	                                                                </tbody>
+	                                                            </table>
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
+	                                                <div role="tabpanel" class="tab-pane" id="Tuesday">
+	                                                    <div class="container-fluid">
+	                                                        <div class=" table-responsive">
+	                                                            <table class="table" border="0" cellpadding="20" cellspacing="10">
+	                                                                <tbody>
+	                                                                    <tr>
+	                                                                        <td class="time">8:00am~12:00am</td>
+	                                                                        <td class="time">10:00am~12:00am</td>
+	                                                                        <td class="time">1:00pm~4:00pm</td>
+	                                                                        <td class="time">4:00am~6:00am</td>
+	                                                                        <td class="time">4:00am~7:00am</td>
+	                                                                    </tr>
+	                                                                    <tr>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Intermation Rela-tions<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                    </tr>
+	                                                                    <tr>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Intermation Rela-tions<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                    </tr>
+	                                                                    <tr>
+	                                                                        <td></td>
+	                                                                        <td></td>
+	                                                                        <td>chinese Intermation Rela-tions<br/><span>GEB 508</span></td>
+	                                                                        <td></td>
+	                                                                        <td></td>
+	                                                                    </tr>
+	                                                                </tbody>
+	                                                            </table>
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
+	                                                <div role="tabpanel" class="tab-pane" id="Wednesday">
+	                                                    <div class="container-fluid">
+	                                                        <div class=" table-responsive">
+	                                                            <table class="table" border="0" cellpadding="20" cellspacing="10">
+	                                                                <tbody>
+	                                                                    <tr>
+	                                                                        <td class="time">8:00am~12:00am</td>
+	                                                                        <td class="time">10:00am~12:00am</td>
+	                                                                        <td class="time">1:00pm~4:00pm</td>
+	                                                                        <td class="time">4:00am~6:00am</td>
+	                                                                        <td class="time">4:00am~7:00am</td>
+	                                                                    </tr>
+	                                                                    <tr>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Intermation Rela-tions<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                    </tr>
+	                                                                    <tr>
+	                                                                        <td></td>
+	                                                                        <td></td>
+	                                                                        <td>chinese Intermation Rela-tions<br/><span>GEB 508</span></td>
+	                                                                        <td></td>
+	                                                                        <td></td>
+	                                                                    </tr>
+	                                                                    <tr>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Intermation Rela-tions<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                    </tr>
+	                                                                </tbody>
+	                                                            </table>
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
+	                                                <div role="tabpanel" class="tab-pane" id="Thursday">
+	                                                    <div class="container-fluid">
+	                                                        <div class=" table-responsive">
+	                                                            <table class="table" border="0" cellpadding="20" cellspacing="10">
+	                                                                <tbody>
+	                                                                    <tr>
+	                                                                        <td class="time">8:00am~12:00am</td>
+	                                                                        <td class="time">10:00am~12:00am</td>
+	                                                                        <td class="time">1:00pm~4:00pm</td>
+	                                                                        <td class="time">4:00am~6:00am</td>
+	                                                                        <td class="time">4:00am~7:00am</td>
+	                                                                    </tr>
+	                                                                    <tr>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Intermation Rela-tions<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                    </tr>
+	                                                                    <tr>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Intermation Rela-tions<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                    </tr>
+	                                                                    <tr>
+	                                                                        <td></td>
+	                                                                        <td></td>
+	                                                                        <td>chinese Intermation Rela-tions<br/><span>GEB 508</span></td>
+	                                                                        <td></td>
+	                                                                        <td></td>
+	                                                                    </tr>
+	                                                                </tbody>
+	                                                            </table>
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
+	                                                <div role="tabpanel" class="tab-pane" id="Friday">
+	                                                    <div class="container-fluid">
+	                                                        <div class=" table-responsive">
+	                                                            <table class="table" border="0" cellpadding="20" cellspacing="10">
+	                                                                <tbody>
+	                                                                    <tr>
+	                                                                        <td class="time">8:00am~12:00am</td>
+	                                                                        <td class="time">10:00am~12:00am</td>
+	                                                                        <td class="time">1:00pm~4:00pm</td>
+	                                                                        <td class="time">4:00am~6:00am</td>
+	                                                                        <td class="time">4:00am~7:00am</td>
+	                                                                    </tr>
+	                                                                    <tr>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Language Classes</td>
+	                                                                        <td>chinese Intermation Rela-tions<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                        <td>chinese Language Classes<br/><span>GEB 508</span></td>
+	                                                                    </tr>
+	                                                                    <tr>
+	                                                                        <td></td>
+	                                                                        <td></td>
+	                                                                        <td>chinese Intermation Rela-tions<br/><span>GEB 508</span></td>
+	                                                                        <td></td>
+	                                                                        <td></td>
+	                                                                    </tr>
+	                                                                    <tr>
+	                                                                        <td></td>
+	                                                                        <td></td>
+	                                                                        <td>chinese Intermation Rela-tions<br/><span>GEB 508</span></td>
+	                                                                        <td></td>
+	                                                                        <td></td>
+	                                                                    </tr>
+	                                                                </tbody>
+	                                                            </table>
+	                                                        </div>
+	                                                    </div>
+	                                                </div>
+	                                            </div>
+	                                        </div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /course -->
+							
+							<!-- activity -->
+							<php>
+								$activities = D('Activity')
+											->alias('a')
+											->field('a.*')
+											->join('__ACTIVITY_STUDENT_RELATIONSHIP__ asr ON a.id=asr.activity_id')
+											->join('__USERS__ u ON u.id=asr.student_id')
+											->where(array('u.id' => $id,'a.classify_id' => array('neq',1)))
+											->select();
+							</php>
+							<div class="box information-detail">
+								<div class="center-activity">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="list-project">
+												<volist name="activities" id="activity">
+													<php> $smeta = json_decode($activity['smeta'],true); </php>
+													<div class="item-project project-wrapper col-xs-12 col-sm-6 col-md-4">
+														<div class="project-thumbnail">
+															<a href="{:U('portal/activity/detail',array('id'=>$activity['id']))}" class="pro-link"></a>
+															<a href="{:U('portal/activity/detail',array('id'=>$activity['id']))}">
+																<notempty name="smeta.thumb">
+																	<img width="100%" src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="{$activity.activity_name}">
+																<else />
+																	<img width="100%" src="__TMPL__Public/assets/images/default-thumbnail.png" alt="{$activity.activity_name}">
+																</notempty>
+															</a>
+														</div>
+														<div class="project-summary">
+															<h2 class="project-title"><a href="{:U('portal/activity/detail',array('id'=>$activity['id']))}">{$activity.activity_name}</a></h2>
+															<div class="project-cat">
+																<a href="{:U('portal/activity/detail',array('id'=>$activity['id']))}" class="cat">Time:{:date('Y/m/d H:i',strtotime($activity['activity_start_time']))}</a>
+															</div>
+														</div>
+													</div>
+												</volist>
+												<!-- #project-## -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<php>
+								$activities = D('Activity')
+											->alias('a')
+											->field('a.*')
+											->join('__ACTIVITY_STUDENT_RELATIONSHIP__ asr ON a.id=asr.activity_id')
+											->join('__USERS__ u ON u.id=asr.student_id')
+											->where(array('u.id' => $id,'a.classify_id' => 1))
+											->select();
+							</php>
+							<div class="box information-detail">
+								<div class="center-severs">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="list-project">
+												<volist name="activities" id="activity">
+													<php> $smeta = json_decode($activity['smeta'],true); </php>
+													<div class="item-project project-wrapper col-xs-12 col-sm-6 col-md-4">
+														<div class="project-thumbnail">
+															<a href="{:U('portal/activity/detail',array('id'=>$activity['id']))}" class="pro-link"></a>
+															<a href="{:U('portal/activity/detail',array('id'=>$activity['id']))}">
+																<notempty name="smeta.thumb">
+																	<img width="100%" src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="{$activity.activity_name}">
+																<else />
+																	<img width="100%" src="__TMPL__Public/assets/images/default-thumbnail.png" alt="{$activity.activity_name}">
+																</notempty>
+															</a>
+														</div>
+														<div class="project-summary">
+															<h2 class="project-title"><a href="{:U('portal/activity/detail',array('id'=>$activity['id']))}">{$activity.activity_name}</a></h2>
+															<div class="project-cat">
+																<a href="{:U('portal/activity/detail',array('id'=>$activity['id']))}" class="cat">Time:{:date('Y/m/d H:i',strtotime($activity['activity_start_time']))}</a>
+															</div>
+														</div>
+													</div>
+												</volist>
+												<!-- #project-## -->
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /activity -->
+							
+							<!-- score -->
+							<php>
+								$scores = D('Score')->alias('s')
+													->field('s.test_score,s.test_time,c.course_name')
+													->join('__COURSE__ c ON c.id=s.course_id')
+													->where(array('student_id' => $id))
+													->select();
+							</php>
+							<div class="box information-detail">
+								<div class="center-score">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="fh-section-title clearfix text-left">
+												<h2>Score <span class="main-color">Information</span></h2>
+											</div>
+											<div class="score-table">
+												<table class="table table-hover">
+													<tr>
+														<th class="text-center success">Course Name</th>
+														<th class="text-center success">Test Time</th>
+														<th class="text-center success">Score</th>
+													</tr>
+													<volist name="scores" id="score">
+														<tr>
+															<td class="active text-center">{$score.course_name}</td>
+															<td class="active text-center">{:date('Y/m/d H:i',strtotime($score['test_time']))}</td>
+															<td class="active text-center">{$score.test_score}</td>
+														</tr>
+													</volist>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- /score -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- User-Center end-->
+
+			<tc_include file="Public:footer" />
+			<div class="bg"></div>
+		</div>
+		<tc_include file="Public:scripts" />
+	</body>
+</html>

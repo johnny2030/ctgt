@@ -1,0 +1,398 @@
+<admintpl file="header" />
+<link href="__PUBLIC__/simpleboot/bootstrap/css/bootstrap.min.css"  rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div class="wrap js-check-wrap" >
+		<form class="well form-search" method="post" id="cid-form" >
+			<select name="year" style="width: 100px;height:35px;" >{$year_html}</select>
+			<select name="term" style="width: 100px;height:35px;" >{$term_html}</select>
+			<select name="sess" style="width: 100px;height:35px;" >{$sess_html}</select>
+			<select name="program" style="width: 100px;height:35px;" >{$program_html}</select>
+			<select name="course" style="width: 100px;height:35px;" >{$course_html}</select>
+			<select name="activity" style="width: 100px;height:35px;" >{$activity_html}</select>
+			<input type="text" name="name" style="width:200px;height:35px;" value="{$name}" placeholder="{:L('NAME')}" />
+			<button class="btn btn-primary">{:L('SEARCH')}</button>
+			<a class="btn btn-danger" href="{:U('main/index')}">{:L('EMPTY')}</a>
+		</form>
+		<div class="form-actions" >
+			<button class="btn btn-sm" id="year">Year</button>
+			<button class="btn btn-sm" id="term">Term</button>
+			<button class="btn btn-sm" id="sess">Session</button>
+			<button class="btn btn-sm" id="program">Program</button>
+			<button class="btn btn-sm" id="institution">Institution</button>
+			<button class="btn btn-sm" id="gender">Gender</button>
+			<button class="btn btn-sm" id="cellphone">Cellphone</button>
+			<button class="btn btn-sm" id="dob">DOB</button>
+			<button class="btn btn-sm" id="email">Email</button>
+			<button class="btn btn-sm" id="score">{:L('GRADE_INFORMATION')}</button>
+			<button class="btn btn-sm" id="course">{:L('COURSE_INFORMATION')}</button>
+			<button class="btn btn-sm" id="activity">{:L('ACTIVITY_INFORMATION')}</button>
+		</div>
+		<form class="js-ajax-form" method="post">
+			<div class="row">
+				<div class="col-md-4 col-sm-4">
+					<table class="table table-hover table-bordered table-list">
+						<thead>
+							<tr>
+								<th nowrap="nowrap">{:L('NO')}</th>
+								<th nowrap="nowrap">First Name</th>
+								<th nowrap="nowrap">Middle Name</th>
+								<th nowrap="nowrap">Last Name</th>
+							</tr>
+						</thead>
+						<volist name="list" id="user">
+							<tr>
+								<td nowrap="nowrap">{$i}</td>
+								<td nowrap="nowrap">{$user.first_name}</td>
+								<td nowrap="nowrap">{$user.middle_name}</td>
+								<td nowrap="nowrap">{$user.last_name}</td>
+							</tr>
+						</volist>
+						<tfoot>
+							<tr>
+								<th nowrap="nowrap">{:L('NO')}</th>
+								<th nowrap="nowrap">First Name</th>
+								<th nowrap="nowrap">Middle Name</th>
+								<th nowrap="nowrap">Last Name</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div class="col-md-7 col-sm-7" style="overflow-x:auto;padding-left:0;padding-right:0;">
+					<table class="table table-hover table-bordered table-list" style="margin-bottom:5px;">
+						<thead>
+							<tr>
+								<th id="thead_year" class="hide" nowrap="nowrap">Year</th>
+								<th id="thead_term" class="hide" nowrap="nowrap">Term</th>
+								<th id="thead_sess" class="hide" nowrap="nowrap">Session</th>
+								<th id="thead_program" class="hide" nowrap="nowrap">Program</th>
+								<th id="thead_institution" class="hide" nowrap="nowrap">Institution</th>
+								<th id="thead_gender" class="hide" nowrap="nowrap">Gender</th>
+								<th id="thead_cellphone" class="hide" nowrap="nowrap">Cellphone</th>
+								<th id="thead_dob" class="hide" nowrap="nowrap">DOB</th>
+								<th id="thead_email" class="hide" nowrap="nowrap">Email</th>
+								<th id="thead_score" class="hide" nowrap="nowrap">{:L('GRADE_INFORMATION')}</th>
+								<th id="thead_course" class="hide" nowrap="nowrap">{:L('COURSE_INFORMATION')}</th>
+								<th id="thead_activity" class="hide" nowrap="nowrap">{:L('ACTIVITY_INFORMATION')}</th>
+							</tr>
+						</thead>
+						<volist name="list" id="user">
+							<tr>
+								<td id="tbody_year_{$user.id}" class="hide" nowrap="nowrap" >{$user.year}</td>
+								<td id="tbody_term_{$user.id}" class="hide" nowrap="nowrap">{$user.term}</td>
+								<td id="tbody_sess_{$user.id}" class="hide" nowrap="nowrap">{$user.sess}</td>
+								<td id="tbody_program_{$user.id}" class="hide" nowrap="nowrap">{$user.program}</td>
+								<td id="tbody_institution_{$user.id}" class="hide" nowrap="nowrap">{$user.institution}</td>
+								<td id="tbody_gender_{$user.id}" class="hide" nowrap="nowrap">{$user.gender}</td>
+								<td id="tbody_cellphone_{$user.id}" class="hide" nowrap="nowrap">{$user.cellphone}</td>
+								<td id="tbody_dob_{$user.id}" class="hide" nowrap="nowrap">{$user.dob}</td>
+								<td id="tbody_email_{$user.id}" class="hide" nowrap="nowrap">{$user.email}</td>
+								<td id="tbody_score_{$user.id}" class="hide" nowrap="nowrap">
+									<php>
+										$score_count = D('Score')->where(array('student_id' => $user['id']))->count();
+										$student_courses_count = D('CourseStudentRelationship')->where(array('student_id' => $user['id'],'course_student_status' => 1))->count();
+										$activity_count = D('ActivityStudentRelationship')->where(array('student_id' => $user['id']))->count();
+									</php>
+									<if condition="$score_count eq 0">
+										{:L('NO_DATA')}
+									<else/>
+										<a href="javascript:open_iframe_dialog('{:U('score/detail',array('student_id' => $user['id'],'entry' => 'search'))}','{:L('GRADE_INFORMATION')}')">{:L('VIEW_DETAILS')}( {$score_count} )</a>
+									</if>
+								</td>
+								<td id="tbody_course_{$user.id}" class="hide" nowrap="nowrap">
+									<if condition="$student_courses_count eq 0">
+										{:L('NO_DATA')}
+									<else/>
+										<a href="javascript:open_iframe_dialog('{:U('student/course_allot_list',array('student_id' => $user['id']))}','{:L('COURSE_INFORMATION')}')"> {:L('VIEW_DETAILS')}( {$student_courses_count} )</a>
+									</if>
+								</td>
+								<td id="tbody_activity_{$user.id}" class="hide" nowrap="nowrap">
+									<if condition="$activity_count eq 0">
+										{:L('NO_DATA')}
+									<else/>
+										<a href="javascript:open_iframe_dialog('{:U('activity/activity_signup_list',array('student_id' => $user['id']))}','{:L('ACTIVITY_INFORMATION')}')"> {:L('VIEW_DETAILS')}( {$activity_count} )</a>
+									</if>
+								</td>
+							</tr>
+						</volist>
+						<tfoot>
+							<tr>
+								<th id="tfoot_year" class="hide" nowrap="nowrap">Year</th>
+								<th id="tfoot_term" class="hide" nowrap="nowrap">Term</th>
+								<th id="tfoot_sess" class="hide" nowrap="nowrap">Session</th>
+								<th id="tfoot_program" class="hide" nowrap="nowrap">Program</th>
+								<th id="tfoot_institution" class="hide" nowrap="nowrap">Institution</th>
+								<th id="tfoot_gender" class="hide" nowrap="nowrap">Gender</th>
+								<th id="tfoot_cellphone" class="hide" nowrap="nowrap">Cellphone</th>
+								<th id="tfoot_dob" class="hide" nowrap="nowrap">DOB</th>
+								<th id="tfoot_email" class="hide" nowrap="nowrap">Email</th>
+								<th id="tfoot_score" class="hide" nowrap="nowrap">{:L('GRADE_INFORMATION')}</th>
+								<th id="tfoot_course" class="hide" nowrap="nowrap">{:L('COURSE_INFORMATION')}</th>
+								<th id="tfoot_activity" class="hide" nowrap="nowrap">{:L('ACTIVITY_INFORMATION')}</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+				<div class="col-md-1 col-sm-1">
+					<table class="table table-hover table-bordered table-list"">
+						<thead>
+							<tr>
+								<th nowrap="nowrap">{:L('ACTIONS')}</th>
+							</tr>
+						</thead>
+						<volist name="list" id="user">
+							<tr>
+								<td nowrap="nowrap">
+									<a href="javascript:open_iframe_dialog('{:U('student/edit',array('id'=>$user['id']))}','{:L('STUDENT_INFORMATION')}')">{:L('EDIT')}</a>
+									<a href="{:U('student/delete',array('id'=>$user['id']))}" class="js-ajax-delete" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</a>
+									<br />
+								</td>
+							</tr>
+						</volist>
+						<tfoot>
+							<tr>
+								<th nowrap="nowrap">{:L('ACTIONS')}</th>
+							</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+			$("#year").click(function() {
+				$(this).toggleClass('btn-success');
+				<?php 
+					foreach ($list as $user) { 
+				?>
+					if( $('#tbody_year_{$user.id}').attr("class") == "hide" ) {
+						$('#thead_year').removeClass('hide');
+						$('#tbody_year_{$user.id}').removeClass('hide');
+						$('#tfoot_year').removeClass('hide');
+					} else {
+						$('#thead_year').addClass('hide');
+						$('#tbody_year_{$user.id}').addClass('hide');
+						$('#tfoot_year').addClass('hide');
+					}
+				<?php	
+				}
+				?>
+			});
+			$("#term").click(function() {
+				$(this).toggleClass('btn-success');
+				<?php 
+					foreach ($list as $user) { 
+				?>
+					if( $('#tbody_term_{$user.id}').attr("class") == "hide" ) {
+						$('#thead_term').removeClass('hide');
+						$('#tbody_term_{$user.id}').removeClass('hide');
+						$('#tfoot_term').removeClass('hide');
+					} else {
+						$('#thead_term').addClass('hide');
+						$('#tbody_term_{$user.id}').addClass('hide');
+						$('#tfoot_term').addClass('hide');
+					}
+				<?php	
+				}
+				?>
+			});
+			$("#sess").click(function() {
+				$(this).toggleClass('btn-success');
+				<?php 
+					foreach ($list as $user) { 
+				?>
+					if( $('#tbody_sess_{$user.id}').attr("class") == "hide" ) {
+						$('#thead_sess').removeClass('hide');
+						$('#tbody_sess_{$user.id}').removeClass('hide');
+						$('#tfoot_sess').removeClass('hide');
+					} else {
+						$('#thead_sess').addClass('hide');
+						$('#tbody_sess_{$user.id}').addClass('hide');
+						$('#tfoot_sess').addClass('hide');
+					}
+				<?php	
+				}
+				?>
+			});
+			$("#program").click(function() {
+				$(this).toggleClass('btn-success');
+				<?php 
+					foreach ($list as $user) { 
+				?>
+					if( $('#tbody_program_{$user.id}').attr("class") == "hide" ) {
+						$('#thead_program').removeClass('hide');
+						$('#tbody_program_{$user.id}').removeClass('hide');
+						$('#tfoot_program').removeClass('hide');
+					} else {
+						$('#thead_program').addClass('hide');
+						$('#tbody_program_{$user.id}').addClass('hide');
+						$('#tfoot_program').addClass('hide');
+					}
+				<?php	
+				}
+				?>
+			});
+			$("#institution").click(function() {
+				$(this).toggleClass('btn-success');
+				<?php 
+					foreach ($list as $user) { 
+				?>
+					if( $('#tbody_institution_{$user.id}').attr("class") == "hide" ) {
+						$('#thead_institution').removeClass('hide');
+						$('#tbody_institution_{$user.id}').removeClass('hide');
+						$('#tfoot_institution').removeClass('hide');
+					} else {
+						$('#thead_institution').addClass('hide');
+						$('#tbody_institution_{$user.id}').addClass('hide');
+						$('#tfoot_institution').addClass('hide');
+					}
+				<?php	
+				}
+				?>
+			});
+			$("#gender").click(function() {
+				$(this).toggleClass('btn-success');
+				<?php 
+					foreach ($list as $user) { 
+				?>
+					if( $('#tbody_gender_{$user.id}').attr("class") == "hide" ) {
+						$('#thead_gender').removeClass('hide');
+						$('#tbody_gender_{$user.id}').removeClass('hide');
+						$('#tfoot_gender').removeClass('hide');
+					} else {
+						$('#thead_gender').addClass('hide');
+						$('#tbody_gender_{$user.id}').addClass('hide');
+						$('#tfoot_gender').addClass('hide');
+					}
+				<?php	
+				}
+				?>
+			});
+			$("#cellphone").click(function() {
+				$(this).toggleClass('btn-success');
+				<?php 
+					foreach ($list as $user) { 
+				?>
+					if( $('#tbody_cellphone_{$user.id}').attr("class") == "hide" ) {
+						$('#thead_cellphone').removeClass('hide');
+						$('#tbody_cellphone_{$user.id}').removeClass('hide');
+						$('#tfoot_cellphone').removeClass('hide');
+					} else {
+						$('#thead_cellphone').addClass('hide');
+						$('#tbody_cellphone_{$user.id}').addClass('hide');
+						$('#tfoot_cellphone').addClass('hide');
+					}
+				<?php	
+				}
+				?>
+			});
+			$("#dob").click(function() {
+				$(this).toggleClass('btn-success');
+				<?php 
+					foreach ($list as $user) { 
+				?>
+					if( $('#tbody_dob_{$user.id}').attr("class") == "hide" ) {
+						$('#thead_dob').removeClass('hide');
+						$('#tbody_dob_{$user.id}').removeClass('hide');
+						$('#tfoot_dob').removeClass('hide');
+					} else {
+						$('#thead_dob').addClass('hide');
+						$('#tbody_dob_{$user.id}').addClass('hide');
+						$('#tfoot_dob').addClass('hide');
+					}
+				<?php	
+				}
+				?>
+			});
+			$("#email").click(function() {
+				$(this).toggleClass('btn-success');
+				<?php 
+					foreach ($list as $user) { 
+				?>
+					if( $('#tbody_email_{$user.id}').attr("class") == "hide" ) {
+						$('#thead_email').removeClass('hide');
+						$('#tbody_email_{$user.id}').removeClass('hide');
+						$('#tfoot_email').removeClass('hide');
+					} else {
+						$('#thead_email').addClass('hide');
+						$('#tbody_email_{$user.id}').addClass('hide');
+						$('#tfoot_email').addClass('hide');
+					}
+				<?php	
+				}
+				?>
+			});
+			$("#score").click(function() {
+				$(this).toggleClass('btn-success');
+				<?php 
+					foreach ($list as $user) { 
+				?>
+					if( $('#tbody_score_{$user.id}').attr("class") == "hide" ) {
+						$('#thead_score').removeClass('hide');
+						$('#tbody_score_{$user.id}').removeClass('hide');
+						$('#tfoot_score').removeClass('hide');
+					} else {
+						$('#thead_score').addClass('hide');
+						$('#tbody_score_{$user.id}').addClass('hide');
+						$('#tfoot_score').addClass('hide');
+					}
+				<?php	
+				}
+				?>
+			});
+			$("#course").click(function() {
+				$(this).toggleClass('btn-success');
+				<?php 
+					foreach ($list as $user) { 
+				?>
+					if( $('#tbody_course_{$user.id}').attr("class") == "hide" ) {
+						$('#thead_course').removeClass('hide');
+						$('#tbody_course_{$user.id}').removeClass('hide');
+						$('#tfoot_course').removeClass('hide');
+					} else {
+						$('#thead_course').addClass('hide');
+						$('#tbody_course_{$user.id}').addClass('hide');
+						$('#tfoot_course').addClass('hide');
+					}
+				<?php	
+				}
+				?>
+			});
+			$("#activity").click(function() {
+				$(this).toggleClass('btn-success');
+				<?php 
+					foreach ($list as $user) { 
+				?>
+					if( $('#tbody_activity_{$user.id}').attr("class") == "hide" ) {
+						$('#thead_activity').removeClass('hide');
+						$('#tbody_activity_{$user.id}').removeClass('hide');
+						$('#tfoot_activity').removeClass('hide');
+					} else {
+						$('#thead_activity').addClass('hide');
+						$('#tbody_activity_{$user.id}').addClass('hide');
+						$('#tfoot_activity').addClass('hide');
+					}
+				<?php	
+				}
+				?>
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>{$post_title} {$site_name}</title>
+		<meta name="keywords" content="{$post_keywords}" />
+		<meta name="description" content="{$post_excerpt}">
+		<tc_include file="Public:head" />
+	</head>
+
+	<body>
+		<div id="con">
+			<tc_include file="Public:nav" />
+			<tc_include file="Public:subpage_banner" />
+			
+			<!--Breadcrumb-->
+			<div class="page-header title-area style-1">
+				<div class="breadcrumb-area">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12 col-sm-12 col-xs-12">
+								<nav class="breadcrumb">
+									<a class="home" href="__ROOT__/" ><span>Home</span></a>
+									<i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i>
+									<span>{$post_title}</span>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--Breadcrumb  end-->
+			<!-- Result detail star-->
+			<div class="result-detail">
+				<div class="container">
+					<div class="entry-header">
+						<h2 class="entry-title">{$post_title}</h2>
+						<div class="entry-meta">
+							<span class="meta"><i class="fa fa-user" aria-hidden="true"></i><php>echo empty($user_nicename) ? $user_login : $user_nicename</php></span>
+							<notempty name="post_keywords">
+								<span class="meta"><i class="fa fa-tags" aria-hidden="true"></i>{$post_keywords}</span>
+							</notempty>
+							<span class="meta"><i class="fa fa-eye"></i> {$post_hits} views</span>
+							<!-- <span class="meta"><i class="fa fa-comment-o" aria-hidden="true"></i>0 Comment</span> -->
+						</div>
+					</div>
+					<div class="entry-content">
+						{$post_content}
+					</div>
+				</div>
+			</div>
+			<!-- Result detail end-->
+			<!-- album -->
+			<div class="htmleaf-container">
+				<div class="container gallery-container">
+					<div class="tz-gallery">
+						<div class="row">
+							<volist name="smeta['photo']" id="item">
+								<div class="col-sm-6 col-md-4">
+									<a class="lightbox" href="{:sp_get_asset_upload_path($item['url'])}">
+										<img src="{:sp_get_asset_upload_path($item['url'])}" alt="{$item.alt}" width="360" height="270">
+									</a>
+								</div>
+							</volist>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<tc_include file="Public:footer" />
+			<div class="bg"></div>
+		</div>
+		<tc_include file="Public:scripts" />
+	</body>
+</html>

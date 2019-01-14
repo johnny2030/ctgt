@@ -1,0 +1,68 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<div class="form-actions" >
+			<span style="color:blue;"> {$activity_name} </span>{:L('ACTIVITY_ALLOT_STUDENT_LIST_HEAD')}  >>  <a href="{:U('activity/student_export',array('id' => $id))}" class="btn btn-small btn-warning">{:L('EXPORT')} Excel</a>
+		</div>
+		<form class="js-ajax-form" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="10">{:L('NO')}</th>
+						<th width="10">{:L('AVATAR')}</th>
+						<th width="50">First Name</th>
+						<th width="50">Last Name</th>
+						<th width="400">Tendency</th>
+					</tr>
+				</thead>
+				<php>$index = 0;</php>
+				<volist name="activity_students" id="vo">
+					<php>
+						$avatar = json_decode($vo['avatar'],true);
+						$activity_tendency = json_decode($vo['activity_tendency'],true);
+						$index++ ;
+					</php>
+					<tr>
+						<td>{$index}</td>
+						<td>
+							<notempty name="avatar.url">
+								<a href="javascript:parent.image_preview_dialog('{:sp_get_image_preview_url($avatar['url'])}');">
+									<img width="25" height="25" src="{:sp_get_image_preview_url($avatar['url'])}" title="{:L('CLICK_TO_ENLARGE')}"/>
+								</a>
+							<else/>
+								<img width="25" height="25" src="__PUBLIC__/images/headicon.png" />
+							</notempty>
+						</td>
+						<td>{$vo.first_name}</td>
+						<td>{$vo.last_name}</td>
+						<td>
+							<volist name="activity_tendency" id="at">
+								{$i} : {$at} &nbsp;
+							</volist>
+						</td>
+					</tr>
+				</volist>
+			</table>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+		});
+	</script>
+</body>
+</html>

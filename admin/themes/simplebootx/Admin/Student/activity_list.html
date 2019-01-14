@@ -1,0 +1,57 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<div class="form-actions" >
+			<span style="color:blue;"> {$student.full_name} </span>{:L('ACTIVITY_LIST_HEAD')}  >>
+		</div>
+		<form class="js-ajax-form" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="10">{:L('NO')}</th>
+						<th width="200">{:L('ACTIVITY_NAME')}</th>
+						<th width="50">{:L('ACTIVITY_CATEGORY')}</th>
+						<th width="50">{:L('ACTIVITY_TEAM_LEADER')}</th>
+						<th width="200">{:L('ACTIVITY_TENDENCY')}</th>
+					</tr>
+				</thead>
+				<volist name="student_activities" id="vo">
+					<tr>
+						<td>{$i}</td>
+						<td>{$vo.activity_name}</td>
+						<td>{$vo.classify_name}</td>
+						<td>{$vo.full_name}</td>
+						<php>
+							$activity_tendency = json_decode($vo['activity_tendency'],true);
+						</php>
+						<td>
+							<volist name="activity_tendency" id="at">
+								{$i} : {$at} &nbsp;
+							</volist>
+						</td>
+					</tr>
+				</volist>
+			</table>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+<admintpl file="header" />
+<style>
+<!--
+.btn-group.open .btn.dropdown-toggle {background-color:#fff;}
+.btn-group>.btn {background-color:#fff;color:#a6b3b9;}
+.caret {border-top: 4px solid #a6b3b9;}
+.dropdown-menu {background-color:#fff;}
+.multiselect-container>li>a>label.checkbox {margin-left:5px;color:#a6b3b9;}
+.multiselect-container>li.active>a>label.checkbox {margin-left:5px;color:#fff;}
+-->
+</style>
+</head>
+<body>
+<div class="wrap js-check-wrap">
+	<ul class="nav nav-tabs">
+		<li class="active"><a href="{:U('accommodation/house_matching')}">{:L('ACCOMMODATION_MATCH_INFO')}</a></li>
+		<!-- <li><a href="{:U('accommodation/hm_add?check=1')}">匹配住宿</a></li> -->
+	</ul>
+	<form class="well form-search" method="post" id="cid-form" >
+		<input type="hidden" name="cmd" id="cmd" >
+		<select name="term_year" id="term_year" style="width:150px;">{$term_year_html}</select>
+		<select name="match_status" id="match_status" style="width:150px;">
+			<option value="">{:L('ACCOMMODATION_MATCH_STATUS')}</option>
+			<option value="1" <?php echo $match_status == 1 ? 'selected' : '' ?> >{:L('MATCHED')}</option>
+			<option value="2" <?php echo $match_status == 2 ? 'selected' : '' ?> >{:L('UNMATCH')}</option>
+		</select>
+		<!-- <input type="text" name="cell_phone" value="{$cell_phone}" placeholder="请输入手机号" /> -->
+		<if condition="$match_status eq 1">
+			<select name="check[]" id="check" style="width:200px;height: 35px;" multiple="multiple">
+				<option value="1" <?php echo in_array(1,$check) ? 'selected' : '' ?> >{:L('ACCOMMODATION_FOREIGN_ROOMMATE')}-{:L('ACCOMMODATION_CHINESE_ROOMMATE')}</option>
+				<option value="2" <?php echo in_array(2,$check) ? 'selected' : '' ?> >{:L('ACCOMMODATION_FOREIGN_ROOMMATE')}-{:L('ACCOMMODATION_HOST_FAMILY')}</option>
+				<option value="3" <?php echo in_array(3,$check) ? 'selected' : '' ?> >{:L('ACCOMMODATION_FOREIGN_ROOMMATE')}-{:L('ACCOMMODATION_FOREIGN_ROOMMATE')}</option>
+			</select>
+		</if>
+		<input type="text" name="name" value="{$name}" placeholder="{:L('ACCOMMODATION_NAME')}" />
+		<a class="btn btn-primary" onclick="search_accommodations();" >{:L('SEARCH')}</a>
+		<a class="btn btn-danger" href="{:U('accommodation/house_matching')}">{:L('EMPTY')}</a>
+		<a class="btn btn-success" onclick="export_excel();">{:L('EXPORT')}</a>
+		<a href="javascript:open_iframe_dialog('{:U('mailer/house_group_mails')}','{:L('GROUPMAIL')}')" class="btn btn-warning">{:L('GROUPMAIL')}</a>
+	</form>
+	<script type="text/javascript">
+		//多选下拉框
+		//定义参数，更多参数查询bootstrap-mutiselect组件api
+		$('#check').multiselect({
+			nonSelectedText: "{:L('ACCOMMODATION_TYPE')}",
+			buttonWidth:"150px"
+		});
+		
+	</script>
+	<form class="js-ajax-form" method="post">
+		<!-- <div class="table-actions">
+			<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('accommodation/hm_delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+		</div> -->
+		<table class="table table-hover table-bordered table-list">
+			<thead>
+				<tr>
+					<th width="20">{:L('NO')}</th>
+					<th width="100">Student Name</th>
+					<th width="50">Genger</th>
+					<th width="100">Roommate</th>
+					<th width="100">Mobile</th>
+					<th width="200">Address</th>
+					<th width="50">{:L('STATUS')}</th>
+					<th width="100">{:L('ACTIONS')}</th>
+				</tr>
+			</thead>
+			<volist name="list" id="vo">
+				<php>
+					$house_user = D('HouseUserRelationship')->where(array('user_id' => $vo['id']))->find();
+					if ($house_user) {
+						if ($house_user['flg'] == 1) {
+							$student = D('Users')->find($vo['id']);
+							$term_year = trim($student['year'])."-".trim($student['term']);
+							$chinese_roommate = D('RecruitMember')->find($house_user['owner_id']);
+							$recruit_member_term = D('RecruitMemberTerm')->where(array('recruit_member_id' => $house_user['owner_id'],'term_year' => $term_year))->find();
+						}
+						if ($house_user['flg'] == 2) $host_family = D('Homestay')->find($house_user['owner_id']);
+						if ($house_user['flg'] == 3) $foreign_roommate = D('Users')->find($house_user['owner_id']);
+					}
+				</php>
+				<tr>
+					<td>{$i}</td>
+					<td>{$vo.full_name}</td>
+					<td>{$vo.gender}</td>
+					<td>
+						<notempty name="house_user">
+							<span style="color:blue;">
+								<if condition="$house_user.flg eq 1">{$chinese_roommate.name}</if>
+								<if condition="$house_user.flg eq 2">{$host_family.name}</if>
+								<if condition="$house_user.flg eq 3">{$foreign_roommate.full_name}</if>
+							</span>
+						<else/>
+							{:L('NO_DATA')}
+						</notempty>
+					</td>
+					<td>
+						<notempty name="house_user">
+							<span style="color:blue;">
+								<if condition="$house_user.flg eq 1">{$chinese_roommate.phone}</if>
+								<if condition="$house_user.flg eq 2">{$host_family.mobile}</if>
+								<if condition="$house_user.flg eq 3">{$foreign_roommate.phone}</if>
+							</span>
+						<else/>
+							{:L('NO_DATA')}
+						</notempty>
+					</td>
+					<td>
+						<notempty name="house_user">
+							<if condition="$house_user.flg eq 1">
+								<notempty name="recruit_member_term.address">
+									<span style="color:blue;">{$recruit_member_term.address}</span>
+								<else/>
+									<a class="btn btn-warning btn-small" href="javascript:open_iframe_layer_small('{:U('accommodation/enter_address',array('student_id' => $vo['id']))}','{:L('ENTER')}')">{:L('ENTER')}</a>
+								</notempty>
+							</if>
+							<if condition="$house_user.flg eq 2">
+								<span style="color:blue;">{$host_family.address}</span>
+							</if>
+							<if condition="$house_user.flg eq 3">
+								<notempty name="house_user.address">
+									<span style="color:blue;">{$house_user.address}</span>
+								<else/>
+									<a class="btn btn-warning btn-small" href="javascript:open_iframe_layer_small('{:U('accommodation/enter_address',array('student_id' => $vo['id']))}','{:L('ENTER')}')">{:L('ENTER')}</a>
+								</notempty>
+							</if>
+						<else/>
+							{:L('NO_DATA')}
+						</notempty>
+					</td>
+					<td>
+						<notempty name="house_user">
+							<a data-toggle="tooltip" title="{:L('MATCHED')}"><i class="fa fa-check"></i></a>
+						<else />
+							<a data-toggle="tooltip" title="{:L('UNMATCH')}"><i class="fa fa-close"></i></a>
+						</notempty>
+					</td>
+					<td>
+						<notempty name="house_user">
+							<a href="javascript:open_iframe_dialog('{:U('accommodation/hm_add',array('student_id'=>$vo['id']))}','{:L('ACCOMMODATION_MATCH')}')" class="btn btn-warning btn-small">{:L('EXCHANGE')}</a>
+							<php>if ($house_user['flg'] == 2 || ($house_user['flg'] == 3 && !empty($house_user['address'])) || ($house_user['flg'] == 1 && !empty($recruit_member_term['address']))) {</php>
+								<a href="javascript:open_iframe_dialog('{:U('mailer/house_send_mails',array('student_id'=>$vo['id']))}','{:L('SEND_MAIL')}')" class="btn btn-warning btn-small">{:L('SEND_MAIL')}</a>
+							<php>}</php>
+						<else/>
+							<a href="javascript:open_iframe_dialog('{:U('accommodation/hm_add',array('student_id'=>$vo['id']))}','{:L('ACCOMMODATION_MATCH')}')" class="btn btn-warning btn-small">{:L('MATCH')}</a>
+						</notempty>
+					</td>
+				</tr>
+			</volist>
+		</table>
+		<div class="pagination">{$page}</div>
+	</form>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+		});
+		//导出excel
+		function export_excel() {
+			$('#cmd').val('export');
+			if (confirm('确定导出所筛选学生数据？')) {
+				$("#cid-form").submit();
+			} 
+		}
+		//搜索students
+		function search_accommodations() {
+			$('#cmd').val('');
+			$("#cid-form").submit();
+		}
+	</script>
+</body>
+</html>

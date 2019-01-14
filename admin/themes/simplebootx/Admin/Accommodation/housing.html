@@ -1,0 +1,327 @@
+<admintpl file="header" />
+<style>
+<!--
+.row-fluid table th,td {white-space:nowrap;}
+.row-fluid table th {height:40px;padding:0 5px 4px 9px;}
+.row-fluid table td {height:25px;}
+-->
+</style>
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('accommodation/housing')}">{:L('ACCOMMODATION_INFO_LIST')}</a></li>
+			<!-- <li><a href="{:U('accommodation/cr_add')}">添加中国同屋</a></li> -->
+			<if condition="$check eq 2">
+				<li><a href="{:U('accommodation/hs_add')}">{:L('ACCOMMODATION_HOST_FAMILY_ADD')}</a></li> 
+			</if>
+		</ul>
+		<form class="well form-search" method="post" id="cid-form" >
+			<input type="hidden" name="cmd" id="cmd">
+			<select name="check" id="check" style="width:150px;height: 35px;">
+				<option value="">{:L('ACCOMMODATION_TYPE')}</option>
+				<option value="1" <?php echo $check == 1 ? 'selected' : '' ?> >{:L('ACCOMMODATION_CHINESE_ROOMMATE')}</option>
+				<option value="2" <?php echo $check == 2 ? 'selected' : '' ?> >{:L('ACCOMMODATION_HOST_FAMILY')}</option>
+			</select>
+			<notempty name="check">
+				<select name="term_year" id="term_year" style="width:150px;">{$term_year_html}</select>
+				<input type="text" name="name" style="width:200px;" value="{$name}" placeholder="{:L('ACCOMMODATION_NAME')}" />
+			</notempty>
+			<a class="btn btn-primary" onclick="search_housing();" >{:L('SEARCH')}</a>
+			<a class="btn btn-danger" href="{:U('accommodation/housing')}">{:L('EMPTY')}</a>
+			<if condition="$check eq 1">
+				<a class="btn btn-success" onclick="export_cr();">{:L('EXPORT')}</a>
+			</if>
+			<if condition="$check eq 2">
+				<a class="btn btn-success" onclick="export_hf();">{:L('EXPORT')}</a>
+			</if>
+		</form>
+		<form class="js-ajax-form" method="post">
+			<if condition="$check eq 1">
+				<!-- <div class="table-actions">
+					<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('accommodation/cr_orders')}">{:L('SORT')}</button>
+					<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('accommodation/cr_delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+				</div> -->
+				<div class="row-fluid">
+					<div class="span3">
+						<table class="table table-hover table-bordered table-list">
+							<thead>
+								<tr>
+									<th>{:L('NO')}</th>
+									<th>{:L('ACCOMMODATION_AVATAR')}</th>
+									<th>{:L('ACCOMMODATION_NAME')}</th>
+									<th>{:L('STATUS')}</th>
+								</tr>
+							</thead>
+							<volist name="list" id="vo">
+								<tr>
+									<td>{$i}</td>
+									<td style="padding:0 8px;">
+										<php>$avatar = json_decode($vo['avatar'],true);</php>
+										<notempty name="avatar.url">
+											<a href="javascript:parent.image_preview_dialog('{:sp_get_image_preview_url($avatar['url'])}');">
+												<img style="width:25px;height:25px;" src="{:sp_get_image_preview_url($avatar['url'])}" title="{:L('CLICK_TO_ENLARGE')}"/>
+											</a>
+										<else/>
+											<img style="width:25px;height:25px;" src="__PUBLIC__/images/headicon.png" />
+										</notempty>
+									</td>
+									<td>{$vo.name}</td>
+									<td>
+										<php>
+											$recruit_member_terms = D('RecruitMemberTerm')->where(array('recruit_member_id' => $vo['id']))->order('term_year desc')->select();
+											$term_year_arr = array();
+											foreach ($recruit_member_terms as $rmt) {
+												if ($rmt['housing_status'] == 1) {
+													$term_year_arr[] = $rmt['term_year']." ( ".L('ACCOMMODATION_MATCHED')." ) ";
+												} else {
+													$term_year_arr[] = $rmt['term_year'];
+												}
+											}
+											$title_str = implode('&#13;',$term_year_arr);
+										</php>
+										<notempty name="vo.renew_status">
+											<span title="{$title_str}">{:L('ACCOMMODATION_STAY_OVER')}</span>
+										<else/>
+											<span title="{$title_str}">{:L('ACCOMMODATION_FIRST_TIME')}</span>
+										</notempty>
+									</td>
+									<!-- <td>
+										<a href="{:U('accommodation/cr_edit',array('id'=>$cr['id']))}">{:L('EDIT')}</a>
+										<a href="{:U('accommodation/cr_delete',array('id'=>$cr['id']))}" class="js-ajax-delete" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</a>
+									</td> -->
+								</tr>
+							</volist>
+						</table>
+					</div>
+					<div class="span8" style="overflow-x:auto;margin-left:0;">
+						<table class="table table-hover table-bordered table-list">
+							<thead>
+								<tr>
+									<th>{:L('ACCOMMODATION_PHONE')}</th>
+									<th>{:L('ACCOMMODATION_EMAIL')}</th>
+									<th>{:L('ACCOMMODATION_GENDER')}</th>
+									<th>{:L('ACCOMMODATION_BIRTH_OF_DATE')}</th>
+									<th>{:L('ACCOMMODATION_NATIVE_PLACE')}</th>
+									<th>{:L('ACCOMMODATION_GRADE')}</th>
+									<th>{:L('ACCOMMODATION_SPECIALITY')}</th>
+									<th>{:L('ACCOMMODATION_HOME_ADDRESS')}</th>
+									<th>{:L('ACCOMMODATION_PRESENT_ADDRESS')}</th>
+									<th>{:L('ACCOMMODATION_COUNSELOR')}</th>
+									<th>{:L('ACCOMMODATION_COUNSELOR_PHONE')}</th>
+									<th>{:L('ACCOMMODATION_COUNSELOR_EMAIL')}</th>
+									<th>{:L('ACCOMMODATION_WAKEUP_TIME')}</th>
+									<th>{:L('ACCOMMODATION_BEDTIME')}</th>
+									<th>{:L('ACCOMMODATION_SMOKING')}</th>
+									<th>{:L('ACCOMMODATION_FREQUENCY_OF_CLEANING')}</th>
+									<th>{:L('ACCOMMODATION_HOBBY')}</th>
+									
+								</tr>
+							</thead>
+							<volist name="list" id="vo">
+								<tr>
+									<td>{$vo.phone}</td>
+									<td>{$vo.email}</td>
+									<td>
+										<if condition="$vo.gender eq 1">{:L('ACCOMMODATION_GENDER_MALE')}</if>
+										<if condition="$vo.gender eq 2">{:L('ACCOMMODATION_GENDER_FEMALE')}</if>
+									</td>
+									<td>{$vo.birth_of_date}</td>
+									<td>{$vo.native_place}</td>
+									<td>{$vo.grade}</td>
+									<td>{$vo.speciality}</td>
+									<td>{$vo.home_address}</td>
+									<td>{$vo.present_address}</td>
+									<td>{$vo.counselor}</td>
+									<td>{$vo.counselor_phone}</td>
+									<td>{$vo.counselor_email}</td>
+									<td>{:date('H:i',strtotime($vo['wakeup_time']))}</td>
+									<td>{:date('H:i',strtotime($vo['bedtime']))}</td>
+									<td>
+										<if condition="$vo.smoking_status eq 1">{:L('ACCOMMODATION_SMOKING_NO')}</if>
+										<if condition="$vo.smoking_status eq 2">{:L('ACCOMMODATION_SMOKING_YES')}</if>
+									</td>
+									<td>{$vo.frequency_of_cleaning}</td>
+									<td>{$vo.hobby}</td>
+								</tr>
+							</volist>
+						</table>
+					</div>
+					<div class="span1"  style="margin-left:0;">
+						<table class="table table-hover table-bordered table-list" id="actions">
+							<thead>
+								<tr>
+									<!-- <th>{:L('ACCOMMODATION_FAMILY_MEMBER')}</th> -->
+									<th>{:L('ACTIONS')}</th>
+								</tr>
+							</thead>
+							<volist name="list" id="vo">
+								<tr>
+									<td>
+										<a href="{:U('accommodation/cr_edit',array('id'=>$vo['id']))}" class="btn btn-small btn-warning">{:L('EDIT')}</a>
+									</td>
+								</tr>
+							</volist>
+						</table>
+					</div>
+				</div>
+			</if>
+			<if condition="$check eq 2">
+				<div class="table-actions">
+					<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('accommodation/hs_delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('BATCH_DELETE')}</button>
+				</div>
+				<div class="row-fluid">
+					<div class="span2">
+						<table class="table table-hover table-bordered table-list">
+							<thead>
+								<tr>
+									<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+									<th>NO</th>
+									<th>Host Family</th>
+								</tr>
+							</thead>
+							<volist name="list" id="vo">
+								<tr>
+									<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+									<td>{$i}</td>
+									<td>{$vo.name}</td>
+									<!-- <td>
+										<a href="{:U('accommodation/cr_edit',array('id'=>$cr['id']))}">{:L('EDIT')}</a>
+										<a href="{:U('accommodation/cr_delete',array('id'=>$cr['id']))}" class="js-ajax-delete" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</a>
+									</td> -->
+								</tr>
+							</volist>
+						</table>
+					</div>
+					<div class="span9" style="overflow-x:auto;margin-left:0;">
+						<table class="table table-hover table-bordered table-list">
+							<thead>
+								<tr>
+									<th>Address</th>
+									<th>Mobile</th>
+									<th>Number of Students this family can host </th>
+									<th>Gender of students this family can host</th>
+									<th>Family Member:1</th>
+									<th>Family Member:2</th>
+									<th>Zip/Postal Code</th>
+									<th>Email</th>
+									<th>Phone</th>
+									<th>Occupation of Parents</th>
+									<th>Ages of parent/s</th>
+									<th>Ages of children in the home</th>
+									<th>Who else lives in the home</th>
+									<th>Hobbies of host family</th>
+									<th>Pets</th>
+									<th>Any Smokers</th>
+									<th>Usual dinner time </th>
+									<th>Usual Bed time</th>
+									<th>Transportation</th>
+									<th>HF Request</th>
+									<th>Bank Account（ICBC）</th>
+									<th>Account Name</th>
+									<th>ID Number</th>
+								</tr>
+							</thead>
+							<volist name="list" id="vo">
+								<tr>
+									<td>{$vo.address}</td>
+									<td>{$vo.mobile}</td>
+									<td>{$vo.number_of_people}</td>
+									<td>
+										<if condition="$vo.in_gender eq 1">Male</if>
+										<if condition="$vo.in_gender eq 2">Female</if>
+										<if condition="$vo.in_gender eq 3">Both For Women & Men</if>
+									</td>
+									<td>{$vo.family_member_1}</td>
+									<td>{$vo.family_member_2}</td>
+									<td>{$vo.postcode}</td>
+									<td>{$vo.email}</td>
+									<td>{$vo.phone}</td>
+									<td>{$vo.profession}</td>
+									<td>{$vo.ages_of_parents}</td>
+									<td>{$vo.ages_of_children}</td>
+									<td>{$vo.other_family}</td>
+									<td>{$vo.family_hobby}</td>
+									<td>{$vo.pets}</td>
+									<td>{$vo.any_smokers}</td>
+									<td>{:date('H:i',strtotime($vo['suppertime']))}</td>
+									<td>{:date('H:i',strtotime($vo['bedtime']))}</td>
+									<td>{$vo.transportation}</td>
+									<td>{$vo.hf_request}</td>
+									<td>{$vo.bank_account}</td>
+									<td>{$vo.account_holder}</td>
+									<td>{$vo.id_number}</td>
+								</tr>
+							</volist>
+						</table>
+					</div>
+					<div class="span1"  style="margin-left:0;">
+						<table class="table table-hover table-bordered table-list" id="actions">
+							<thead>
+								<tr>
+									<!-- <th>{:L('ACCOMMODATION_FAMILY_MEMBER')}</th> -->
+									<th>{:L('ACTIONS')}</th>
+								</tr>
+							</thead>
+							<volist name="list" id="vo">
+								<php>$homestay_families = D('HomestayFamily')->where(array('homestay_id' => $vo['id']))->select();</php>
+								<tr>
+									<!-- <td>
+										<notempty name="homestay_families">
+											<a href="javascript:open_iframe_dialog('{:U('accommodation/view_family',array('id'=>$vo['id']))}','{:L('ACCOMMODATION_FAMILY_MEMBER')}')" class="btn btn-small btn-success">{:L('VIEW')}</a>
+										<else/>
+											{:L('NO_DATA')}
+										</notempty>
+									</td> -->
+									<td>
+										<a href="{:U('accommodation/hs_edit',array('id'=>$vo['id']))}" class="btn btn-small btn-warning">{:L('EDIT')}</a>
+										<a href="{:U('accommodation/hs_delete',array('id'=>$vo['id']))}" class="btn btn-small btn-danger js-ajax-delete" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</a>
+									</td>
+								</tr>
+							</volist>
+						</table>
+					</div>
+				</div>
+			</if>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+		});
+		//导出excel
+		function export_cr() {
+			$('#cmd').val('export');
+			if (confirm('确定导出所筛选中国同屋信息？')) {
+				$("#cid-form").submit();
+			} 
+		}
+		//导出excel
+		function export_hf() {
+			$('#cmd').val('export');
+			if (confirm('确定导出所筛选友好家庭信息？')) {
+				$("#cid-form").submit();
+			} 
+		}
+		//搜索students
+		function search_housing() {
+			$('#cmd').val('');
+			$("#cid-form").submit();
+		}
+	</script>
+</body>
+</html>

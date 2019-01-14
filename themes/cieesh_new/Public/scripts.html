@@ -1,0 +1,220 @@
+<script type="text/javascript">
+//全局变量
+var GV = {
+    ROOT: "__ROOT__/",
+    WEB_ROOT: "__WEB_ROOT__/",
+    JS_ROOT: "public/js/"
+};
+</script>
+   <!-- Placed at the end of the document so the pages load faster -->
+   <script src="__PUBLIC__/js/wind.js"></script>
+   <script src="__PUBLIC__/js/frontend.js"></script>
+   
+	<!-- 新增 -->
+	<script type="text/javascript">
+        $(document).ready(function() {
+            $('#horizontalTab').easyResponsiveTabs({
+                type: 'default', //Types: default, vertical, accordion
+                width: 'auto', //auto or any width like 600px
+                fit: true, // 100% fit in a container
+                closed: 'accordion', // Start closed if in accordion view
+                activate: function(event) { // Callback function if tab is switched
+                    var $tab = $(this);
+                    var $info = $('#tabInfo');
+                    var $name = $('span', $info);
+
+                    $name.text($tab.text());
+
+                    $info.show();
+
+                }
+            });
+
+            $('#ab').easyResponsiveTabs({
+                type: 'vertical',
+                width: 'auto',
+                fit: true,
+            });
+
+
+            $('#cmt').easyResponsiveTabs({
+                type: 'vertical',
+                width: 'auto',
+                fit: true,
+            });
+        });
+    </script>
+
+    <script src="__TMPL__Public/js/jquery.lightbox.js"></script>
+    <script src="__TMPL__Public/js/templatemo_custom.js"></script>
+    <script src="__TMPL__Public/js/easyResponsiveTabs.js" type="text/javascript"></script>
+    <script>
+        function showhide() {
+            var div = document.getElementById("newpost");
+            if (div.style.display !== "none") {
+                div.style.display = "none";
+            } else {
+                div.style.display = "block";
+            }
+        }
+    </script>
+    <script>
+        $(window).load(function() {
+            $('.btn-nav').on('click tap', function() {
+                $('.nav-content').toggleClass('showNav hideNav').removeClass('hidden');
+                $(this).toggleClass('animated');
+            });
+            $('.nav-list').on('click tap', function() {
+
+            })
+            $(".item-activity").click(function() {
+                $('#menu-container .homepage').fadeOut(1000, function() {
+                    $('#menu-container .services').fadeIn(1000);
+                    $('#menu-container .portfolio').fadeOut("fast");
+                    $('#menu-container .testimonial').fadeOut("fast");
+                    $('#menu-container .about').fadeOut("fast");
+                    $('#menu-container .contact').fadeOut("fast");
+                    $('#menu-container .academy').fadeOut("fast");
+                    $('#menu-container .visa').fadeOut("fast");
+                });
+                $('.nav-content').toggleClass('showNav hideNav').removeClass('hidden');
+                $('.btn-nav').toggleClass('animated');
+            });
+
+            $(".item-notice").click(function() {
+                $('#menu-container .homepage').fadeOut(1000, function() {
+                    $('#menu-container .portfolio').fadeIn(1000);
+                    $('#menu-container .services').fadeOut("fast");
+                    $('#menu-container .testimonial').fadeOut("fast");
+                    $('#menu-container .about').fadeOut("fast");
+                    $('#menu-container .contact').fadeOut("fast");
+                    $('#menu-container .academy').fadeOut("fast");
+                    $('#menu-container .visa').fadeOut("fast");
+                });
+                $('.nav-content').toggleClass('showNav hideNav').removeClass('hidden');
+                $('.btn-nav').toggleClass('animated');
+            });
+
+            $(".item-qa").click(function() {
+                $('#menu-container .homepage').fadeOut(1000, function() {
+                    $('#menu-container .testimonial').fadeIn(1000);
+                    $('#menu-container .services').fadeOut("fast");
+                    $('#menu-container .portfolio').fadeOut("fast");
+                    $('#menu-container .about').fadeOut("fast");
+                    $('#menu-container .contact').fadeOut("fast");
+                    $('#menu-container .academy').fadeOut("fast");
+                    $('#menu-container .visa').fadeOut("fast");
+                });
+                $('.nav-content').toggleClass('showNav hideNav').removeClass('hidden');
+                $('.btn-nav').toggleClass('animated');
+            });
+
+            $(".item-contact").click(function() {
+                $('#menu-container .homepage').fadeOut(1000, function() {
+                    $('#menu-container .about').fadeIn(1000);
+                    $('#menu-container .services').fadeOut("fast");
+                    $('#menu-container .portfolio').fadeOut("fast");
+                    $('#menu-container .testimonial').fadeOut("fast");
+                    $('#menu-container .contact').fadeOut("fast");
+                    $('#menu-container .academy').fadeOut("fast");
+                    $('#menu-container .visa').fadeOut("fast");
+                });
+                $('.nav-content').toggleClass('showNav hideNav').removeClass('hidden');
+                $('.btn-nav').toggleClass('animated');
+            });
+
+
+            $(".item-visa").click(function() {
+                $('.nav-content').toggleClass('showNav hideNav').removeClass('hidden');
+                $('.btn-nav').toggleClass('animated');
+                window.open("pdf.html");
+            });
+
+            $(".item-academy").click(function() {
+                $('#menu-container .homepage').fadeOut(1000, function() {
+                    $('#menu-container .academy').fadeIn(1000);
+                    $('#menu-container .services').fadeOut("fast");
+                    $('#menu-container .portfolio').fadeOut("fast");
+                    $('#menu-container .testimonial').fadeOut("fast");
+                    $('#menu-container .about').fadeOut("fast");
+                    $('#menu-container .contact').fadeOut("fast");
+                    $('#menu-container .visa').fadeOut("fast");
+                });
+                $('.nav-content').toggleClass('showNav hideNav').removeClass('hidden');
+                $('.btn-nav').toggleClass('animated');
+            });
+
+            $(".item-login").click(function() {
+                $('.nav-content').toggleClass('showNav hideNav').removeClass('hidden');
+                $('.btn-nav').toggleClass('animated');
+                window.open("login.html");
+
+            });
+
+        });
+    </script>
+	<!-- /新增 -->
+<script>
+$(function(){
+	$('body').on('touchstart.dropdown', '.dropdown-menu', function (e) { e.stopPropagation(); });
+	
+	$("#main-menu li.dropdown").hover(function(){
+		$(this).addClass("open");
+	},function(){
+		$(this).removeClass("open");
+	});
+	
+	$.post("{:U('user/index/is_login')}",{},function(data){
+		if(data.status==1){
+			if(data.user.avatar){
+				$("#main-menu-user .headicon").attr("src",data.user.avatar.indexOf("http")==0?data.user.avatar:"{:sp_get_image_url('[AVATAR]','!avatar')}".replace('[AVATAR]',data.user.avatar));
+			}
+			
+			$("#main-menu-user .user-nicename").text(data.user.user_nicename!=""?data.user.user_nicename:data.user.user_login);
+			$("#main-menu-user li.login").show();
+			
+		}
+		if(data.status==0){
+			$("#main-menu-user li.offline").show();
+		}
+		
+		/* $.post("{:U('user/notification/getLastNotifications')}",{},function(data){
+			$(".nav .notifactions .count").text(data.list.length);
+		}); */
+		
+	});	
+	;(function($){
+		$.fn.totop=function(opt){
+			var scrolling=false;
+			return this.each(function(){
+				var $this=$(this);
+				$(window).scroll(function(){
+					if(!scrolling){
+						var sd=$(window).scrollTop();
+						if(sd>100){
+							$this.fadeIn();
+						}else{
+							$this.fadeOut();
+						}
+					}
+				});
+				
+				$this.click(function(){
+					scrolling=true;
+					$('html, body').animate({
+						scrollTop : 0
+					}, 500,function(){
+						scrolling=false;
+						$this.fadeOut();
+					});
+				});
+			});
+		};
+	})(jQuery); 
+	
+	$("#backtotop").totop();
+	
+	
+});
+</script>
+

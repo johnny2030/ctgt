@@ -1,0 +1,716 @@
+<admintpl file="header" />
+<style>
+<!--
+.row-fluid table th,td {white-space:nowrap;}
+.row-fluid table th {height:40px;padding:0 5px 4px 9px;}
+.row-fluid table td {height:25px;}
+-->
+</style>
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<form class="well form-search" method="post" id="cid-form" >
+			<if condition="$assessment_type eq 2">
+				<select name="teacher_id" style="width: 150px;" >{$teacher_html}</select>
+				<button class="btn btn-primary">{:L('SEARCH')}</button>
+				<notempty name="teacher_id">
+					<br>
+					<br>
+					{:L('ASSESSMENT_NAME')} : <span style="color:blue;"> {$assessment_name} </span> ; {:L('ASSESSMENT_RESULT_HEAD1')} : <span style="color:blue;"> {$student_count} </span> ; {:L('ASSESSMENT_RESULT_HEAD')}  >>
+				</notempty>
+			<elseif condition="$assessment_type eq 3" />
+				<!-- <input type="hidden" name="roommate_type" id="roommate_type" value="{$roommate_type}">
+				<select name="cr_id" style="width: 150px;" id="cr_id">{$chinese_roommate_html}</select>
+				<select name="hf_id" style="width: 150px;" id="hf_id">{$host_family_html}</select>
+				<button class="btn btn-primary">{:L('SEARCH')}</button>
+				<php>if (!empty($chinese_roommate_id) || !empty($host_family_id)) {</php>
+					<br>
+					<br>
+					{:L('ASSESSMENT_NAME')} : <span style="color:blue;"> {$assessment_name} </span> ; {:L('ASSESSMENT_RESULT_HEAD1')} : <span style="color:blue;"> {$student_count} </span> ; {:L('ASSESSMENT_RESULT_HEAD')}  >>
+				<php>}</php> -->
+				{:L('ASSESSMENT_NAME')} : <span style="color:blue;"> {$assessment_name} </span> ; {:L('ASSESSMENT_RESULT_HEAD1')} : <span style="color:blue;"> {$student_count} </span> ; {:L('ASSESSMENT_RESULT_HEAD')}  >>
+			<else/>
+				{:L('ASSESSMENT_NAME')} : <span style="color:blue;"> {$assessment_name} </span> ; {:L('ASSESSMENT_RESULT_HEAD1')} : <span style="color:blue;"> {$student_count} </span> ; {:L('ASSESSMENT_RESULT_HEAD')}  >>
+			</if>
+		</form>
+		<form method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+			<div class="row-fluid">
+				<div class="span12">
+					<php>
+						$where = array();
+						$where1 = array();
+						$where2 = array();
+						$where3 = array();
+						$where['aq.assessment_id'] = $id; 
+					</php>
+					<if condition="$assessment_type eq 2">
+						<notempty name="teacher_id">
+							<table class="table table-bordered">
+								<php>
+									$index = 0;
+									$where['aa.teacher_id'] = $teacher_id;
+									$where1['aa.teacher_id'] = $teacher_id;
+									$where2['aa.teacher_id'] = $teacher_id;
+									$where3['aa.teacher_id'] = $teacher_id;
+								</php>
+								<notempty name="assessment_questions1">
+									<php>
+										$assessment_options1 = D('AssessmentQuestion')->field('distinct assessment_option')->where(array('assessment_id' => $id,'question_type' => 1))->select();
+										$assessment_options_count = count($assessment_options1);
+									</php>
+									<if condition="$assessment_options_count eq 1">
+										<tr>
+											<php>
+												$where['aq.question_type'] = 1;
+												$assessment_answers_total = D('AssessmentAnswer')->alias('aa')->join('__ASSESSMENT_QUESTION__ aq ON aq.id=aa.assessment_question_id')->where($where)->select();
+											</php>
+											<th width="100">{:L('ASSESSMENT_CHART_STATISTICS')}</th>
+											<td>
+												<notempty name="assessment_answers_total" >
+													<php>
+														$chart = new \Think\Chart();
+														$title = ''; 
+														$data_total = array();
+														$size = 120; 
+														$width = 1200; 
+														$height = 300; 
+														foreach($assessment_options1 as $ao) $assessment_option1 = $ao['assessment_option'];
+														$legend = json_decode($assessment_option1,true);
+														foreach($legend as $k => $v) $data_total[$k] = 0;
+														foreach($assessment_answers_total as $assessment_answer) {
+															foreach($legend as $k => $v) {
+																if(trim($assessment_answer['assessment_answer']) == trim($v)) $data_total[$k]++;
+															}
+														}
+														$columnar_img_name = "columnar-total-".$id.".png";
+														$pie3d_img_name = "pie3d-total-".$id.".png";
+														$chart->createcolumnar($title,$data_total,$size,$height,$width,$legend,$columnar_img_name);
+														$chart->create3dpie($title,$data_total,$size,$height,$width,$legend,0,$pie3d_img_name);
+													</php>
+													<img src="./data/runtime/Cache/{$columnar_img_name}">
+													<img src="./data/runtime/Cache/{$pie3d_img_name}">
+												<else/>
+													{:L('NO_DATA')}
+												</notempty>
+											</td>
+										</tr>
+									</if>
+									<tr>
+										<th width="100">{:L('ASSESSMENT_SINGLE_CHOICE')}</th>
+										<td>
+											<volist name="assessment_questions1" id="aq1">
+												<php>$index++;</php>
+												<p style="font-size:14px;font-weight:bold;">{$index}.{$aq1.assessment_question}</p>
+												<php>
+													$where1['aa.assessment_question_id'] = $aq1['id'];
+													$assessment_answers1 = D('AssessmentAnswer')->alias('aa')->where($where1)->select();
+												</php>
+												<notempty name="assessment_answers1" >	
+													<php>
+														$chart = new \Think\Chart();
+														$title = ''; 
+														$data = array(); 
+														$size = 90; 
+														$width = 500; 
+														$height = 300; 
+														$legend = json_decode($aq1['assessment_option'],true);
+														foreach($legend as $k => $v) $data[$k] = 0;
+														foreach($assessment_answers1 as $assessment_answer) {
+															foreach($legend as $k => $v) {
+																if(trim($assessment_answer['assessment_answer']) == trim($v)) $data[$k]++;
+															}
+														}
+														$columnar_img_name = "columnar-".$aq1['id'].".png";
+														$pie3d_img_name = "pie3d-".$aq1['id'].".png";
+														$chart->createcolumnar($title,$data,$size,$height,$width,$legend,$columnar_img_name);
+														$chart->create3dpie($title,$data,$size,$height,$width,$legend,0,$pie3d_img_name);
+													</php>
+													<img src="./data/runtime/Cache/{$columnar_img_name}">
+													<img src="./data/runtime/Cache/{$pie3d_img_name}">
+												<else/>
+													{:L('NO_DATA')}
+												</notempty>
+											</volist>
+										</td>
+									</tr>
+								</notempty>
+								<notempty name="assessment_questions2">
+									<tr>
+										<th width="100">{:L('ASSESSMENT_MULTIPLE_CHOICE')}</th>
+										<td>
+											<volist name="assessment_questions2" id="aq2">
+												<php>$index++;</php>
+												<p style="font-size:14px;font-weight:bold;">{$index}.{$aq2.assessment_question}</p>
+												<php>
+													$where2['aa.assessment_question_id'] = $aq2['id'];
+													$assessment_answers2 = D('AssessmentAnswer')->alias('aa')->where($where2)->select();
+												</php>
+												<notempty name="assessment_answers2" >
+													<php>
+														$chart = new \Think\Chart();
+														$title = ''; 
+														$data = array(); 
+														$size = 90; 
+														$width = 500; 
+														$height = 300; 
+														$legend =json_decode($aq2['assessment_option'],true);
+														foreach($legend as $k => $v) $data[$k] = 0;
+														foreach($assessment_answers2 as $assessment_answer) {
+															foreach($legend as $k => $v) {
+																if(trim($assessment_answer['assessment_answer']) == trim($v)) $data[$k]++;
+															}
+														}
+														$columnar_img_name = "columnar-".$aq2['id'].".png";
+														$pie3d_img_name = "pie3d-".$aq2['id'].".png";
+														$chart->createcolumnar($title,$data,$size,$height,$width,$legend,$columnar_img_name);
+														$chart->create3dpie($title,$data,$size,$height,$width,$legend,0,$pie3d_img_name);
+													</php>
+													<img src="./data/runtime/Cache/{$columnar_img_name}">
+													<img src="./data/runtime/Cache/{$pie3d_img_name}">
+												<else/>
+													{:L('NO_DATA')}
+												</notempty>
+											</volist>
+										</td>
+									</tr>
+								</notempty>
+								<notempty name="assessment_questions3">
+									<tr>
+										<th width="100">{:L('ASSESSMENT_ESSAY_QUESTION')}</th>
+										<td>
+											<volist name="assessment_questions3" id="aq3">
+												<php>$index++;</php>
+												<p style="font-size:14px;font-weight:bold;">{$index}.{$aq3.assessment_question}</p>
+												<php>
+													$where3['aa.assessment_question_id'] = $aq3['id'];
+													$assessment_answers3 = D('AssessmentAnswer')->alias('aa')->where($where3)->select();
+												</php>
+												<notempty name="assessment_answers3" >
+													<table class="table table-bordered">
+														<volist name="assessment_answers3" id="aa3">
+															<tr>
+																<td>
+																	<p style="font-size:12px;font-weight:normal;">
+																		<if condition="$assessment_anonymity eq 2">
+																			<php>$student = D('Users')->field('full_name')->find($aa3['student_id']);</php>
+																			{$student.full_name} : 
+																		</if>
+																		{$aa3.assessment_answer}
+																	</p>
+																</td>
+															</tr>
+														</volist>
+													</table>
+												<else/>
+													{:L('NO_DATA')}
+												</notempty>
+											</volist>
+										</td>
+									</tr>
+								</notempty>
+							</table>
+						</notempty>
+					<elseif condition="$assessment_type eq 3"/>
+						<!-- <php>if (!empty($chinese_roommate_id) || !empty($host_family_id)) {</php>
+							<table class="table table-bordered">
+								<php>
+									$index = 0;
+									if ($chinese_roommate_id) {
+										$where['aa.roommate_id'] = $chinese_roommate_id;
+										$where1['aa.roommate_id'] = $chinese_roommate_id;
+										$where2['aa.roommate_id'] = $chinese_roommate_id;
+										$where3['aa.roommate_id'] = $chinese_roommate_id;
+										$where['aa.roommate_type'] = 1;
+										$where1['aa.roommate_type'] = 1;
+										$where2['aa.roommate_type'] = 1;
+										$where3['aa.roommate_type'] = 1;
+									}
+									if ($host_family_id) {
+										$where['aa.roommate_id'] = $host_family_id;
+										$where1['aa.roommate_id'] = $host_family_id;
+										$where2['aa.roommate_id'] = $host_family_id;
+										$where3['aa.roommate_id'] = $host_family_id;
+										$where['aa.roommate_type'] = 2;
+										$where1['aa.roommate_type'] = 2;
+										$where2['aa.roommate_type'] = 2;
+										$where3['aa.roommate_type'] = 2;
+									}
+								</php>
+								<notempty name="assessment_questions1">
+									<php>
+										$assessment_options1 = D('AssessmentQuestion')->field('distinct assessment_option')->where(array('assessment_id' => $id,'question_type' => 1))->select();
+										$assessment_options_count = count($assessment_options1);
+									</php>
+									<if condition="$assessment_options_count eq 1">
+										<tr>
+											<php>
+												$where['aq.question_type'] = 1;
+												$assessment_answers_total = D('AssessmentAnswer')->alias('aa')->join('__ASSESSMENT_QUESTION__ aq ON aq.id=aa.assessment_question_id')->where($where)->select();
+											</php>
+											<th width="100">{:L('ASSESSMENT_CHART_STATISTICS')}</th>
+											<td>
+												<notempty name="assessment_answers_total" >
+													<php>
+														$chart = new \Think\Chart();
+														$title = ''; 
+														$data_total = array();
+														$size = 120; 
+														$width = 1200; 
+														$height = 300; 
+														foreach($assessment_options1 as $ao) $assessment_option1 = $ao['assessment_option'];
+														$legend = json_decode($assessment_option1,true);
+														foreach($legend as $k => $v) $data_total[$k] = 0;
+														foreach($assessment_answers_total as $assessment_answer) {
+															foreach($legend as $k => $v) {
+																if(trim($assessment_answer['assessment_answer']) == trim($v)) $data_total[$k]++;
+															}
+														}
+														$columnar_img_name = "columnar-total-".$id.".png";
+														$pie3d_img_name = "pie3d-total-".$id.".png";
+														$chart->createcolumnar($title,$data_total,$size,$height,$width,$legend,$columnar_img_name);
+														$chart->create3dpie($title,$data_total,$size,$height,$width,$legend,0,$pie3d_img_name);
+													</php>
+													<img src="./data/runtime/Cache/{$columnar_img_name}">
+													<img src="./data/runtime/Cache/{$pie3d_img_name}">
+												<else/>
+													{:L('NO_DATA')}
+												</notempty>
+											</td>
+										</tr>
+									</if>
+									<tr>
+										<th width="100">{:L('ASSESSMENT_SINGLE_CHOICE')}</th>
+										<td>
+											<volist name="assessment_questions1" id="aq1">
+												<php>$index++;</php>
+												<p style="font-size:14px;font-weight:bold;">{$index}.{$aq1.assessment_question}</p>
+												<php>
+													$where1['aa.assessment_question_id'] = $aq1['id'];
+													$assessment_answers1 = D('AssessmentAnswer')->alias('aa')->where($where1)->select();
+												</php>
+												<notempty name="assessment_answers1" >	
+													<php>
+														$chart = new \Think\Chart();
+														$title = ''; 
+														$data = array(); 
+														$size = 90; 
+														$width = 500; 
+														$height = 300; 
+														$legend = json_decode($aq1['assessment_option'],true);
+														foreach($legend as $k => $v) $data[$k] = 0;
+														foreach($assessment_answers1 as $assessment_answer) {
+															foreach($legend as $k => $v) {
+																if(trim($assessment_answer['assessment_answer']) == trim($v)) $data[$k]++;
+															}
+														}
+														$columnar_img_name = "columnar-".$aq1['id'].".png";
+														$pie3d_img_name = "pie3d-".$aq1['id'].".png";
+														$chart->createcolumnar($title,$data,$size,$height,$width,$legend,$columnar_img_name);
+														$chart->create3dpie($title,$data,$size,$height,$width,$legend,0,$pie3d_img_name);
+													</php>
+													<img src="./data/runtime/Cache/{$columnar_img_name}">
+													<img src="./data/runtime/Cache/{$pie3d_img_name}">
+												<else/>
+													{:L('NO_DATA')}
+												</notempty>
+											</volist>
+										</td>
+									</tr>
+								</notempty>
+								<notempty name="assessment_questions2">
+									<tr>
+										<th width="100">{:L('ASSESSMENT_MULTIPLE_CHOICE')}</th>
+										<td>
+											<volist name="assessment_questions2" id="aq2">
+												<php>$index++;</php>
+												<p style="font-size:14px;font-weight:bold;">{$index}.{$aq2.assessment_question}</p>
+												<php>
+													$where2['aa.assessment_question_id'] = $aq2['id'];
+													$assessment_answers2 = D('AssessmentAnswer')->alias('aa')->where($where2)->select();
+												</php>
+												<notempty name="assessment_answers2" >
+													<php>
+														$chart = new \Think\Chart();
+														$title = ''; 
+														$data = array(); 
+														$size = 90; 
+														$width = 500; 
+														$height = 300; 
+														$legend =json_decode($aq2['assessment_option'],true);
+														foreach($legend as $k => $v) $data[$k] = 0;
+														foreach($assessment_answers2 as $assessment_answer) {
+															foreach($legend as $k => $v) {
+																if(trim($assessment_answer['assessment_answer']) == trim($v)) $data[$k]++;
+															}
+														}
+														$columnar_img_name = "columnar-".$aq2['id'].".png";
+														$pie3d_img_name = "pie3d-".$aq2['id'].".png";
+														$chart->createcolumnar($title,$data,$size,$height,$width,$legend,$columnar_img_name);
+														$chart->create3dpie($title,$data,$size,$height,$width,$legend,0,$pie3d_img_name);
+													</php>
+													<img src="./data/runtime/Cache/{$columnar_img_name}">
+													<img src="./data/runtime/Cache/{$pie3d_img_name}">
+												<else/>
+													{:L('NO_DATA')}
+												</notempty>
+											</volist>
+										</td>
+									</tr>
+								</notempty>
+								<notempty name="assessment_questions3">
+									<tr>
+										<th width="100">{:L('ASSESSMENT_ESSAY_QUESTION')}</th>
+										<td>
+											<volist name="assessment_questions3" id="aq3">
+												<php>$index++;</php>
+												<p style="font-size:14px;font-weight:bold;">{$index}.{$aq3.assessment_question}</p>
+												<php>
+													$where3['aa.assessment_question_id'] = $aq3['id'];
+													$assessment_answers3 = D('AssessmentAnswer')->alias('aa')->where($where3)->select();
+												</php>
+												<notempty name="assessment_answers3" >
+													<table class="table table-bordered">
+														<volist name="assessment_answers3" id="aa3">
+															<tr>
+																<td>
+																	<p style="font-size:12px;font-weight:normal;">
+																		<if condition="$assessment_anonymity eq 2">
+																			<php>$student = D('Users')->field('full_name')->find($aa3['student_id']);</php>
+																			{$student.full_name} : 
+																		</if>
+																		{$aa3.assessment_answer}
+																	</p>
+																</td>
+															</tr>
+														</volist>
+													</table>
+												<else/>
+													{:L('NO_DATA')}
+												</notempty>
+											</volist>
+										</td>
+									</tr>
+								</notempty>
+							</table>
+						<php>}</php> -->
+						<notempty name="cr_students">
+							<div class="form-actions" style="padding-left:20px;margin-bottom:0;margin-top:0;">
+								<span style="color:blue;"> Chinese Roommates </span>  >>
+							</div>
+							<div class="row-fluid">
+								<php>$index = 0;</php>
+								<div class="span4">
+									<table class="table table-hover table-bordered table-list">
+										<thead>
+											<tr>
+												<th>NO</th>
+												<th>Chinese Roommate</th>
+												<th>Evaluator</th>
+											</tr>
+										</thead>
+										<volist name="cr_students" id="vo">
+											<tr>
+												<td>{$i}</td>
+												<td>{$vo.name}</td>
+												<td>{$vo.full_name}</td>
+											</tr>
+										</volist>
+									</table>
+								</div>
+								<div class="span8" style="overflow-x:auto;margin-left:0;">
+									<table class="table table-hover table-bordered table-list">
+										<thead>
+											<tr>
+												<volist name="assessment_questions1" id="aq1">
+													<php>$index++;</php>
+													<th>{$index} : {$aq1.assessment_question}</th>
+												</volist>
+												<volist name="assessment_questions2" id="aq2">
+													<php>$index++;</php>
+													<th>{$index} : {$aq2.assessment_question}</th>
+												</volist>
+												<volist name="assessment_questions3" id="aq3">
+													<php>$index++;</php>
+													<th>{$index} : {$aq3.assessment_question}</th>
+												</volist>
+											</tr>
+										</thead>
+										<volist name="cr_students" id="vo">
+											<tr>
+												<volist name="assessment_questions1" id="aq1">
+													<php>$assessment_answer1 = D('AssessmentAnswer')->where(array('roommate_id' => $vo['id'],'assessment_question_id' => $aq1['id']))->find();</php>
+													<td>{$assessment_answer1.assessment_answer}</td>
+												</volist>
+												<volist name="assessment_questions2" id="aq2">
+													<php>$assessment_answer2 = D('AssessmentAnswer')->where(array('roommate_id' => $vo['id'],'assessment_question_id' => $aq2['id']))->find();</php>
+													<td>{$assessment_answer2.assessment_answer}</td>
+												</volist>
+												<volist name="assessment_questions3" id="aq3">
+													<php>$assessment_answer3 = D('AssessmentAnswer')->where(array('roommate_id' => $vo['id'],'assessment_question_id' => $aq3['id']))->find();</php>
+													<td>{$assessment_answer3.assessment_answer}</td>
+												</volist>
+											</tr>
+										</volist>
+									</table>
+								</div>
+							</div>
+						</notempty>
+						<notempty name="hf_students">
+							<div class="form-actions" style="padding-left:20px;margin-bottom:0;">
+								<span style="color:blue;"> Host Families </span>  >>
+							</div>
+							<div class="row-fluid">
+								<php>$index = 0;</php>
+								<div class="span4">
+									<table class="table table-hover table-bordered table-list">
+										<thead>
+											<tr>
+												<th>NO</th>
+												<th>Host Family</th>
+												<th>Evaluator</th>
+											</tr>
+										</thead>
+										<volist name="hf_students" id="vo">
+											<tr>
+												<td>{$i}</td>
+												<td>{$vo.name}</td>
+												<td>{$vo.full_name}</td>
+											</tr>
+										</volist>
+									</table>
+								</div>
+								<div class="span8" style="overflow-x:auto;margin-left:0;">
+									<table class="table table-hover table-bordered table-list">
+										<thead>
+											<tr>
+												<volist name="assessment_questions1" id="aq1">
+													<php>$index++;</php>
+													<th>{$index} : {$aq1.assessment_question}</th>
+												</volist>
+												<volist name="assessment_questions2" id="aq2">
+													<php>$index++;</php>
+													<th>{$index} : {$aq2.assessment_question}</th>
+												</volist>
+												<volist name="assessment_questions3" id="aq3">
+													<php>$index++;</php>
+													<th>{$index} : {$aq3.assessment_question}</th>
+												</volist>
+											</tr>
+										</thead>
+										<volist name="hf_students" id="vo">
+											<tr>
+												<volist name="assessment_questions1" id="aq1">
+													<php>$assessment_answer1 = D('AssessmentAnswer')->where(array('roommate_id' => $vo['id'],'assessment_question_id' => $aq1['id']))->find();</php>
+													<td>{$assessment_answer1.assessment_answer}</td>
+												</volist>
+												<volist name="assessment_questions2" id="aq2">
+													<php>$assessment_answer2 = D('AssessmentAnswer')->where(array('roommate_id' => $vo['id'],'assessment_question_id' => $aq2['id']))->find();</php>
+													<td>{$assessment_answer2.assessment_answer}</td>
+												</volist>
+												<volist name="assessment_questions3" id="aq3">
+													<php>$assessment_answer3 = D('AssessmentAnswer')->where(array('roommate_id' => $vo['id'],'assessment_question_id' => $aq3['id']))->find();</php>
+													<td>{$assessment_answer3.assessment_answer}</td>
+												</volist>
+											</tr>
+										</volist>
+									</table>
+								</div>
+							</div>
+						</notempty>
+					<else/>
+						<table class="table table-bordered">
+							<php>$index = 0;</php>
+							<notempty name="assessment_questions1">
+								<php>
+									$assessment_options1 = D('AssessmentQuestion')->field('distinct assessment_option')->where(array('assessment_id' => $id,'question_type' => 1))->select();
+									$assessment_options_count = count($assessment_options1);
+								</php>
+								<if condition="$assessment_options_count eq 1">
+									<tr>
+										<php>
+											$where['aq.question_type'] = 1;
+											$assessment_answers_total = D('AssessmentAnswer')->alias('aa')->join('__ASSESSMENT_QUESTION__ aq ON aq.id=aa.assessment_question_id')->where($where)->select();
+										</php>
+										<th width="100">{:L('ASSESSMENT_CHART_STATISTICS')}</th>
+										<td>
+											<notempty name="assessment_answers_total" >
+												<php>
+													$chart = new \Think\Chart();
+													$title = ''; 
+													$data_total = array();
+													$size = 120; 
+													$width = 1200; 
+													$height = 300; 
+													foreach($assessment_options1 as $ao) $assessment_option1 = $ao['assessment_option'];
+													$legend = json_decode($assessment_option1,true);
+													foreach($legend as $k => $v) $data_total[$k] = 0;
+													foreach($assessment_answers_total as $assessment_answer) {
+														foreach($legend as $k => $v) {
+															if(trim($assessment_answer['assessment_answer']) == trim($v)) $data_total[$k]++;
+														}
+													}
+													$columnar_img_name = "columnar-total-".$id.".png";
+													$pie3d_img_name = "pie3d-total-".$id.".png";
+													$chart->createcolumnar($title,$data_total,$size,$height,$width,$legend,$columnar_img_name);
+													$chart->create3dpie($title,$data_total,$size,$height,$width,$legend,0,$pie3d_img_name);
+												</php>
+												<img src="./data/runtime/Cache/{$columnar_img_name}">
+												<img src="./data/runtime/Cache/{$pie3d_img_name}">
+											<else/>
+												{:L('NO_DATA')}
+											</notempty>
+										</td>
+									</tr>
+								</if>
+								<tr>
+									<th width="100">{:L('ASSESSMENT_SINGLE_CHOICE')}</th>
+									<td>
+										<volist name="assessment_questions1" id="aq1">
+											<php>$index++;</php>
+											<p style="font-size:14px;font-weight:bold;">{$index}.{$aq1.assessment_question}</p>
+											<php>
+												$where1['aa.assessment_question_id'] = $aq1['id'];
+												$assessment_answers1 = D('AssessmentAnswer')->alias('aa')->where($where1)->select();
+											</php>
+											<notempty name="assessment_answers1" >	
+												<php>
+													$chart = new \Think\Chart();
+													$title = ''; 
+													$data = array(); 
+													$size = 90; 
+													$width = 500; 
+													$height = 300; 
+													$legend = json_decode($aq1['assessment_option'],true);
+													foreach($legend as $k => $v) $data[$k] = 0;
+													foreach($assessment_answers1 as $assessment_answer) {
+														foreach($legend as $k => $v) {
+															if(trim($assessment_answer['assessment_answer']) == trim($v)) $data[$k]++;
+														}
+													}
+													$columnar_img_name = "columnar-".$aq1['id'].".png";
+													$pie3d_img_name = "pie3d-".$aq1['id'].".png";
+													$chart->createcolumnar($title,$data,$size,$height,$width,$legend,$columnar_img_name);
+													$chart->create3dpie($title,$data,$size,$height,$width,$legend,0,$pie3d_img_name);
+												</php>
+												<img src="./data/runtime/Cache/{$columnar_img_name}">
+												<img src="./data/runtime/Cache/{$pie3d_img_name}">
+											<else/>
+												{:L('NO_DATA')}
+											</notempty>
+										</volist>
+									</td>
+								</tr>
+							</notempty>
+							<notempty name="assessment_questions2">
+								<tr>
+									<th width="100">{:L('ASSESSMENT_MULTIPLE_CHOICE')}</th>
+									<td>
+										<volist name="assessment_questions2" id="aq2">
+											<php>$index++;</php>
+											<p style="font-size:14px;font-weight:bold;">{$index}.{$aq2.assessment_question}</p>
+											<php>
+												$where2['aa.assessment_question_id'] = $aq2['id'];
+												$assessment_answers2 = D('AssessmentAnswer')->alias('aa')->where($where2)->select();
+											</php>
+											<notempty name="assessment_answers2" >
+												<php>
+													$chart = new \Think\Chart();
+													$title = ''; 
+													$data = array(); 
+													$size = 90; 
+													$width = 500; 
+													$height = 300; 
+													$legend =json_decode($aq2['assessment_option'],true);
+													foreach($legend as $k => $v) $data[$k] = 0;
+													foreach($assessment_answers2 as $assessment_answer) {
+														foreach($legend as $k => $v) {
+															if(trim($assessment_answer['assessment_answer']) == trim($v)) $data[$k]++;
+														}
+													}
+													$columnar_img_name = "columnar-".$aq2['id'].".png";
+													$pie3d_img_name = "pie3d-".$aq2['id'].".png";
+													$chart->createcolumnar($title,$data,$size,$height,$width,$legend,$columnar_img_name);
+													$chart->create3dpie($title,$data,$size,$height,$width,$legend,0,$pie3d_img_name);
+												</php>
+												<img src="./data/runtime/Cache/{$columnar_img_name}">
+												<img src="./data/runtime/Cache/{$pie3d_img_name}">
+											<else/>
+												{:L('NO_DATA')}
+											</notempty>
+										</volist>
+									</td>
+								</tr>
+							</notempty>
+							<notempty name="assessment_questions3">
+								<tr>
+									<th width="100">{:L('ASSESSMENT_ESSAY_QUESTION')}</th>
+									<td>
+										<volist name="assessment_questions3" id="aq3">
+											<php>$index++;</php>
+											<p style="font-size:14px;font-weight:bold;">{$index}.{$aq3.assessment_question}</p>
+											<php>
+												$where3['aa.assessment_question_id'] = $aq3['id'];
+												$assessment_answers3 = D('AssessmentAnswer')->alias('aa')->where($where3)->select();
+											</php>
+											<notempty name="assessment_answers3" >
+												<table class="table table-bordered">
+													<volist name="assessment_answers3" id="aa3">
+														<tr>
+															<td>
+																<p style="font-size:12px;font-weight:normal;">
+																	<if condition="$assessment_anonymity eq 2">
+																		<php>$student = D('Users')->field('full_name')->find($aa3['student_id']);</php>
+																		{$student.full_name} : 
+																	</if>
+																	{$aa3.assessment_answer}
+																</p>
+															</td>
+														</tr>
+													</volist>
+												</table>
+											<else/>
+												{:L('NO_DATA')}
+											</notempty>
+										</volist>
+									</td>
+								</tr>
+							</notempty>
+						</table>
+					</if>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+			
+			$('#cr_id').change(function() {
+				if ($('#cr_id option:selected').val() != "") {
+					$('#hf_id').find('option:first').attr('selected',true);
+					$('#roommate_type').val(1);
+				}
+			});
+			$('#hf_id').change(function() {
+				if ($('#hf_id option:selected').val() != "") {
+					$('#cr_id').find('option:first').attr('selected',true);
+					$('#roommate_type').val(2);
+				}
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<admintpl file="header" />
+<style>
+<!--
+.btn-group {border: 1px solid #e9eef3;border-radius: 3px;}
+.btn-group.open .btn.dropdown-toggle {background-color:#fff;}
+.btn-group>.btn {background-color:#fff;color:#a6b3b9;}
+.caret {border-top: 4px solid #a6b3b9;}
+.dropdown-menu {background-color:#fff;}
+.multiselect-container>li>a>label.checkbox {margin-left:0;color:#a6b3b9;}
+.multiselect-container>li.active>a>label.checkbox {margin-left:0;color:#fff;}
+-->
+</style>
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('assessment/index')}">{:L('ASSESSMENT_LIST')}</a></li>
+			<li class="active"><a href="{:U('assessment/add')}">{:L('ASSESSMENT_ADD')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+			<div class="row-fluid">
+				<div class="span9">
+					<table class="table table-bordered">
+						<tr>
+							<th width="100">{:L('ASSESSMENT_NAME')}</th>
+							<td>
+								<input type="text" style="width: 500px;" id="assessment_name" name="assessment_name" value="{$assessment_name}" placeholder="{:L('ASSESSMENT_NAME')}"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('ASSESSMENT_END_TIME')}</th>
+							<td>
+								<input type="text" name="assessment_end_time" value="" class="js-datetime" />
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('ASSESSMENT_TERM')}</th>
+							<td colspan="3">
+								<select name="term_year_sess[]" id="term_year_sess" style="width: 215px;" multiple="multiple">
+									{$term_html}
+								</select>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<script type="text/javascript">
+							//多选下拉框
+							//定义参数，更多参数查询bootstrap-mutiselect组件api
+							$('#term_year_sess').multiselect({
+								nonSelectedText: "{:L('PLEASE_SELECT')}",
+								buttonWidth:"220px"
+							});
+							
+						</script>
+						<tr>
+							<th width="100">{:L('ASSESSMENT_TYPE')}</th>
+							<td colspan="3">
+								<input name="assessment_type" type="radio" value="1" checked/> {:L('ASSESSMENT_TYPE_GENERAL')}&nbsp;&nbsp;&nbsp;
+								<input name="assessment_type" type="radio" value="2"/> {:L('ASSESSMENT_TYPE_TEACHER')}&nbsp;&nbsp;&nbsp;
+								<input name="assessment_type" type="radio" value="3"/> {:L('ASSESSMENT_TYPE_ROOMMATE')}<br />
+								<!-- <table class="table table-bordered" style="margin-top:10px;display:none;" id="teacher">
+									<tr>
+										<php>
+											$headteachers = D('Users')->alias('u')->field('u.id,u.full_name')->join('__ROLE_USER__ ru ON ru.user_id=u.id')->where(array('ru.role_id' => 3,'u.user_status' => 1))->select();
+											$parttimeteachers = D('Users')->alias('u')->field('u.id,u.full_name')->join('__ROLE_USER__ ru ON ru.user_id=u.id')->where(array('ru.role_id' => 13,'u.user_status' => 1))->select();
+										</php>
+										<td>
+											<input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x">　{:L('SELECT_ALL')} (CIEE Staff)<br>
+											<volist name="headteachers" id="headteacher">
+												<input type="checkbox" name="headteachers[]" value="{$headteacher.id}" class="js-check" data-xid="js-check-x"> {$headteacher.full_name} &nbsp; 
+											</volist>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<input type="checkbox" class="js-check-all" data-direction="y" data-checklist="js-check-y">　{:L('SELECT_ALL')} (CIEE教师)<br>
+											<volist name="parttimeteachers" id="parttimeteacher">
+												<input type="checkbox" name="parttimeteachers[]" value="{$parttimeteacher.id}" class="js-check" data-yid="js-check-y" > {$parttimeteacher.full_name} &nbsp; 
+											</volist>
+										</td>
+									</tr>
+								</table>
+								<table class="table table-bordered" style="margin-top:10px;display:none;" id="student">
+									<tr>
+										<php>
+											$headteachers = D('Users')->alias('u')->field('u.id,u.full_name')->join('__ROLE_USER__ ru ON ru.user_id=u.id')->where(array('ru.role_id' => 3,'u.user_status' => 1))->select();
+											$parttimeteachers = D('Users')->alias('u')->field('u.id,u.full_name')->join('__ROLE_USER__ ru ON ru.user_id=u.id')->where(array('ru.role_id' => 13,'u.user_status' => 1))->select();
+										</php>
+										<td>
+											<input type="checkbox" class="js-check-all" data-direction="y" data-checklist="js-check-y">　{:L('SELECT_ALL')} <br>
+											<volist name="parttimeteachers" id="parttimeteacher">
+												<input type="checkbox" name="parttimeteachers[]" value="{$parttimeteacher.id}" class="js-check" data-yid="js-check-y" > {$parttimeteacher.full_name} &nbsp; 
+											</volist>
+										</td>
+									</tr>
+								</table> -->
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('ASSESSMENT_ANONYMITY')}</th>
+							<td colspan="3">
+								<input name="assessment_anonymity" type="radio" value="1" checked/> {:L('ASSESSMENT_ANONYMITY_YES')}&nbsp;&nbsp;&nbsp;
+								<input name="assessment_anonymity" type="radio" value="2"/> {:L('ASSESSMENT_ANONYMITY_NO')}&nbsp;&nbsp;&nbsp;
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('ASSESSMENT_SINGLE_CHOICE')}</th>
+							<td>
+								<table class="table table-bordered">
+									<tbody>
+										<tr>
+											<td>
+												<input type="hidden" name="option_counts1[]" value="1">
+												{:L('QUESTION')} : 
+												<textarea name="assessment_question1[]" style="width: 600px; height: 40px;" ></textarea>
+												<button class="btn btn-success btn-small" type="button" onclick="$(this).parent().find('span:last').clone(true).appendTo($(this).parent()).find('input').val('');$(this).parent().find('input:first').val($(this).parent().children('span').length)">+{:L('ASSESSMENT_OPTION_ADD')}</button>
+												<br><br>
+												{:L('OPTION')} : 
+												<span>
+													<input type="text" name="assessment_option1[]" value="" style="width:100px;"/>
+													<a style="padding:2px 5px;border-radius:25px;" class="btn btn-danger btn-small" href="javascript:;" onclick="if ($(this).parent().parent().children('span').length <= 1) { alert('{:L('DELETE_LAST_MESSAGE')}'); return false; } if (window.confirm('{:L('DELETE_CONFIRM_MESSAGE')}')) {$(this).parent().parent().find('input:first').val($(this).parent().parent().find('input:first').val()-1);$(this).parent().remove();}">{:L('—')}</a>
+												</span>
+											</td>
+											<td><a href="javascript:;" onclick="if ($(this).parent().parent().siblings().length <= 0) { alert('{:L('DELETE_LAST_MESSAGE')}'); return false; } if (window.confirm('{:L('DELETE_CONFIRM_MESSAGE')}')) $(this).parent().parent().remove();">{:L('DELETE')}</a></td>
+										</tr>
+									</tbody>
+								</table>
+								<button class="btn btn-primary" type="button" onclick="$(this).prev().find('tbody tr:last').clone(true).appendTo($(this).prev().find('tbody')).find('textarea').val('');;$(this).prev().find('tbody tr:last td input:first').val($(this).prev().find('tbody tr:last td').children('span').length);">+{:L('ASSESSMENT_QUESTION_ADD')}</button>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('ASSESSMENT_MULTIPLE_CHOICE')}</th>
+							<td>
+								<table class="table table-bordered">
+									<tbody>
+										<tr>
+											<td>
+												<input type="hidden" name="option_counts2[]" value="1">
+												{:L('QUESTION')} : 
+												<textarea name="assessment_question2[]" style="width: 600px; height: 40px;" ></textarea>
+												<button class="btn btn-success btn-small" type="button" onclick="$(this).parent().find('span:last').clone(true).appendTo($(this).parent()).find('input').val('');$(this).parent().find('input:first').val($(this).parent().children('span').length)">+{:L('添加选项')}</button>
+												<br><br>
+												{:L('OPTION')} : 
+												<span>
+													<input type="text" name="assessment_option2[]" value="" style="width:100px;"/>
+													<a style="padding:2px 5px;border-radius:25px;" class="btn btn-danger btn-small" href="javascript:;" onclick="if ($(this).parent().parent().children('span').length <= 1) { alert('{:L('DELETE_LAST_MESSAGE')}'); return false; } if (window.confirm('{:L('DELETE_CONFIRM_MESSAGE')}')) {$(this).parent().parent().find('input:first').val($(this).parent().parent().find('input:first').val()-1);$(this).parent().remove();}">{:L('—')}</a>
+												</span>
+											</td>
+											<td><a href="javascript:;" onclick="if ($(this).parent().parent().siblings().length <= 0) { alert('{:L('DELETE_LAST_MESSAGE')}'); return false; } if (window.confirm('{:L('DELETE_CONFIRM_MESSAGE')}')) $(this).parent().parent().remove();">{:L('DELETE')}</a></td>
+										</tr>
+									</tbody>
+								</table>
+								<button class="btn btn-primary" type="button" onclick="$(this).prev().find('tbody tr:last').clone(true).appendTo($(this).prev().find('tbody')).find('textarea').val('');;$(this).prev().find('tbody tr:last td input:first').val($(this).prev().find('tbody tr:last td').children('span').length);">+{:L('ASSESSMENT_QUESTION_ADD')}</button>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('ASSESSMENT_ESSAY_QUESTION')}</th>
+							<td>
+								<table class="table table-bordered">
+									<tbody>
+										<tr>
+											<td>
+												{:L('QUESTION')} : <textarea name="assessment_question3[]" style="width: 600px; height: 40px;" ></textarea>
+											</td>
+											<td><a href="javascript:;" onclick="if ($(this).parent().parent().siblings().length <= 0) { alert('{:L('DELETE_LAST_MESSAGE')}'); return false; } if (window.confirm('{:L('DELETE_CONFIRM_MESSAGE')}')) $(this).parent().parent().remove();">{:L('DELETE')}</a></td>
+										</tr>
+									</tbody>
+								</table>
+								<button class="btn btn-primary" type="button" onclick="$(this).prev().find('tbody tr:last').clone(true).appendTo($(this).prev().find('tbody')).find('textarea').val('');">+{:L('ASSESSMENT_QUESTION_ADD')}</button>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('ASSESSMENT_ABSTRACT')}</th>
+							<td>
+								<textarea name="assessment_description" id="assessment_description" style="width: 98%; height: 50px;" placeholder="{:L('ASSESSMENT_ABSTRACT')}">{$assessment_description}</textarea>
+							</td>
+						</tr>
+						<tr>
+							<th>{:L('ASSESSMENT_DETAILS')}</th>
+							<td>
+								<script type="text/plain" id="assessment_content" name="assessment_content">{$assessment_content}</script>
+							</td>
+						</tr>
+						
+					</table>
+				</div>
+				<div class="span3">
+					<table class="table table-bordered">
+						<tr>
+							<th>{:L('THUMBNAIL')}</th>
+						</tr>
+						<tr>
+							<td>
+								<div style="text-align: center;">
+									<input type="hidden" name="smeta[thumb]" id="thumb" value="">
+									<a href="javascript:upload_one_image('{:L('IMAGE_UPLOAD')}','#thumb');">
+										<img src="__TMPL__Public/assets/images/default-thumbnail.png" id="thumb-preview" width="135" style="cursor: hand" />
+									</a>
+									<input type="button" class="btn btn-small" onclick="$('#thumb-preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="{:L('CANCEL')}">
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th>{:L('PUBDATE')}</th>
+						</tr>
+						<tr>
+							<td>
+								<input type="text" id="assessment_modify_time" name="assessment_modify_time" value="{:date('Y-m-d H:i:s',time())}" class="js-datetime">
+							</td>
+						</tr>
+						<tr>
+							<th>{:L('STATUS')}</th>
+						</tr>
+						<tr>
+							<td>
+								<label class="radio"><input type="radio" name="assessment_status" value="1" checked>{:L('DISPLAY')}</label>
+								<label class="radio"><input type="radio" name="assessment_status" value="0">{:L('HIDE')}</label>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="form-actions">
+				<button class="btn btn-primary js-ajax-submit" type="submit">{:L('ADD')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript">
+		//编辑器路径定义
+		var editorURL = GV.WEB_ROOT;
+		
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			
+			$(".js-ajax-close-btn").on('click', function(e) {
+				e.preventDefault();
+				Wind.use("artDialog", function() {
+					art.dialog({
+						id : "question",
+						icon : "question",
+						fixed : true,
+						lock : true,
+						background : "#CCCCCC",
+						opacity : 0,
+						content : "{:L('CLOSE_PAGE')}",
+						ok : function() {
+							setCookie("refersh_time", 1);
+							window.close();
+							return true;
+						}
+					});
+				});
+			});
+			/////---------------------
+			Wind.use('validate','ajaxForm','artDialog',function() {
+				//编辑器
+				editorcontent = new baidu.editor.ui.Editor();
+				editorcontent.render('assessment_content');
+				try {
+					editorcontent.sync();
+				} catch (err) {}
+				//增加编辑器验证规则
+				jQuery.validator.addMethod('editorcontent',function() {
+					try {
+						editorcontent.sync();
+					} catch (err) {}
+					return editorcontent.hasContents();
+				});
+				
+				var form = $('form.js-ajax-forms');
+				//ie处理placeholder提交问题
+				if ($.browser && $.browser.msie) {
+					form.find('[placeholder]').each(function() {
+						var input = $(this);
+						if (input.val() == input
+								.attr('placeholder')) {
+							input.val('');
+						}
+					});
+				}
+				//表单验证开始
+				form.validate({
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//是否在敲击键盘时验证
+					onkeyup : false,
+					//当鼠标掉级时验证
+					onclick : false,
+					//验证错误
+					showErrors : function(errorMap,errorArr) {
+						//errorMap {'name':'错误信息'}
+						//errorArr [{'message':'错误信息',element:({})}]
+						try {
+							$(errorArr[0].element).focus();
+							art.dialog({
+								id : 'error',
+								icon : 'error',
+								lock : true,
+								fixed : true,
+								background : "#CCCCCC",
+								opacity : 0,
+								content : errorArr[0].message,
+								cancelVal : "{:L('OK')}",
+								cancel : function() {
+									$(errorArr[0].element).focus();
+								}
+							});
+						} catch (err) {}
+					},
+					//验证规则
+					rules : {
+						'assessment_name' : { required : 1 },
+						'assessment_end_time' : { required : 1 }
+					},
+					//验证未通过提示消息
+					messages : {
+						'assessment_name' : { required : "{:L('ASSESSMENT_NAME')}" },
+						'assessment_end_time' : { required : "{:L('ASSESSMENT_END_TIME')}" }
+					},
+					//给未通过验证的元素加效果,闪烁等
+					highlight : false,
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//验证通过，提交表单
+					submitHandler : function(forms) {
+						$(forms).ajaxSubmit({
+							url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+							dataType : 'json',
+							beforeSubmit : function(arr,$form,options) {
+	
+							},
+							success : function(data,statusText,xhr,$form) {
+								if (data.status) {
+									setCookie("refersh_time",1);
+									//添加成功
+									Wind.use("artDialog",function() {
+										art.dialog({
+											id : "succeed",
+											icon : "succeed",
+											fixed : true,
+											lock : true,
+											background : "#CCCCCC",
+											opacity : 0,
+											content : data.info,
+											button : [
+											{
+												name : "{:L('CONTINUE')}",
+												callback : function() {
+													reloadPage(window);
+													return true;
+												},
+												focus : true
+											},
+											{
+												name : "{:L('RETURN')}",
+												callback : function() {
+													location.href = "{:U('assessment/index')}";
+													return true;
+												}
+											}
+											]
+										});
+									});
+								} else {
+									alert(data.info);
+								}
+							}
+						});
+					}
+				});
+			});
+		////-------------------------
+		});
+		
+		$("#assessment_type input[type='radio']").click(function(){
+			$('#teacher').css('display','none');
+			$('#student').css('display','none');
+			if ($(this).val() == 2) $('#teacher').css('display','block');
+			if ($(this).val() == 3) $('#student').css('display','block');
+		});
+	</script>
+</body>
+</html>

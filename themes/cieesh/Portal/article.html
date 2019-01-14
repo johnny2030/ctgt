@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>{$post_title} {$site_name}</title>
+		<meta name="keywords" content="{$post_keywords}" />
+		<meta name="description" content="{$post_excerpt}">
+		<tc_include file="Public:head" />
+		<link href="__TMPL__Public/css/style.css" rel="stylesheet">
+	</head>
+
+	<body>
+		<tc_include file="Public:nav" />
+
+		<!--content-->
+		<div class="container">
+			<div class="my-page">
+				<div class="my-title">
+					<h3 title="{$post_title}">{$post_title}</h3>
+					<span class="date">发布时间：{:date('Y-m-d H:i',strtotime($post_modified))}</span>
+				</div>
+				<div class="my-content">
+					<div class="row">
+						<div class="col-md-12">
+							{$post_content}
+						</div>
+					</div>
+				</div>
+			</div>
+			<img src="__TMPL__Public/img/logo-sa.png" class="center-block" />
+		</div>
+		<!-- FOOTER -->
+		<tc_include file="Public:footer" />
+		<tc_include file="Public:scripts" />
+	</body>
+</html>

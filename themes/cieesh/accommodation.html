@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>Housing Resource {$site_name}</title>
+		<tc_include file="Public:head" />
+		<link href="__TMPL__Public/css/style.css" rel="stylesheet">
+	</head>
+	<body>
+		<tc_include file="Public:nav" />
+
+		<!--content-->
+		<div class="container">
+			<div class="my-page">
+				<div class="my-title">
+					<h3>Housing Resource</h3>
+				</div>
+				<div class="row w">
+					<div class="col-md-2">
+						<ul class="nav nav-tabs nav-stacked" role="tablist">
+							<li role="presentation" class="active">
+								<a href="#house" aria-controls="house" role="tab" data-toggle="tab" title="Housing Resource">Housing Resource</a>
+							</li>
+						</ul>
+					</div>
+					<div class="col-md-10">
+						<div class="tab-content">
+							<!-- ===== First Tab ===== -->
+							<div role="tabpanel" class="tab-pane active" id="house">
+								<div class="contents-courses">
+									<div class="courses-list">
+										<div class="row">
+											<php>$index = -1;</php>
+											<volist name="list" id="vo">
+												<php>
+													$index++;
+													if($index%3 == 0) echo '</div><div class="row">';
+												</php>
+												<div class="col-md-4">
+													<div class="item">
+														<div class="pic">
+															<a href="{:U('accommodation/detail',array('id'=>$vo['id']))}">
+																<img src="__TMPL__Public/img/house.jpg" width="100%" height="100%" alt="" />
+															</a>
+														</div>
+														<div class="text">
+															<h3><a href="{:U('accommodation/detail',array('id'=>$vo['id']))}" title="[{$vo.house_city}-{$vo.house_district}]小区名称x楼x室">[{$vo.house_city}-{$vo.house_district}]小区名称x楼x室</a></h3>
+															<div class="intro">
+																<p title="">户型面积：{$vo.house_size}({$vo.house_area}平米)</p>
+																<p title="">租金：{$vo.house_money}元/月</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</volist>
+										</div>
+									</div>
+									<div class="pager">
+										<ul>
+											{$page}
+										</ul>
+									</div>
+								</div>
+							</div>
+							<!--First Tab End-->
+						</div>
+					</div>
+				</div>
+			</div>
+			<img src="__TMPL__Public/img/logo-sa.png" class="center-block my-logo" />
+		</div>
+		<!-- FOOTER -->
+		<tc_include file="Public:footer" />
+		<tc_include file="Public:scripts" />
+	</body>
+
+</html>

@@ -1,0 +1,320 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('wage/index')}">{:L('WAGE_RECORD_LIST')}</a></li>
+			<li class="active"><a href="javascript:void(0);">{:L('WAGE_RECORD_EDIT')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+			<input type="hidden" name="id" value="{$id}">
+			<div class="row-fluid">
+				<div class="span9">
+					<table class="table table-bordered">
+						<tr>
+							<th width="100">{:L('WAGE_RECORD_NAME')}</th>
+							<td>
+								<input type="text" id="teacher_name" name="teacher_name" value="{$teacher_name}" placeholder="{:L('WAGE_RECORD_NAME')}"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('WAGE_RECORD_SENIOR_TEACHER')}</th>
+							<td>
+								<input type="radio" name="teacher_status" value="0" <?php echo $teacher_status == 0 ? 'checked' : '' ?> /> &nbsp;{:L('WAGE_RECORD_NO')}&nbsp;
+								<input type="radio" name="teacher_status" value="1" <?php echo $teacher_status == 1 ? 'checked' : '' ?> /> &nbsp;{:L('WAGE_RECORD_YES')}
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('WAGE_RECORD_COLLECTION_TYPE')}</th>
+							<td>
+								<select name="type" id="type" style="width: 150px;">
+									<option value="">{:L('PLEASE_SELECT')}</option>
+									<option value="1" <?php echo $type == 1 ? 'selected' : '' ?> >{:L('WAGE_RECORD_SELF')}</option>
+									<option value="2" <?php echo $type == 2 ? 'selected' : '' ?> >{:L('WAGE_RECORD_COLLECTION')}</option>
+								</select>
+								<span class="form-required" style="color:red;"> *</span>
+								<div style="display:<?php echo $type == 1 ? 'block' : 'none' ?>;" id="teacher_info">
+									<br>
+									<table class="table table-bordered" >
+										<tr>
+											<th width="100">{:L('WAGE_RECORD_STUDENT_NO')}</th>
+											<td><input type="text" name="teacher_student_no" id="teacher_student_no" value="{$teacher_student_no}" /><span class="form-required" style="color:red;"> *</span></td>
+										</tr>
+										<tr>
+											<th width="100">{:L('WAGE_RECORD_CARD_NO')}</th>
+											<td><input type="text" name="teacher_card_no" id="teacher_card_no" value="{$teacher_card_no}" style="width:300px;"/><span class="form-required" style="color:red;"> *</span></td>
+										</tr>
+									</table>
+								</div>
+								<div style="display:<?php echo $type == 2 ? 'block' : 'none' ?>;" id="receiver_info">
+									<br>
+									<table class="table table-bordered" >
+										<tr>
+											<th width="100">{:L('WAGE_RECORD_NAME')}</th>
+											<td><input type="text" name="receiver" id="receiver" value="{$receiver}" /><span class="form-required" style="color:red;"> *</span></td>
+										</tr>
+										<tr>
+											<th width="100">{:L('WAGE_RECORD_STUDENT_NO')}</th>
+											<td><input type="text" name="receiver_student_no" id="receiver_student_no" value="{$receiver_student_no}" /><span class="form-required" style="color:red;"> *</span></td>
+										</tr>
+										<tr>
+											<th width="100">{:L('WAGE_RECORD_CARD_NO')}</th>
+											<td><input type="text" name="receiver_card_no" id="receiver_card_no" value="{$receiver_card_no}" style="width:300px;"/><span class="form-required" style="color:red;"> *</span></td>
+										</tr>
+									</table>
+								</div>
+							</td>
+						</tr>
+						
+						<tr>
+							<th width="100">{:L('WAGE_RECORD_CLASS_HOUR')}</th>
+							<td>
+								<input type="text" name="class_hour" id="class_hour" value="{$class_hour}" placeholder="{:L('WAGE_RECORD_CLASS_HOUR')}" onblur= "if( /^\d*(\.\d{1,2})?$/.test(this.value)){if(this.value<0){alert('只能输入非负数，小数点后最多保留两位');this.value='';}else{gethour();}}else{alert('只能输入非负数，小数点后最多保留两位');this.value='';}"/>
+								<span class="form-required" style="color:red;"> *</span>
+								<div style="display:<?php echo $teacher_status == 1 ? 'block' :'none' ?>;" id="senior_teacher">
+									<br>
+									{:L('WAGE_RECORD_SENIOR_TEACHER_DISCOUNT')} : <span class="form-required" id="senior_class_hour" style="color:red;"><php>echo $class_hour*1.5;</php></span>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('WAGE_RECORD_SCALE')}</th>
+							<td colspan="3">
+								<select name="wage_scale_id" id="wage_scale_id" style="width: 150px;">
+									{$wage_scale_html}
+								</select>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('WAGE_RECORD_YEAR_MONTH')}</th>
+							<td>
+								<input type="text" name="year_month" id="year_month" value="{$year_month}" placeholder="{:L('WAGE_RECORD_YEAR_MONTH')}" class="js-year-month" />
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th width="100">{:L('WAGE_RECORD_LEADER')}</th>
+							<td>
+								<select name="leader_id" id="leader_id" style="width: 150px;">
+									{$leader_html}
+								</select>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="span3">
+				</div>
+			</div>
+			<div class="form-actions">
+				<button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript">
+		//编辑器路径定义
+		var editorURL = GV.WEB_ROOT;
+		
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+	<script type="text/javascript">
+	
+		function gethour(){
+			var seniot_class_hour = $('#class_hour').val()*1.5;
+			$('#senior_class_hour').html(seniot_class_hour);
+			
+		}
+	
+		$(function() {
+			//选择收款类型
+			$('#type').change(function(){
+				var type = $(this).children('option:selected').val();
+				if (type == 1) {
+					$.post('{:U("wage/getTeacher")}', function(result){
+						$("#teacher_student_no").val(result.teacher_student_no);
+						$("#teacher_card_no").val(result.teacher_card_no);
+					});
+					$('#receiver_info').css('display','none');
+					$('#teacher_info').css('display','block');
+				} else if (type == 2) {
+					$.post('{:U("wage/getTeacher")}', function(result){
+						$("#receiver").val(result.receiver);
+						$("#receiver_student_no").val(result.receiver_student_no);
+						$("#receiver_card_no").val(result.receiver_card_no);
+					});
+					$('#teacher_info').css('display','none');
+					$('#receiver_info').css('display','block');
+				} else {
+					$('#teacher_info').css('display','none');
+					$('#receiver_info').css('display','none');
+				}
+				
+			});
+			//是否为资深教师
+			$("input[name=teacher_status]").click(function(){
+				var checked_val = $("input[name=teacher_status]:checked").val();
+				if (checked_val == 0) {
+					$('#senior_teacher').css('display','none');
+				}
+				if (checked_val == 1) {
+					$('#senior_teacher').css('display','block');
+				}
+			});
+			
+			
+			$(".js-ajax-close-btn").on('click', function(e) {
+				e.preventDefault();
+				Wind.use("artDialog", function() {
+					art.dialog({
+						id : "question",
+						icon : "question",
+						fixed : true,
+						lock : true,
+						background : "#CCCCCC",
+						opacity : 0,
+						content : "{:L('CLOSE_PAGE')}",
+						ok : function() {
+							setCookie("refersh_time", 1);
+							window.close();
+							return true;
+						}
+					});
+				});
+			});
+			/////---------------------
+			Wind.use('validate','ajaxForm','artDialog',function() {
+				//编辑器
+				editorcontent = new baidu.editor.ui.Editor();
+				editorcontent.render('content');
+				try {
+					editorcontent.sync();
+				} catch (err) {}
+				//增加编辑器验证规则
+				jQuery.validator.addMethod('editorcontent',function() {
+					try {
+						editorcontent.sync();
+					} catch (err) {}
+					return editorcontent.hasContents();
+				});
+				
+				var form = $('form.js-ajax-forms');
+				//ie处理placeholder提交问题
+				if ($.browser && $.browser.msie) {
+					form.find('[placeholder]').each(function() {
+						var input = $(this);
+						if (input.val() == input
+								.attr('placeholder')) {
+							input.val('');
+						}
+					});
+				}
+				//表单验证开始
+				form.validate({
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//是否在敲击键盘时验证
+					onkeyup : false,
+					//当鼠标掉级时验证
+					onclick : false,
+					//验证错误
+					showErrors : function(errorMap,errorArr) {
+						//errorMap {'name':'错误信息'}
+						//errorArr [{'message':'错误信息',element:({})}]
+						try {
+							$(errorArr[0].element).focus();
+							art.dialog({
+								id : 'error',
+								icon : 'error',
+								lock : true,
+								fixed : true,
+								background : "#CCCCCC",
+								opacity : 0,
+								content : errorArr[0].message,
+								cancelVal : "{:L('OK')}",
+								cancel : function() {
+									$(errorArr[0].element).focus();
+								}
+							});
+						} catch (err) {}
+					},
+					//验证规则
+					rules : {
+						'teahcer_name' : { required : 1 },
+						'type' : { required : 1 },
+						'class_hour' : { required : 1 },
+						'wage_scale_id' : { required : 1 },
+						'year_month' : { required : 1 },
+						'leader_id' : { required : 1 }
+					},
+					//验证未通过提示消息
+					messages : {
+						'teacher_name' : { required : "{:L('WAGE_RECORD_NAME')}" },
+						'type' : { required : "{:L('WAGE_RECORD_COLLECTION_TYPE')}" },
+						'class_hour' : { required : "{:L('WAGE_RECORD_CLASS_HOUR')}" },
+						'wage_scale_id' : { required : "{:L('WAGE_RECORD_SCALE')}" },
+						'year_month' : { required : "{:L('WAGE_RECORD_YEAR_MONTH')}" },
+						'leader_id' : { required : "{:L('WAGE_RECORD_LEADER')}" }
+					},
+					//给未通过验证的元素加效果,闪烁等
+					highlight : false,
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//验证通过，提交表单
+					submitHandler : function(forms) {
+						$(forms).ajaxSubmit({
+							url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+							dataType : 'json',
+							beforeSubmit : function(arr,$form,options) {
+	
+							},
+							success : function(data,statusText,xhr,$form) {
+								if (data.status) {
+									setCookie("refersh_time",1);
+									//添加成功
+									Wind.use("artDialog",function() {
+										art.dialog({
+											id : "succeed",
+											icon : "succeed",
+											fixed : true,
+											lock : true,
+											background : "#CCCCCC",
+											opacity : 0,
+											content : data.info,
+											button : [
+											{
+												name : "{:L('REEDIT')}",
+												callback : function() {
+													reloadPage(window);
+													return true;
+												},
+												focus : true
+											},
+											{
+												name : "{:L('RETURN')}",
+												callback : function() {
+													location.href = "{:U('wage/index')}";
+													return true;
+												}
+											}
+											]
+										});
+									});
+								} else {
+									alert(data.info);
+								}
+							}
+						});
+					}
+				});
+			});
+		////-------------------------
+		});
+	</script>
+</body>
+</html>

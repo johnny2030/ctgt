@@ -1,0 +1,13 @@
+{:hook('body_start')}
+<php>
+	$subpage_banner=sp_getslide("subpage_banner",1);
+</php>
+<section class="banner-sub">
+	<foreach name="subpage_banner" item="vo">
+		<if condition="$vo.slide_url != ''">
+			<a href="{$vo.slide_url}"><img width="100%" src="{:sp_get_asset_upload_path($vo['slide_pic'])}" alt="{$vo.slide_name}"/></a>
+		<else />
+			<img width="100%" src="{:sp_get_asset_upload_path($vo['slide_pic'])}" alt="{$vo.slide_name}"/>
+		</if>
+	</foreach>
+</section>

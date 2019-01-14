@@ -1,0 +1,140 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="javascript:void(0);">{:L('COURSE_LIST')}</a></li>
+			<li><a href="{:U('course/add')}">{:L('COURSE_ADD')}</a></li>
+		</ul>
+		<form class="well form-search" method="post" id="cid-form" >
+			<select name="course_type" style="width:150px;height:35px;">
+				<option value="" >{:L('COURSE_CATEGORY')}</option>
+				<option value="1" <?php echo $course_type==1 ? 'selected' : '' ?> >{:L('COURSE_SPECIALIZED')}</option>
+				<option value="2" <?php echo $course_type==2 ? 'selected' : '' ?> >{:L('COURSE_CHINESE')}</option>
+			</select>
+			<input type="text" name="keyword" style="width: 300px;" value="{$keyword}" placeholder="{:L('COURSE_CODE')}/{:L('COURSE_NAME')}">
+			<button class="btn btn-primary">{:L('SEARCH')}</button>
+			<a class="btn btn-danger" href="{:U('course/index')}">{:L('EMPTY')}</a>
+			<a class="btn btn-success" href="{:U('portal/course/index')}" target="_blank">{:L('VIEW_THE_FRONT_END_LIST')}</a>
+		</form>
+		<form class="js-ajax-form" method="post">
+			<div class="table-actions">
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('course/listorders')}">{:L('SORT')}</button>
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('course/recommend',array('recommend'=>1))}" data-subcheck="true">{:L('RECOMMEND')}</button>
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('course/recommend',array('unrecommend'=>1))}" data-subcheck="true">{:L('CANCEL_RECOMMENDED')}</button>
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('course/toggle',array('hide'=>1))}" data-subcheck="true">{:L('HIDE')}</button>
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('course/toggle',array('display'=>1))}" data-subcheck="true">{:L('DISPLAY')}</button>
+				<!-- <button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('course/copy')}" data-subcheck="true" data-msg="{:L('COURSE_COPY_MSG')}">{:L('BULK_COPY')}</button> -->
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('course/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('BATCH_DELETE')}</button>
+			</div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">{:L('SORT')}</th>
+						<th width="30">{:L('COURSE_ID')}</th>
+						<th width="250">{:L('COURSE_CODE')}</th>
+						<th width="250">{:L('COURSE_NAME')}</th>
+						<th width="30">{:L('COURSE_CREDIT')}</th>
+						<th width="50">{:L('COURSE_CLASS_HOUR')}(h)</th>
+						<!-- <th width="50">{:L('POSTER')}</th> -->
+						<th width="150">{:L('PUBDATE')}</th>
+						<th width="30">{:L('STATUS')}</th>
+						<th width="150">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<foreach name="list" item="vo">
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+					<td><input name='listorders[{$vo.id}]' class="input input-order mr5" type='text' size='3' value='{$vo.listorder}'></td>
+					<td>{$vo.id}</td>
+					<td><a href="{:U('portal/course/detail',array('id'=>$vo['id']))}" target="_blank"><span>{$vo.course_code}</span></a></td>
+					<td>{$vo.course_name}</td>
+					<td>{$vo.course_credit}</td>
+					<td>{$vo.course_academic_hour}</td>
+					<!-- <td>
+						<php>$smeta=json_decode($vo['smeta'],true);</php>
+						<notempty name="smeta.thumb">
+							<a href="javascript:parent.image_preview_dialog('{:sp_get_image_preview_url($smeta['thumb'])}');">
+								<i class="fa fa-photo fa-fw"></i>
+							</a>
+						</notempty>
+					</td> -->
+					<td>{$vo.course_modify_time}</td>
+					<td>
+						<notempty name="vo.course_status">
+							<a data-toggle="tooltip" title="{:L('DISPLAY')}"><i class="fa fa-check"></i></a>
+							<else/>
+							<a data-toggle="tooltip" title="{:L('HIDE')}"><i class="fa fa-close"></i></a>
+						</notempty>
+						<notempty name="vo.course_recommended">
+							<a data-toggle="tooltip" title="{:L('HAVE_RECOMMENDED')}"><i class="fa fa-thumbs-up"></i></a>
+							<else />
+							<a data-toggle="tooltip" title="{:L('NOT_RECOMMENDED')}"><i class="fa fa-thumbs-down"></i></a>
+						</notempty>
+					</td>
+					<td>
+						<a class="btn btn-warning btn-small" href="{:U('course/edit',array('id'=>$vo['id']))}">{:L('EDIT')}</a>
+						<a class="btn btn-primary btn-small js-ajax-dialog-btn" href="{:U('course/copy_course',array('id'=>$vo['id']))}" data-msg="{:L('确定复制此课程？')}">{:L('COPY')}</a>
+						<!-- <button class="btn btn-primary btn-small" type="button" id="course_{$vo.id}">{:L('COPY')}</button> -->
+						<a href="{:U('course/delete',array('id'=>$vo['id']))}" class="btn btn-danger btn-small js-ajax-delete" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</a>
+						<br />
+					</td>
+				</tr>
+				</foreach>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+			//学季三级联动
+			$('#department').change(function(){
+				var department_id=$(this).children('option:selected').val();
+				$.post('{:U("course/getMajors")}', {did: department_id}, function(result){
+					$("#major").html(result);
+					$("#category").html("<option value='0'>请选择课程名称</option>")
+				});
+			});
+			$('#major').change(function(){
+				var major_id=$(this).children('option:selected').val();
+				$.post('{:U("course/getCategories")}', {mid: major_id}, function(result){
+					$("#category").html(result.category_html);
+				});
+			});
+			
+			setCookie("refersh_time", 0);
+			Wind.use('ajaxForm', 'artDialog', 'iframeTools', function() {
+				//复制课程
+				<?php
+					foreach($list as $course) {
+				?>
+					$('#course_{$course.id}').click(function(e) {
+						var course_id = {$course.id};
+						art.dialog.open("__ROOT__/index.php?g=admin&m=course&a=copy_course&id="+course_id , {
+							title : "复制课程",
+							width : "500px"
+						});
+					});
+				<?php	
+					}
+				?> 
+			});
+		});
+	</script>
+</body>
+</html>

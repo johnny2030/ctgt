@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>{$site_seo_title} {$site_name} </title>
+		<meta name="keywords" content="{$site_seo_keywords}" />
+		<meta name="description" content="{$site_seo_description}">
+		<tc_include file="Public:head" />
+	</head>
+
+	<body>
+		<div id="con">
+			<tc_include file="Public:nav" />
+			<!-- 首页banner -->
+			<php>
+				$userid = sp_get_current_userid();
+				$home_slides = sp_getslide("home_banner");
+				$home_slides = empty($home_slides) ? $default_home_slides : $home_slides;
+			</php>
+			<div class="banner swiper-container visible-md-block visible-lg-block">
+				<div class="swiper-wrapper">
+					<volist name="home_slides" id="vo">
+						<php>$img_url = sp_get_asset_upload_path($vo['slide_pic']);</php>
+						<div class="swiper-slide">
+							<notempty name="vo.slide_url">
+								<a style="background: url({$img_url}) no-repeat center" href="{$vo.slide_url}">
+									<h2 data-swiper-parallax="-500">{$vo.slide_name}</h2>
+									<h3 data-swiper-parallax="-1000">{$vo.slide_content}</h3>
+									<p data-swiper-parallax="-1500">{$vo.slide_des}</p>
+									<button data-swiper-parallax="-2000" type="button" class="btn btn-lg btn-primary">To know more</button>
+								</a>
+							<else/>
+								<a style="background: url({$img_url}) no-repeat center" href="javascript:void(0);">
+									<h2 data-swiper-parallax="-500">{$vo.slide_name}</h2>
+									<h3 data-swiper-parallax="-1000">{$vo.slide_content}</h3>
+									<p data-swiper-parallax="-1500">{$vo.slide_des}</p>
+								</a>
+							</notempty>
+						</div>
+					</volist>
+				</div>
+				<!-- 如果需要分页器 -->
+				<div class="swiper-pagination"></div>
+
+				<!-- 如果需要导航按钮 -->
+				<php>if(count($home_slides) >= 2){</php>
+					<div class="swiper-button-prev"></div>
+					<div class="swiper-button-next"></div>
+				<php>}</php>
+			</div>
+			<php>
+				$mobile_slides = sp_getslide("mobile_banner");
+				$mobile_slides = empty($mobile_slides) ? $default_home_slides : $mobile_slides;
+			</php>
+			<div class="banner swiper-container visible-xs-block visible-sm-block">
+				<div class="swiper-wrapper">
+					<volist name="mobile_slides" id="vo">
+						<php>$img_url = sp_get_asset_upload_path($vo['slide_pic']);</php>
+						<div class="swiper-slide">
+							<notempty name="vo.slide_url">
+								<a style="background: url({$img_url}) no-repeat center" href="{$vo.slide_url}"></a>
+							<else/>
+								<a style="background: url({$img_url}) no-repeat center" href="javascript:void(0);"></a>
+							</notempty>
+						</div>
+					</volist>
+				</div>
+				<!-- 如果需要分页器 -->
+				<div class="swiper-pagination"></div>
+			</div>
+			<notempty name="userid">
+				<php>
+					$notices = sp_sql_posts( "cid:3;order:post_modified desc;limit:3;" );
+				</php>
+				<div class="welcomesec secpadd">
+					<div class="container">
+						<div class="fh-section-title clearfix  text-center style-1 version-dark has-icon">
+							<h2>Welcome to <span class="main-color">CIEE</span></h2>
+							<span class="fh-icon"><i class="flaticon-nature-3"></i></span>
+						</div>
+						<p class="haeadingpara text-center">We provide ongoing property maintenance which includes lawn mowing, fertilizing, spring and fall cleanups, de-thatching, aerating, seeding, mulching, edging, herbicide application, plant health care, snow plowing, pruning, and tree care and removal.</p>
+	
+						<div class="fh-service  style-1">
+							<div class="service-list row">
+								<volist name="notices" id="vo">
+									<php>$smeta = json_decode($vo['smeta'],true);</php>
+									<div class="item-service  col-xs-12 col-sm-6 col-md-4">
+										<div class="service-content">
+											<div class="entry-thumbnail">
+												<a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}"></a>
+												<notempty name="smeta.thumb">
+													<img src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="{$vo.post_title}" width="370" height="210">
+												<else />
+													<img src="__TMPL__Public/assets/images/default-thumbnail.png" alt="{$vo.post_title}" width="370" height="210">
+												</notempty>
+											</div>
+											<div class="summary">
+												<h2 class="entry-title"><a href="{:leuu('article/index',array('id'=>$vo['object_id'],'cid'=>$vo['term_id']))}">{$vo.post_title}</a></h2>
+												<p>{$vo.post_excerpt}</p>
+											</div>
+										</div>
+									</div>
+								</volist>
+							</div>
+						</div>
+					</div>
+				</div>
+		        <!-- 账户主要表格 -->
+		        <div class="account-box container">
+		            <h2 class="account-title">
+		                <span class="left c3">Operator in charge</span>
+		                <a href="###" class="f-btn-fhby right">返回本月</a>
+		                <div class="clearfix right">
+		                    <div class="f-btn-jian left">&lt;</div>
+		                    <div class="left f-riqi"><span class="f-year">2017</span>年<span class="f-month">1</span>月</div>
+		                    <div class="f-btn-jia left">&gt;</div>
+		                    <!-- 一定不能换行-->
+		                </div>
+		            </h2>
+		            <div class="f-rili-table">
+		                <div class="f-rili-head celarfix">
+		                    <div class="f-rili-th">周日</div>
+		                    <div class="f-rili-th">周一</div>
+		                    <div class="f-rili-th">周二</div>
+		                    <div class="f-rili-th">周三</div>
+		                    <div class="f-rili-th">周四</div>
+		                    <div class="f-rili-th">周五</div>
+		                    <div class="f-rili-th">周六</div>
+		                    <div class="clear"></div>
+		                </div>
+		                <div class="f-tbody clearfix">
+		
+		                </div>
+		            </div>
+		        </div>
+	
+			    <!-- Modal rili diyiceng-->
+			    <div id="myModal" class="modal fade bs-example-modal-sm modal-btn" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+			        <div class="modal-dialog modal-sm" role="document">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+			                </div>
+			                <div class="modal-body">
+			                    <button data-toggle="modal" data-target="#shanchu" style="width: 100%;" class="btn btn-danger btn-first" type="button">删除</button>
+			                    <button data-toggle="modal" data-target="#xiugai" style="width: 100%;" class="btn btn-primary btn-first" type="button">修改</button>
+			                    <button data-toggle="modal" data-target="#tiaoban" style="width: 100%;" class="btn btn-primary btn-first" type="button">调班</button>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+		
+			    <!-- Modal rili shanchu-->
+			    <div id="shanchu" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+			        <div class="modal-dialog" role="document">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			                    <h4 class="modal-title" id="myModalLabel">Delete</h4>
+			                </div>
+			                <div class="modal-body delete-body">
+			                    Are you sure you want to delete it?
+			                </div>
+			                <div class="modal-footer">
+			                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			                    <button type="button" class="btn btn-primary">Save changes</button>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			
+			    <!-- Modal rili xiugai-->
+			    <div id="xiugai" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+			        <div class="modal-dialog" role="document">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			                    <h4 class="modal-title" id="myModalLabel">Delete</h4>
+			                </div>
+			                <div class="modal-body">
+			                    <form>
+			                        <div class="form-group">
+			                            <label for="exampleInputEmail1">原值班人：</label>
+			                            <input class="form-control" type="text" placeholder="Old caretaker" readonly>
+			                        </div>
+			                        <div class="form-group">
+			                            <label for="exampleInputPassword1">现值班人</label>
+			                            <select class="form-control">
+			                              <option>1</option>
+			                              <option>2</option>
+			                              <option>3</option>
+			                              <option>4</option>
+			                              <option>5</option>
+			                            </select>
+			                        </div>
+			                    </form>
+			                </div>
+			                <div class="modal-footer">
+			                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			                    <button type="button" class="btn btn-primary">Save changes</button>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			    <!-- Modal rili shanchu-->
+			    <div id="tiaoban" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+			        <div class="modal-dialog" role="document">
+			            <div class="modal-content">
+			                <div class="modal-header">
+			                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			                    <h4 class="modal-title" id="myModalLabel">Delete</h4>
+			                </div>
+			                <div class="modal-body">
+			                    <form>
+			                        <div class="form-group">
+			                            <label for="exampleInputEmail1">现值班人</label>
+			                            <input class="form-control" type="text" placeholder="Caretaker" readonly>
+			                        </div>
+			                        <div class="form-group">
+			                            <label for="exampleInputPassword1">可调值班人</label>
+			                            <select class="form-control">
+			                              <option>1</option>
+			                              <option>2</option>
+			                              <option>3</option>
+			                              <option>4</option>
+			                              <option>5</option>
+			                            </select>
+			                        </div>
+			                        <div class="checkbox">
+			                            <label>
+			                              <input type="checkbox" checked> 确认现值班人和调换人员已进行过沟通。
+			                            </label>
+			                        </div>
+			                    </form>
+			                </div>
+			                <div class="modal-footer">
+			                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			                    <button type="button" class="btn btn-primary">Save changes</button>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+			</notempty>
+			<tc_include file="Public:footer" />
+			<div class="bg"></div>
+		</div>
+		<tc_include file="Public:scripts" />
+	</body>
+</html>

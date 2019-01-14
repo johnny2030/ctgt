@@ -1,0 +1,54 @@
+{:hook('body_start')}
+
+<!--navbar-->
+<header class="container-fluid">
+	<div class="row">
+		<div class="col-xs-6 col-sm-6">
+			<a href="__ROOT__/" class="logo"><img src="__TMPL__Public/images/logo-sa.png"></a>
+		</div>	
+		<div class="col-xs-6 col-sm-6">
+			<div class="callout text-right">
+				<php>
+					if($user = sp_get_current_user()) {
+						echo empty($user['user_nicename']) ? $user['user_login'] : $user['user_nicename'];
+				</php>
+				<br/><a href="{:leuu('user/center/index')}" >UserCenter</a>or<a href="{:leuu('user/index/logout')}" >Logout</a>
+				<php>}else{</php>
+				JOIN US<br/><a data-target="#login" data-toggle="modal" href="javastript:;">Login</a>
+				<php>}</php>
+			</div>
+		</div>
+	</div>
+</header>
+<!--/navbar-->
+<!-- Modal login begin-->
+<div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Welcome to <span class="main-color">CIEE</span></h4>
+			</div>
+			<div class="modal-body">
+				<form id="loginForm" method="post" action="{:leuu('user/login/index')}">
+					<div class="form-group">
+						<label for="username">Username</label>
+						<input type="text" class="form-control" id="username" name="username" placeholder="Username">
+					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+						<input type="password" class="form-control" id="password" name="password" placeholder="Password">
+					</div>
+					<div class="checkbox">
+						<label>
+							<input type="checkbox" id="remember" name="remember" value="remember"> Check me out
+						</label>
+					</div>
+					<button type="submit" class="btn btn-primary btn-login">Login</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Modal login end-->
+

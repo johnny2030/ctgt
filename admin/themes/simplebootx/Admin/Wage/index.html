@@ -1,0 +1,118 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('wage/index')}">{:L('WAGE_RECORD_LIST')}</a></li>
+			<li><a href="{:U('wage/add')}">{:L('WAGE_RECORD_ADD')}</a></li>
+		</ul>
+		<form class="well form-search" method="post" id="cid-form" >
+			<input type="hidden" name="cmd" id="cmd">
+			<input type="text" name="year_month" value="{$year_month}" class="js-year-month" placeholder="{:L('WAGE_RECORD_YEAR_MONTH')}">
+			<input type="text" name="keyword" value="{$keyword}" placeholder="{:L('WAGE_RECORD_NAME')}">
+			<a class="btn btn-primary" onclick="searchWages();" >{:L('SEARCH')}</a>
+			<a class="btn btn-danger" href="{:U('wage/index')}">{:L('EMPTY')}</a>
+			<a class="btn btn-success" onclick="exportExcel();">{:L('WAGE_EXPORT_DETAIL')}</a>
+			<a class="btn btn-success" onclick="exportFee();">{:L('WAGE_EXPORT_FILING_FEE')}</a>
+		</form>
+		<form class="js-ajax-form" method="post">
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('wage/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('BATCH_DELETE')}</button>
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('wage/copy')}" data-subcheck="true" data-msg="{:L('WAGE_COPY_MSG')}">{:L('BULK_COPY')}</button>
+			</div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="10"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="10">{:L('ID')}</th>
+						<th width="50">{:L('WAGE_RECORD_NAME')}</th>
+						<th width="50">{:L('WAGE_RECORD_CLASS_HOUR')}</th>
+						<th width="70">{:L('WAGE_RECORD_SCALE')}</th>
+						<th width="50">{:L('WAGE_RECORD_TOTAL')}</th>
+						<th width="70">{:L('WAGE_RECORD_STUDENT_NO')}</th>
+						<th width="100">{:L('WAGE_RECORD_CARD_NO')}</th>
+						<th width="30">{:L('WAGE_RECORD_COLLECTION_TYPE')}</th>
+						<th width="50">{:L('WAGE_RECORD_LEADER')}</th>
+						<th width="20">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<foreach name="list" item="vo">
+					<php>
+						if ($vo['teacher_status'] == 0) {
+							$class_hour = $vo['class_hour'];
+							$wage_total = sprintf("%.2f",$vo['class_hour']*$vo['wage_scale']);
+						}
+						if ($vo['teacher_status'] == 1) {
+							$class_hour = $vo['class_hour']*1.5;
+							$wage_total = sprintf("%.2f",$vo['class_hour']*$vo['wage_scale']*1.5);
+						}
+						$leader = D('Users')->field('full_name')->find($vo['leader_id']);
+					</php>
+					<tr>
+						<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+						<td>{$vo.id}</td>
+						<td>{$vo.teacher_name}</td>
+						<td>{$class_hour}</td>
+						<td>{$vo.wage_scale}</td>
+						<td><span style="color:red">{$wage_total}</span></td>
+						<if condition="$vo.type eq 1">
+							<td>{$vo.teacher_student_no}</td>
+							<td>{$vo.teacher_card_no}</td>
+							<td>{:L('WAGE_RECORD_SELF')}</td>
+						</if>
+						<if condition="$vo.type eq 2">
+							<td>{$vo.receiver_student_no}</td>
+							<td>{$vo.receiver_card_no}</td>
+							<td>{:L('WAGE_RECORD_COLLECTION')} ( {$vo.receiver} )</td>
+						</if>
+						<td>{$leader.full_name}</td>
+						<td>
+							<a href="{:U('wage/edit',array('id'=>$vo['id']))}" class="btn btn-warning btn-small">{:L('EDIT')}</a>
+							<a href="{:U('wage/delete',array('id'=>$vo['id']))}" class="btn btn-danger btn-small js-ajax-delete" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</a>
+							<br />
+						</td>
+					</tr>
+				</foreach>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+		});
+		//搜索
+		function searchWages() {
+			$('#cmd').val('');
+			$("#cid-form").submit();
+		}
+		//导出excel
+		function exportExcel() {
+			$('#cmd').val('export');
+			if (confirm('确定导出所筛选工资明细？')) {
+				$("#cid-form").submit();
+			} 
+		}
+		//导出excel
+		function exportFee() {
+			$('#cmd').val('fee');
+			if (confirm('确定导出所筛选申报费用？')) {
+				$("#cid-form").submit();
+			} 
+		}
+	</script>
+</body>
+</html>

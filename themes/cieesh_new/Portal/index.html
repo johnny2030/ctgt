@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<title>{$site_seo_title} {$site_name} </title>
+		<meta name="keywords" content="{$site_seo_keywords}" />
+		<meta name="description" content="{$site_seo_description}">
+		<meta name="author" content="11k">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<tc_include file="Public:head" />
+	</head>
+
+	<body>
+		<tc_include file="Public:nav" />
+		
+		<div id="menu-container" class="main_menu">
+			<!-- homepage start -->
+			<div class="content homepage" id="menu-1">
+				<div class="container">
+					<div class="col-md-3 col-sm-6 templatemo_leftgap">
+						<div class="templatemo_mainservice templatemo_botgap">
+							<div class="templatemo_link">
+								<notempty name="user">
+									<a class="show-2 templatemo_page2" href="#">Activity</a>
+								<else/>
+									<a href="{:leuu('user/login/index')}">Activity</a>
+								</notempty>
+							</div>
+						</div>
+						<div class="templatemo_mainimg hidden-xs">
+							<img src="__TMPL__Public/images/templatemo_home1.jpg" alt="home img 01">
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 templatemo_leftgap home2">
+						<div class="templatemo_mainportfolio templatemo_botgap">
+							<div class="templatemo_link">
+								<notempty name="user">
+									<a class="show-7 templatemo_page7" href="#">Course</a>
+								<else/>
+									<a href="{:leuu('user/login/index')}">Course</a>
+								</notempty>
+							</div>
+						</div>
+						<div class="templatemo_mainimg templatemo_botgap templatemo_portfotopgap hidden-xs ">
+							<img src="__TMPL__Public/images/templatemo_home4.jpg" alt="home img 02">
+						</div>
+						<div class="templatemo_mainacademy">
+							<div class="templatemo_link">
+								<notempty name="user">
+									<a class="show-3 templatemo_page3" href="#">Notice</a>
+								<else/>
+									<a href="{:leuu('user/login/index')}">Notice</a>
+								</notempty>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 templatemo_leftgap">
+						<div class="templatemo_maintesti templatemo_botgap templatemo_topgap">
+							<div class="templatemo_link">
+								<notempty name="user">
+									<a class="show-4 templatemo_page4" href="#">Q&A</a>
+								<else/>
+									<a href="{:leuu('user/login/index')}">Q&A</a>
+								</notempty>
+							</div>
+						</div>
+						<div class="templatemo_mainavisa templatemo_botgap">
+							<div class="templatemo_link">
+								<notempty name="user">
+									<a href="__TMPL__Public/images/Visa Change Flow Chart (X1，X2).pdf" target="_blank">Visa</a>
+								<else/>
+									<a href="{:leuu('user/login/index')}">Visa</a>
+								</notempty>
+							</div>
+						</div>
+						<div class="templatemo_mainimg templatemo_botgap templatemo_portfotopgap hidden-xs ">
+							<img src="__TMPL__Public/images/templatemo_home4.jpg" alt="home img 02">
+						</div>
+					</div>
+					<div class="col-md-3 col-sm-6 templatemo_leftgap">
+						<div class="templatemo_mainimg templatemo_botgap templatemo_topgap hidden-xs">
+							<img src="__TMPL__Public/images/templatemo_home4.jpg" alt="home img 04">
+						</div>
+						<div class="templatemo_mainabout templatemo_botgap">
+							<div class="templatemo_link">
+								<notempty name="user">
+									<a class="show-5 templatemo_page5" href="#">About Us</a>
+								<else/>
+									<a href="{:leuu('user/login/index')}">About Us</a>
+								</notempty>
+							</div>
+						</div>
+						<div class="templatemo_mainlogin templatemo_botgap">
+							<div class="templatemo_link">
+								<notempty name="user">
+									<php>$username = empty($user['user_nicename']) ? $user['user_login'] : $user['user_nicename']; </php>
+									<a href="{:leuu('user/center/index')}" title="{$username}"><i class="fa fa-user-o"></i></a> &nbsp;|&nbsp; <a href="{:leuu('user/index/logout')}" title="Sign out"><i class="fa fa-sign-out"></i></a>
+								<else/>
+									<a href="{:leuu('user/login/index')}" title="Sign in"><i class="fa fa-sign-in"></i></a>
+								</notempty>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- homepage end -->
+
+			<!--activity start -->
+			<div class="content services" id="menu-2">
+				<div class="container">
+					<div class="col-md-3 col-sm-6 templatemo_leftgap">
+						<div class="templatemo_insideportfolio templatemo_botgap">
+							<div class="templatemo_portfoliotext">
+								<h2>Activity</h2>
+								<div class="clear"></div>
+								This is an active calendar table
+							</div>
+						</div>
+						<div class="templatemo_portfolioback templatemo_botgap">
+							<div class="templatemo_link"><a class="show-1 templatemo_homeservice" href="#">Go Back</a></div>
+						</div>
+					</div>
+					
+					<div class="col-md-9 col-sm-6 templatemo_leftgap">
+						<div class="templatemo_white">
+							<div class="templatemo_frame_2">
+								<div class="table-responsive">
+									<table class="avtivity-table">
+										<tr>
+											<th class="bf avtivity-title" colspan="7"><span>Fall 2018</span> Program Calendar</th>
+										</tr>
+	                                    <tr class="bf">
+	                                        <th>MON</th>
+	                                        <th>TUE</th>
+	                                        <th>WED</th>
+	                                        <th>THURS</th>
+	                                        <th>FRI</th>
+	                                        <th>SAT</th>
+	                                        <th>SUN</th>
+	                                    </tr>
+	                                    <tr class="bf">
+	                                        <th>9/3/2019</th>
+	                                        <th>9/4/2019</th>
+	                                        <th>9/5/2019</th>
+	                                        <th>9/6/2019</th>
+	                                        <th>9/7/2019</th>
+	                                        <th>9/8/2019</th>
+	                                        <th>9/9/2019</th>
+	                                    </tr>
+	                                    <tr>
+	                                        <td class="text-center" colspan="5">Orientation</td>
+	                                        <td></td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr>
+	                                        <td></td>
+	                                        <td></td>
+	                                        <td class="f9e">
+	                                            <p data-toggle="modal" data-target="#actibity-detail">CIEE Social Night</p>
+	                                            <span>Time: 5:30-6:30pm</span>
+	                                            <span>Meeting Place: Dancing room, 1F No. 2 International Student Residence Hall</span>
+	                                        </td>
+	                                        <td>
+	                                            <p>Group Visa Change</p>
+	                                            <span>Meeting Time: 1:00pm Meeting Point: Mao Statue</span>
+	                                        </td>
+	                                        <td>
+	                                            <p>Amazing Race Shanghai</p>
+	                                            <span>Meeting Time: 1:00pm Meeting Place: Mao Statue</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr class="bf">
+	                                        <th>9/10/2019</th>
+	                                        <th>9/11/2019</th>
+	                                        <th>9/12/2019</th>
+	                                        <th>9/13/2019</th>
+	                                        <th>9/14/2019</th>
+	                                        <th>9/15/2019</th>
+	                                        <th>9/16/2019</th>
+	                                    </tr>
+	                                    <tr>
+	                                        <td>
+	                                            <p>First day of Classes</p>
+	                                        </td>
+	                                        <td></td>
+	                                        <td>
+	                                            <p>First Program Meeting</p>
+	                                            <span>Time: 12:15pm</span>
+	                                            <span>Place: TBA</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td class="ecf">
+	                                            <p>Program Day Trips</p>
+	                                            <span>(Wuzhen / Hangzhou / Suzhou)</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr class="bf">
+	                                        <th>2019/9/17</th>
+	                                        <th>2019/9/18</th>
+	                                        <th>2019/9/19</th>
+	                                        <th>2019/9/20</th>
+	                                        <th>2019/9/21</th>
+	                                        <th>2019/9/22</th>
+	                                        <th>2019/9/22</th>
+	                                    </tr>
+	                                    <tr>
+	                                        <td></td>
+	                                        <td></td>
+	                                        <td class="a4c">
+	                                            <p>Birthday Party for September babies!</p>
+	                                            <span>Time:12:15pm</span>
+	                                            <span>Place: Global Education Building 407</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td>
+	                                            <p>Themed Activity - "Old Shanghai" Acitivity 1: What does Shanghai look like? </p>
+	                                            <span>Site visit:Shanghai Urban Planning Exhibition Center</span>
+	                                            <span>Meeting Time: 1:30pm </span>
+	                                            <span>Meeting Place: Mao Statue</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr>
+	                                        <td></td>
+	                                        <td class="ecd">
+	                                            <p>Chinese Painting</p>
+	                                            <span>Time: 7:30-8:30pm</span>
+	                                            <span>Meeting Place: 1F, Study Room in Dorm</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                        <td class="e39">
+	                                            <p>End of Add/ drop Period for Area Study Courses</p>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr class="bf">
+	                                        <th>2019/9/24</th>
+	                                        <th>2019/9/25</th>
+	                                        <th>2019/9/26</th>
+	                                        <th>2019/9/27</th>
+	                                        <th>2019/9/28</th>
+	                                        <th>2019/9/29</th>
+	                                        <th>2019/9/30</th>
+	                                    </tr>
+	                                    <tr>
+	                                        <td></td>
+	                                        <td class="ecd">
+	                                            <p>Chinese Painting</p>
+	                                            <span>Time: 7:30-8:30pm </span>
+	                                            <span>Meeting Place: 1F, Study Room in Dorm</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                        <td>
+	                                            <p>Make-up Classes for Mid-Autumn Festival (9/24 Monday)</p>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr class="bf">
+	                                        <th>2019/10/1</th>
+	                                        <th>2019/10/2</th>
+	                                        <th>2019/10/3</th>
+	                                        <th>2019/10/4</th>
+	                                        <th>2019/10/5</th>
+	                                        <th>2019/10/6</th>
+	                                        <th>2019/10/7</th>
+	                                    </tr>
+	                                    <tr>
+	                                        <td class="text-center e35" colspan="5">
+	                                            <p>Weeklong Fall Break (no class)</p>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr class="bf">
+	                                        <th>2019/10/8</th>
+	                                        <th>2019/10/9</th>
+	                                        <th>2019/10/10</th>
+	                                        <th>2019/10/11</th>
+	                                        <th>2019/10/12</th>
+	                                        <th>2019/10/13</th>
+	                                        <th>2019/10/14</th>
+	                                    </tr>
+	                                    <tr>
+	                                        <td class="ecd">
+	                                            <p>Martial Art</p>
+	                                            <span>Time: 6:00-7:00pm</span>
+	                                            <span>Meeting Place: Mao Statue</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                        <td></td>
+	                                        <td></td>
+	                                        <td class="ecf">
+	                                            <p>Themed Activity - "Old Shanghai" </p>
+	                                            <p>Acitivity 2: Explore Chinese Marrige Market </p>
+	                                            <span>Site visit: Chinese Marrige Market in the People's Park</span>
+	                                            <span>Meeting Time: 9:30am</span>
+	                                            <span>Meeting Place: Mao Statue</span>
+	                                        </td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr class="bf">
+	                                        <th>2019/10/15</th>
+	                                        <th>2019/10/16</th>
+	                                        <th>2019/10/17</th>
+	                                        <th>2019/10/18</th>
+	                                        <th>2019/10/19</th>
+	                                        <th>2019/10/20</th>
+	                                        <th>2019/10/21</th>
+	                                    </tr>
+	                                    <tr>
+	                                        <td class="ecd">
+	                                            <p>Martial Art</p>
+	                                            <span>Time: 6:00-7:00pm</span>
+	                                            <span>Meeting Place: Mao Statue</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td class="a4c">
+	                                            <p>Birthday Party for October babies!</p>
+	                                            <span>Time: 12:15pm</span>
+	                                            <span>Place: Global Education Building 407</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td>
+	                                            <p>Master Chef: Food Fest </p>
+	                                            <span>Time: 10:30am~2:00pm</span>
+	                                            <span>Place: 3F Dorm Kitchen</span>
+	                                            <span>Chinese Cooking & Western Cooking</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr class="bf">
+	                                        <th>2019/10/22</th>
+	                                        <th>2019/10/23</th>
+	                                        <th>2019/10/24</th>
+	                                        <th>2019/10/25</th>
+	                                        <th>2019/10/26</th>
+	                                        <th>2019/10/27</th>
+	                                        <th>2019/10/28</th>
+	                                    </tr>
+	                                    <tr>
+	                                        <td class="ecd">
+	                                            <p>Martial Art</p>
+	                                            <span>Time: 6:00-7:00pm</span>
+	                                            <span>Meeting Place: Mao Statue</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td>
+	                                            <p>Second Program Meeting</p>
+	                                            <span>Time: 12:15pm</span>
+	                                            <span>Place: TBA</span>
+	                                        </td>
+	                                        <td>
+	                                            <p>Midterm Language Exams (oral & written)</p>
+	                                        </td>
+	                                        <td class="e39">
+	                                            <p>Withdrawal Deadline for Area Study Courses</p>
+	                                        </td>
+	                                        <td></td>
+	                                        <td class="a3c">
+	                                            <p>Cultural Excursions</p>
+	                                        </td>
+	                                    </tr>
+	                                    <tr>
+	                                        <td class="text-center" colspan="4">
+	                                            <p>Midterm Exams & Evaluation for Area Study Courses</p>
+	                                        </td>
+	                                        <td class="e39">
+	                                            <p>Withdrawal Deadline for Area Study Courses</p>
+	                                        </td>
+	                                        <td></td>
+	                                        <td class="a3c">
+	                                            <p>Cultural Excursions</p>
+	                                        </td>
+	                                    </tr>
+	                                    <tr class="bf">
+	                                        <th>2019/10/29</th>
+	                                        <th>2019/10/30</th>
+	                                        <th>2019/10/31</th>
+	                                        <th>2019/11/1</th>
+	                                        <th>2019/11/2</th>
+	                                        <th>2019/11/3</th>
+	                                        <th>2019/11/4</th>
+	                                    </tr>
+	                                    <tr>
+	                                        <td class="text-center a3c" colspan="5">
+	                                            <p>Cultural Excursions (Silk Road / Service Learning - Sichuan / Taiwan)</p>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr class="bf">
+	                                        <th>2019/11/5</th>
+	                                        <th>2019/11/6</th>
+	                                        <th>2019/11/7</th>
+	                                        <th>2019/11/8</th>
+	                                        <th>2019/11/8</th>
+	                                        <th>2019/11/10</th>
+	                                        <th>2019/11/11</th>
+	                                    </tr>
+	                                    <tr>
+	                                        <td></td>
+	                                        <td class="f9e">
+	                                            <p>East Meets West: A Night of Chinese Culture </p>
+	                                            <span>Time: 6:30-7:30pm</span>
+	                                            <span>Meeting Place: Dancing room, 1F in Dorm</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                        <td class="ecf">
+	                                            <p>Themed Activity - "Old Shanghai" Acitivity 3: Chinese Temples</p>
+	                                            <span>Site visit: Jade Buddha Temple</span>
+	                                            <span>Meeting Time: 1:30pm</span>
+	                                            <span>Meeting Place: Mao Statue</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr class="bf">
+	                                        <th>2019/11/12</th>
+	                                        <th>2019/11/13</th>
+	                                        <th>2019/11/14</th>
+	                                        <th>2019/11/15</th>
+	                                        <th>2019/11/16</th>
+	                                        <th>2019/11/17</th>
+	                                        <th>2019/11/18</th>
+	                                    </tr>
+	                                    <tr>
+	                                        <td></td>
+	                                        <td></td>
+	                                        <td class="ecd">
+	                                            <p>Calligraphy</p>
+	                                            <span>Time: 6:00-7:00pm</span>
+	                                            <span>Meeting Place: 1F, Study Room in Dorm</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td class="ecf">
+	                                            <p>Themed Activity - "Old Shanghai" Acitivity 4: The Jews in Shanghai</p>
+	                                            <span>Site visit: Shanghai Jewish Refugees Museum</span>
+	                                            <span>Meeting Time: 1:30pm</span>
+	                                            <span>Meeting Place: Mao Statue</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr class="bf">
+	                                        <th>2019/11/19</th>
+	                                        <th>2019/11/20</th>
+	                                        <th>2019/11/21</th>
+	                                        <th>2019/11/22</th>
+	                                        <th>2019/11/23</th>
+	                                        <th>2019/11/24</th>
+	                                        <th>2019/11/25</th>
+	                                    </tr>
+	                                    <tr>
+	                                        <td></td>
+	                                        <td></td>
+	                                        <td class="a4c">
+	                                            <p>Birthday Party for November babies! </p>
+	                                            <span>Time:12:15pm</span>
+	                                            <span>Place: Global Education Building 407</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td class="ecf">
+	                                            <p>Themed Activity - Old Shanghai" Acitivity 5: Chinese Modern Art </p>
+	                                            <span>Site visit: M50 Art Distric</span>
+	                                            <span>Meeting Time: 1:30pm</span>
+	                                            <span>Meeting Place: Mao Statue</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr>
+	                                        <td></td>
+	                                        <td></td>
+	                                        <td class="ecd">
+	                                            <p>Calligraphy</p>
+	                                            <span>Time: 6:00-7:00pm</span>
+	                                            <span>Meeting Place: 1F, Study Room in Dorm</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                        <td></td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr class="bf">
+	                                        <th>2019/11/26</th>
+	                                        <th>2019/11/27</th>
+	                                        <th>2019/11/28</th>
+	                                        <th>2019/11/29</th>
+	                                        <th>2019/11/30</th>
+	                                        <th>2019/12/1</th>
+	                                        <th>2019/12/2</th>
+	                                    </tr>
+	
+	                                    <tr>
+	                                        <td></td>
+	                                        <td></td>
+	                                        <td class="ecd">
+	                                            <p>Calligraphy</p>
+	                                            <span>Time: 6:00-7:00pm</span>
+	                                            <span>Meeting Place: 1F, Study Room in Dorm</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td class="ecf">
+	                                            <p>Themed Activity - Old Shanghai" Acitivity 6: Preserved Water Town in Shanghai </p>
+	                                            <span>Site visit: Zhujiajiao Water Town</span>
+	                                            <span>Meeting Time: 1:00pm</span>
+	                                            <span>Meeting Place: Mao Statue</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr class="bf">
+	                                        <th>2019/12/3</th>
+	                                        <th>2019/12/4</th>
+	                                        <th>2019/12/5</th>
+	                                        <th>2019/12/6</th>
+	                                        <th>2019/12/7</th>
+	                                        <th>2019/12/8</th>
+	                                        <th>2019/12/9</th>
+	                                    </tr>
+	                                    <tr>
+	                                        <td></td>
+	                                        <td></td>
+	                                        <td>
+	                                            <p>Third Program Meeting </p>
+	                                            <span>Time: 12:15pm</span>
+	                                            <span>Place: TBA</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td>
+	                                            <p>Themed Activity - "Old Shanghai" Acitivity 7: The Past and the Present of Shanghai</p>
+	                                            <span>Excurison: Huangpu River Cruise</span>
+	                                            <span>MeetingTime: 6:00pm</span>
+	                                            <span>Meeting Place: Mao Statue</span>
+	                                        </td>
+	                                        <td></td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr class="bf">
+	                                        <th>2019/12/10</th>
+	                                        <th>2019/12/11</th>
+	                                        <th>2019/12/12</th>
+	                                        <th>2019/12/13</th>
+	                                        <th>2019/12/14</th>
+	                                        <th>2019/12/15</th>
+	                                        <th>2019/12/16</th>
+	                                    </tr>
+	                                    <tr>
+	                                        <td></td>
+	                                        <td>
+	                                            <p>Last Day of Language Classes</p>
+	                                        </td>
+	                                        <td>
+	                                            <p>Final Language Exams (oral)</p>
+	                                        </td>
+	                                        <td>
+	                                            <p>Final Language Exams (written)</p>
+	                                        </td>
+	                                        <td>
+	                                            <p>Certificate Ceremony and Farewell Lunch</p>
+	                                        </td>
+	                                        <td>
+	                                            <p>Student Departure</p>
+	                                        </td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr>
+	                                        <td class="text-center" colspan="4">
+	                                            <p>Last Days of Area Study Courses & Final Exams</p>
+	                                        </td>
+	                                        <td>
+	                                            <p>Certificate Ceremony and Farewell Lunch</p>
+	                                        </td>
+	                                        <td>
+	                                            <p>Student Departure</p>
+	                                        </td>
+	                                        <td></td>
+	                                    </tr>
+	                                    <tr>
+	                                        <td class="text-center" colspan="7">
+	                                            <p>*Note: Activities and times are subject to change. Not all activities are listed. Please read emails for more updated information.</p>
+	                                        </td>
+	                                    </tr>
+	                                </table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- activity end -->
+			
+			<!-- notice start -->
+			<php>$notices = sp_sql_posts( "cid:3;order:post_modified desc;limit:5;" );</php>
+			<div class="portfolio" id="menu-3" style="display: none;">
+				<div class="container">
+					<div class="row templatemo_bordergapborder">
+						<!--vertical Tabs-->
+						<div id="ab">
+							<div class="col-md-3 col-sm-12 templatemo_leftgap_about">
+								<ul class="resp-tabs-list templatemo_tab">
+									<volist name="notices" id="vo">
+										<li><p class="ellipsis_style">{$vo.post_title}</p></li>
+									</volist>
+								</ul>
+								<div class="templatemo_aboutlinkwrapper1">
+									<div class="templatemo_aboutback templatemo_botgap">
+										<div class="templatemo_link"><a class="show-1 templatemo_homeportfolio" href="#">Go Back</a></div>
+									</div>
+								</div>
+							</div>
+							<div class="resp-tabs-container templatemo_aboutcontainer">
+								<volist name="notices" id="vo">
+									<php>$smeta = json_decode($vo['smeta'],true);</php>
+									<div>
+										<div class="templatemo_col50 templatemo_rightgap_about">
+											<div class="templatemo_graybg templatemo_botgap">
+												<div class="templatemo_frame" >
+													<h2>{$vo.post_title}</h2>
+													{$vo.post_content}
+												</div>
+											</div>
+										</div>
+										<div class="templatemo_col50 templatemo_leftgap templatemo_botgap">
+											<notempty name="smeta.thumb">
+												<img src="{:sp_get_asset_upload_path($smeta['thumb'])}" style="height:466px;" alt="{$vo.post_title}">
+											<else/>
+												<img src="__TMPL__Public/assets/images/default_thumbnail.png" style="height:466px;" alt="{$vo.post_title}">
+											</notempty>
+										</div>
+									</div>
+								</volist>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- notice end -->
+			
+			<div class="copyrights">Collect from </div>
+			
+			<!-- Q&A start -->
+			<php>$qas = sp_sql_posts( "cid:13;order:post_modified desc;" );</php>
+			<div class="content testimonial" id="menu-4">
+				<div class="container">
+					<div class="col-md-3 col-sm-6 templatemo_leftgap">
+						<div class="templatemo_insideportfolio templatemo_botgap">
+							<div class="templatemo_portfoliotext">
+								<h2>Q&A</h2>
+								<div class="clear"></div>
+								Here are some common questions and answers
+							</div>
+						</div>
+						<div class="templatemo_aboutlinkwrapper">
+							<div class="templatemo_link"><a class="show-1 templatemo_hometestimonial" href="index.html">Go Back</a></div>
+						</div>
+					</div>
+					<div class="col-md-9 col-sm-6 templatemo_leftgap">
+						<div class="templatemo_white">
+							<div class="templatemo_frame_2">
+								<div class="table-responsive">
+									<div class="qa">
+										<dl>
+											<volist name="qas" id="vo">
+												<dt>{$vo.post_title}</dt>
+												<dd>{$vo.post_content}</dd>
+											</volist>
+										</dl>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Q&A end -->
+			
+			<!-- about start -->
+			<php>
+				$id=11;//文章id
+				$about = sp_sql_post($id,'field:post_title,post_content,smeta;');
+				$smeta = json_decode($about['smeta'],true);
+			</php>
+			<div class="content about" id="menu-5">
+				<div class="container">
+					<div class="row templatemo_bordergapborder">
+						<div class="col-md-3 col-sm-12 templatemo_leftgap">
+							<div class="templatemo_mainimg templatemo_botgap">
+								<img src="__TMPL__Public/images/templatemo_contact1.jpg" alt="contact image">
+							</div>
+							<div class="templatemo_maincontact templatemo_botgap">
+								<div class="templatemo_linkcontact"><a class="show-1 templatemo_homeabout" href="#">Go Back</a></div>
+							</div>
+						</div>
+						<div class="templatemo_col37 col-sm-12 templatemo_leftgap">
+							<div class="templatemo_graybg templatemo_paddinggap" style="overflow-y: scroll;">
+								<h2>{$about.post_title}</h2>
+								<div class="clear"></div>
+								<div class="templatemo_address">{$about.post_content}</div>
+							</div>
+						</div>
+						<div class="templatemo_col37 col-sm-12 templatemo_leftgap templatemo_topgap">
+							<div class="templatemo_graybg">
+								<div class="templatemo_contactmap">
+									<!-- <map>
+										<iframe src="map.html" width="100%" height="466" frameborder="0" scrolling="no"></iframe>
+									</map> -->
+									<notempty name="smeta.thumb">
+										<img src="{:sp_get_asset_upload_path($smeta['thumb'])}" style="height:466px;" alt="{$about.post_title}">
+									<else/>
+										<img src="__TMPL__Public/assets/images/default_thumbnail.png" style="height:466px;" alt="{$about.post_title}">
+									</notempty>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- about end -->
+
+			<!-- course start -->
+			<php>
+				$term_year_sess = trim($user['year']).'-'.trim($user['term']).'-'.trim($user['session']).'-'.trim($user['program']);
+				/*该学生所在学季的所有课程id*/
+				$term_courses = D('TermCourseRelationship')->where(array('term_year_sess' => $term_year_sess))->select();
+				$course_ids = array();
+				foreach ($term_courses as $term_course) $course_ids[] = $term_course['course_id'];
+				
+				$courses = D('Course')->where(array('id' => array('in',implode(',',$course_ids))))->select();
+				/*这些课程所有的时间段id（不重复）*/
+				$time_zone_ids = array();
+				$course_times = D('CourseTime')->where(array('course_id' => array('in',implode(',',$course_ids))))->select();
+				foreach( $course_times as $course_time) {
+					$time_zone_ids = array_keys(array_flip($time_zone_ids) + array_flip(explode(',',$course_time['time_zone_ids'])));
+				}
+				$time_zones = D('TimeZones')->where(array('id' => array('in',implode(',',$time_zone_ids))))->order('time_zones asc')->select();
+			</php>
+			<div class="content academy" id="menu-7" style="display: none;">
+				<div class="container">
+					<div class="row templatemo_bordergapborder">
+						<div class="col-md-3 col-sm-12 templatemo_leftgap">
+							<div class="templatemo_insideportfolio templatemo_botgap">
+								<div class="templatemo_portfoliotext">
+									<h2>Course</h2>
+									<div class="clear"></div>
+									This is a class schedule
+								</div>
+							</div>
+							<div class="templatemo_mainservice templatemo_botgap" style="height:150px;">
+								<div class="templatemo_linkservice"><a class="show-1 templatemo_homeacademy" href="#">Go Back</a></div>
+							</div>
+						</div>
+
+						<div class="col-md-9 col-sm-6 templatemo_leftgap">
+							<div class="templatemo_white">
+								<div class="templatemo_frame_3">
+									<h2>Class Schedule</h2>
+									<div class="sep2"></div>
+									<div class="clear"></div>
+									<div class="table-responsive">
+										<table class="table table-bordered avtivity-table">
+											<tr>
+												<th colspan="6">{$user.year} {$user.term} {$user.session} {$user.program}</th>
+											</tr>
+											<tr>
+												<td class="week"></td>
+												<td class="week">Monday</td>
+												<td class="week">Tuesday</td>
+												<td class="week">Wednesday</td>
+												<td class="week">Thursday</td>
+												<td class="week">Friday</td>
+											</tr>
+											<volist name="time_zones" id="time_zone">
+												<php>
+													$where_all = array();
+													$where_monday = array();
+													$where_tuesday = array();
+													$where_wednesday = array();
+													$where_thursday = array();
+													$where_friday = array();
+													
+													$where_all[] = "FIND_IN_SET(".$time_zone['id'].",ct.time_zone_ids)";
+													$where_monday[] = "FIND_IN_SET(".$time_zone['id'].",ct.time_zone_ids)";
+													$where_tuesday[] = "FIND_IN_SET(".$time_zone['id'].",ct.time_zone_ids)";
+													$where_wednesday[] = "FIND_IN_SET(".$time_zone['id'].",ct.time_zone_ids)";
+													$where_thursday[] = "FIND_IN_SET(".$time_zone['id'].",ct.time_zone_ids)";
+													$where_friday[] = "FIND_IN_SET(".$time_zone['id'].",ct.time_zone_ids)";
+													
+													$where_all['ct.course_week'] = 0;
+													$where_monday['ct.course_week'] = 1;
+													$where_tuesday['ct.course_week'] = 2;
+													$where_wednesday['ct.course_week'] = 3;
+													$where_thursday['ct.course_week'] = 4;
+													$where_friday['ct.course_week'] = 5;
+													
+													$where_all['c.id'] = array('in',implode(',',$course_ids));
+													$where_monday['c.id'] = array('in',implode(',',$course_ids));
+													$where_tuesday['c.id'] = array('in',implode(',',$course_ids));
+													$where_wednesday['c.id'] = array('in',implode(',',$course_ids));
+													$where_thursday['c.id'] = array('in',implode(',',$course_ids));
+													$where_friday['c.id'] = array('in',implode(',',$course_ids));
+													
+													$all_courses = D('Course')->alias('c')->field('c.*')->join('__COURSE_TIME__ ct ON ct.course_id=c.id')->where($where_all)->select();
+													$monday_courses = D('Course')->alias('c')->field('c.*')->join('__COURSE_TIME__ ct ON ct.course_id=c.id')->where($where_monday)->select();
+													$tuesday_courses = D('Course')->alias('c')->field('c.*')->join('__COURSE_TIME__ ct ON ct.course_id=c.id')->where($where_tuesday)->select();
+													$wednesday_courses = D('Course')->alias('c')->field('c.*')->join('__COURSE_TIME__ ct ON ct.course_id=c.id')->where($where_wednesday)->select();
+													$thursday_courses = D('Course')->alias('c')->field('c.*')->join('__COURSE_TIME__ ct ON ct.course_id=c.id')->where($where_thursday)->select();
+													$friday_courses = D('Course')->alias('c')->field('c.*')->join('__COURSE_TIME__ ct ON ct.course_id=c.id')->where($where_friday)->select();
+													$week_rowspan = max(count($monday_courses),count($tuesday_courses),count($wednesday_courses),count($thursday_courses),count($friday_courses));
+													$rowspan = $week_rowspan+count($all_courses);
+													
+													$monday_course_ids = array();
+													$monday_course_names = array();
+													$monday_course_addresses = array();
+													foreach ($monday_courses as $monday_course) {
+														$monday_course_ids[] = $monday_course['id'];
+														$monday_course_names[] = $monday_course['course_name'];
+														$monday_course_addresses[] = $monday_course['course_address'];
+													} 
+													$tuesday_course_ids = array();
+													$tuesday_course_names = array();
+													$tuesday_course_addresses = array();
+													foreach ($tuesday_courses as $tuesday_course) {
+														$tuesday_course_ids[] = $tuesday_course['id'];
+														$tuesday_course_names[] = $tuesday_course['course_name'];
+														$tuesday_course_addresses[] = $tuesday_course['course_address'];
+													} 
+													$wednesday_course_ids = array();
+													$wednesday_course_names = array();
+													$wednesday_course_addresses = array();
+													foreach ($wednesday_courses as $wednesday_course) {
+														$wednesday_course_ids[] = $wednesday_course['id'];
+														$wednesday_course_names[] = $wednesday_course['course_name'];
+														$wednesday_course_addresses[] = $wednesday_course['course_address'];
+													} 
+													$thursday_course_ids = array();
+													$thursday_course_names = array();
+													$thursday_course_addresses = array();
+													foreach ($thursday_courses as $thursday_course) {
+														$thursday_course_ids[] = $thursday_course['id'];
+														$thursday_course_names[] = $thursday_course['course_name'];
+														$thursday_course_addresses[] = $thursday_course['course_address'];
+													} 
+													$friday_course_ids = array();
+													$friday_course_names = array();
+													$friday_course_addresses = array();
+													foreach ($friday_courses as $friday_course) {
+														$friday_course_ids[] = $friday_course['id'];
+														$friday_course_names[] = $friday_course['course_name'];
+														$friday_course_addresses[] = $friday_course['course_address'];
+													} 
+												</php>
+												<if condition="$week_rowspan gt 0">
+													<tr>
+														<td rowspan="{$rowspan}" style="white-space:nowrap;vertical-align:middle;">
+															{$time_zone.time_zones}
+														</td>
+														<td>
+															<p data-toggle="modal" data-target="#course_{$monday_course_ids.0}">{$monday_course_names.0}</p> 
+															<span class="text-danger">{$monday_course_addresses.0}</span>
+														</td>
+														<td>
+															<p data-toggle="modal" data-target="#course_{$tuesday_course_ids.0}">{$tuesday_course_names.0}</p> 
+															<span class="text-danger">{$tuesday_course_addresses.0}</span>
+														</td>
+														<td>
+															<p data-toggle="modal" data-target="#course_{$wednesday_course_ids.0}">{$wednesday_course_names.0}</p> 
+															<span class="text-danger">{$wednesday_course_addresses.0}</span>
+														</td>
+														<td>
+															<p data-toggle="modal" data-target="#course_{$thursday_course_ids.0}">{$thursday_course_names.0}</p> 
+															<span class="text-danger">{$thursday_course_addresses.0}</span>
+														</td>
+														<td>
+															<p data-toggle="modal" data-target="#course_{$friday_course_ids.0}">{$friday_course_names.0}</p> 
+															<span class="text-danger">{$friday_course_addresses.0}</span>
+														</td>
+													</tr>
+													<php>
+														if ($week_rowspan > 1) {
+															for ($i=1;$i<$week_rowspan;$i++) {
+													</php>
+														<tr>
+															<td>
+																<p data-toggle="modal" data-target="#course_{$monday_course_ids.$i}">{$monday_course_names.$i}</p> 
+																<span class="text-danger">{$monday_course_addresses.$i}</span>
+															</td>
+															<td>
+																<p data-toggle="modal" data-target="#course_{$tuesday_course_ids.$i}">{$tuesday_course_names.$i}</p> 
+																<span class="text-danger">{$tuesday_course_addresses.$i}</span>
+															</td>
+															<td>
+																<p data-toggle="modal" data-target="#course_{$wednesday_course_ids.$i}">{$wednesday_course_names.$i}</p> 
+																<span class="text-danger">{$wednesday_course_addresses.$i}</span>
+															</td>
+															<td>
+																<p data-toggle="modal" data-target="#course_{$thursday_course_ids.$i}">{$thursday_course_names.$i}</p> 
+																<span class="text-danger">{$thursday_course_addresses.$i}</span>
+															</td>
+															<td>
+																<p data-toggle="modal" data-target="#course_{$friday_course_ids.$i}">{$friday_course_names.$i}</p> 
+																<span class="text-danger">{$friday_course_addresses.$i}</span>
+															</td>
+														</tr>
+													<php>	
+															}
+														}
+													</php>
+													<notempty name="all_courses" >
+														<volist name="all_courses" id="vo">
+															<tr>
+																<td colspan="5" class="text-center">
+																	<p data-toggle="modal" data-target="#course_{$vo.id}">{$vo.course_name}</p>
+																	<span class="text-danger">{$vo.course_address}</span>
+																</td>
+															</tr>
+														</volist>
+													</notempty>
+												<else/>
+													<notempty name="all_courses" >
+														<volist name="all_courses" id="vo">
+															<tr>
+																<td rowspan="{$rowspan}" style="white-space:nowrap;vertical-align:middle;">
+																	{$time_zone.time_zones}
+																</td>
+																<td colspan="5" class="text-center">
+																	<p data-toggle="modal" data-target="#course_{$vo.id}">{$vo.course_name}</p>
+																	<span class="text-danger">{$vo.course_address}</span>
+																</td>
+															</tr>
+														</volist>
+													</notempty>
+												</if>
+											</volist>
+										</table>
+									</div>
+	
+									<!-- <h2>Academic Handbook</h2>
+									<div class="sep2"></div>
+									<ul>
+										<li><a href="__TMPL__Public/images/Visa Change Flow Chart (X1，X2).pdf" target="_blank">Visa Change Flow Chart (X1，X2).pdf</a><i class="fa fa-download"></i></li>
+										<li><a href="__TMPL__Public/images/Visa Change Flow Chart (X1，X2).pdf" target="_blank">Visa Change Flow Chart (X1，X2).pdf</a><i class="fa fa-download"></i></li>
+										<li><a href="__TMPL__Public/images/Visa Change Flow Chart (X1，X2).pdf" target="_blank">Visa Change Flow Chart (X1，X2).pdf</a><i class="fa fa-download"></i></li>
+									</ul> -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<!-- COURSE 详情页 start -->
+			<!-- Modal -->
+			<volist name="courses" id="course">
+				<php>
+					$smeta = json_decode($course['smeta'],true); 
+					$ciee_staff = D('Users')->field('full_name')->find($course['headteacher_id']);
+					if ($course['parttimeteacher_id']) {
+						$ciee_teachers = D('Users')->field('full_name')->where(array('id' => array('in',$course['parttimeteacher_id'])))->select();
+						$ciee_teachers_arr = array();
+						foreach($ciee_teachers as $ciee_teacher) $ciee_teachers_arr[] = $ciee_teacher['full_name'];
+						$ciee_teachers_str = implode(',',$ciee_teachers_arr);
+					}
+				</php>
+				<div class="modal fade" id="course_{$course.id}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							</div>
+							<div class="modal-body">
+								<div class="container-fluid fh-section-title">
+									<div class="row">
+										<h3><span class="main-color">{$course.course_name}</span></h3>
+										<p>{$course.course_description}</p>
+										<div class="fh-project-meta">
+											<div class="info">
+												<div class="meta-item">
+													<i class="fa fa-bullhorn"></i>
+													<h4 class="title"> Course Code</h4>
+													<div class="details">{$course.course_code}</div>
+												</div>
+												<div class="meta-item">
+													<i class="fa fa-pie-chart"></i>
+													<h4 class="title">Course Credit</h4>
+													<div class="details">{$course.course_credit}</div>
+												</div>
+												<div class="meta-item">
+													<i class="fa fa-clock-o"></i>
+													<h4 class="title">Curriculum Hours</h4>
+													<div class="details">{$course.course_academic_hour} hours</div>
+												</div>
+												<div class="meta-item">
+													<i class="fa fa-map-signs"></i>
+													<h4 class="title">Place</h4>
+													<div class="details">{$course.course_address}</div>
+												</div>
+												<div class="meta-item">
+													<i class="fa fa-user"></i>
+													<h4 class="title">CIEE Staff</h4>
+													<div class="details">{$ciee_staff.full_name}</div>
+												</div>
+												<notempty name="course.parttimeteacher_id">
+													<div class="meta-item">
+														<i class="fa fa-users"></i>
+														<h4 class="title">CIEE Teachers</h4>
+														<div class="details">{$ciee_teachers_str}</div>
+													</div>
+												</notempty>
+												<notempty name="course.course_download_url">
+													<div class="meta-item">
+														<i class="fa fa-download"></i>
+														<h4 class="title">Download Url</h4>
+														<div class="details"><a href="{$course.course_download_url}" style="color:blue;text-decoration:underline;" target="_blank">{$course.course_download_url}</a></div>
+													</div>
+												</notempty>
+											</div>
+										</div>
+										<notempty name="smeta.thumb">
+											<img style="width:568px;height:316px;" src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="{$course.course_name}">
+										<else />
+											<img style="width:568px;height:316px;" src="__TMPL__Public/assets/images/default-thumbnail.png" alt="{$course.course_name}">
+										</notempty>
+										<h3><span class="main-color">Details</span></h3>
+										{$course.course_content}
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								<!-- <button type="button" class="btn btn-primary">Join activities</button> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</volist>
+			<!-- COURSE 详情页 end -->
+			<!-- course end -->
+			
+			<!-- visa start -->
+			<div class="content visa" id="menu-8" style="display: none;">
+				<div class="container">
+					<div class="row templatemo_bordergapborder">
+						<div class="col-md-3 col-sm-12 templatemo_leftgap">
+							<div class="templatemo_mainimg templatemo_botgap">
+								<img src="__TMPL__Public/images/templatemo_service1.jpg" alt="service image">
+							</div>
+							<div class="templatemo_mainservice templatemo_botgap">
+								<div class="templatemo_linkservice"><a class="show-1 templatemo_homevisa" href="#">Go Back</a></div>
+							</div>
+						</div>
+
+						<div class="templatemo_col37 col-sm-12 templatemo_leftgap">
+							<div class="templatemo_graybg">
+								<div class="templatemo_frame">
+									<h2>Our Services</h2>
+									<div class="clear"></div>
+									<p><a href="#">Matrix HTML5 template</a> is new metro style <a href="#">website template</a> for you and it is available for free download. Credit goes to <a rel="nofollow" href="#">Unsplash</a> for all images used in this template. Praesent ut vehicula lorem. Nulla nec tellus id ligula egestas luctus fringilla vel dui. Nulla quis quam eget purus aliquam molestie. Nunc ligula magna, viverra eu eros vitae, aliquam tempor nunc. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.<br><br> Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Suspendisse eget laoreet nunc. Suspendisse condimentum metus neque, at adipiscing metus venenatis eu. Mauris sit amet erat laoreet, ullamcorper justo sit amet, vehicula purus. Nulla sagittis pulvinar erat, sit amet venenatis lacus fringilla vitae.<br><br> Integer sit amet libero sed dui pretium tempor. Nam neque erat, euismod ut pulvinar in, bibendum eget mi. Phasellus porttitor purus sit amet condimentum mattis. Nulla non venenatis mauris.</p>
+								</div>
+							</div>
+						</div>
+						<div class="templatemo_col37 col-sm-12 templatemo_leftgap templatemo_topgap">
+							<div class="templatemo_mainimg templatemo_botgap"><img src="__TMPL__Public/images/templatemo_service2.jpg" alt="service image"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- academy end -->
+
+			<!-- activity 详情页 start -->
+
+			<!-- Modal -->
+			<div class="modal fade" id="actibity-detail" tabindex="-1" role="dialog">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						</div>
+	                    <div class="modal-body">
+	                        <div class="container-fluid fh-section-title">
+	                            <div class="row">
+	                                <h3>The Reading <span class="main-color">Section</span></h3>
+	                                <p>Must explain to you how all this mistaken sed idea of denouncing pleasure and praising pain was born and gives you a completed system.</p>
+	                                <div class="fh-project-meta">
+	                                    <div class="info">
+	                                        <div class="meta-item">
+	                                            <i class="fa fa-bullhorn"></i>
+	                                            <h4 class="title">Activity name</h4>
+	                                            <div class="details">Shanghai one-day tour</div>
+	                                        </div>
+	                                        <div class="meta-item">
+	                                            <i class="fa fa-calendar"></i>
+	                                            <h4 class="title">Activity set time</h4>
+	                                            <div class="details">01 November 2017, 01 - 12:00 on November 2017</div>
+	                                        </div>
+	                                        <div class="meta-item">
+	                                            <i class="fa fa-map-signs"></i>
+	                                            <h4 class="title">Activity assembly point</h4>
+	                                            <div class="details">Flame Wu1 、123</div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                                <img src="__TMPL__Public/images/templatemo_home4.jpg">
+	                                <h3>Activity <span class="main-color">Content</span></h3>
+	                                <p>Must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will gives you a complete account of the system, and expounds the actual teachings of the great exploresr of the truth, the master-builders of human happiness. No one rejects, dislikes, or avoided pleasure itself, because it is pleasure, but because those who do not know how to pursue pleasure rationally encounter consequences that are extremely painful.</p>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="modal-footer">
+	                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	                        <!-- <button type="button" class="btn btn-primary">Join activities</button> -->
+	                    </div>
+					</div>
+				</div>
+			</div>
+			<!-- activity 详情页 end -->
+		</div>
+	
+		<tc_include file="Public:footer" />
+		<tc_include file="Public:scripts" />
+	</body>
+</html>

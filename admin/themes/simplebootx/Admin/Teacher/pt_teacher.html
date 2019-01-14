@@ -1,0 +1,117 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('teacher/pt_teacher')}">{:L('PARTTIME_TEACHER_LIST')}</a></li>
+		</ul>
+		<form class="well form-search" method="post" id="cid-form" >
+			<input type="text" name="keyword" style="width: 200px;" value="{$keyword}" placeholder="{:L('PARTTIME_TEACHER_NAME')}">
+			<button class="btn btn-primary">{:L('SEARCH')}</button>
+			<a class="btn btn-danger" href="{:U('parttimeteacher/index')}">{:L('EMPTY')}</a>
+			<!-- <a class="btn btn-danger" href="javascript:open_iframe_dialog('{:U('PartTimeTeacher/upload')}','{:L('PARTTIME_TEACHER_IMPORT')}')">{:L('PARTTIME_TEACHER_IMPORT')}</a> -->
+		</form>
+		<form class="js-ajax-form" method="post">
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('teacher/toggle',array('hide'=>1))}" data-subcheck="true">{:L('DIMISSION')}</button>
+			</div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="30">{:L('ID')}</th>
+						<th width="100">{:L('RECRUIT_REAL_NAME')}</th>
+						<th width="100">{:L('RECRUIT_EMAIL')}</th>
+						<th width="100">{:L('RECRUIT_PHONE')}</th>
+						<th width="30">{:L('RECRUIT_GENDER')}</th>
+						<th width="30">{:L('RECRUIT_EDUCATION')}</th>
+						<th width="100">{:L('RECRUIT_SCHOOL')}</th>
+						<th width="100">{:L('RECRUIT_SPECIALITY')}</th>
+						<th width="70">{:L('RECRUIT_EXPERIENCE')}</th>
+						<th width="100">{:L('RECRUIT_PRESENT_ADDRESS')}</th>
+						<!-- <th width="100">{:L('RECRUIT_RESUME')}</th> -->
+						<th width="110">{:L('TEACHER_ENTRY_TIME')}</th>
+						<th width="110">{:L('TEACHER_DIMISSION_TIME')}</th>
+						<th width="30">{:L('STATUS')}</th>
+						<!-- <th width="100">{:L('ACTIONS')}</th> -->
+					</tr>
+				</thead>
+				<foreach name="list" item="vo">
+					<php>
+						$email_conf = D('EmailConf')->where(array('admin_id' => $vo['id']))->find();
+						$email = "";
+						$recruit_member = null;
+						if ($vo['recruit_member_id']) {
+							$recruit_member = D('RecruitMember')->find($vo['recruit_member_id']);
+							$email = $recruit_member['email'];
+						} else {
+							$email = empty($vo['user_email']) ? $email_conf['email_address'] : $vo['user_email'];
+						}
+					</php>
+					<tr>
+						<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+						<td>{$vo.id}</td>
+						<td>{$vo.full_name}</td>
+						<td>{$email}</td>
+						<td>{$recruit_member.phone}</td>
+						<td>
+							<if condition="$recruit_member['gender'] eq 1">男</if>
+							<if condition="$recruit_member['gender'] eq 2">女</if>
+						</td>
+						<td>
+							<if condition="$recruit_member['education'] eq 1">博士</if>
+							<if condition="$recruit_member['education'] eq 2">硕士</if>
+							<if condition="$recruit_member['education'] eq 3">本科</if>
+							<if condition="$recruit_member['education'] eq 4">专科</if>
+							<if condition="$recruit_member['education'] eq 5">高中</if>
+							<if condition="$recruit_member['education'] eq 6">初中</if>
+						</td>
+						<td>{$recruit_member.school}</td>
+						<td>{$recruit_member.speciality}</td>
+						<td>{$recruit_member.experience}</td>
+						<td>{$recruit_member.present_address}</td>
+						<!-- <php>$smeta = json_decode($vo['smeta'],true);</php>
+						<td><a href="__ROOT__{$smeta.resume_url}" >{$smeta.resume_name}</a></td> -->
+						<td>{$vo.teacher_join_time}</td>
+						<td>
+							<notempty name="vo.teacher_leave_time">
+								{$vo.teacher_leave_time}
+							<else/>
+								--
+							</notempty>
+						</td>
+						<td>
+							<if condition="$vo.user_status eq 1">
+								<a data-toggle="tooltip" title="{:L('ON_JOB')}"><i class="fa fa-check"></i></a>
+							<elseif condition="$vo.user_status eq 2"/>
+								<a data-toggle="tooltip" title="{:L('CHECK_PENDING')}"><i class="fa fa-exclamation"></i></a>
+							<else/>
+								<a data-toggle="tooltip" title="{:L('DIMISSION')}"><i class="fa fa-close"></i></a>
+							</if>
+						</td>
+					</tr>
+				</foreach>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+		});
+	</script>
+</body>
+</html>

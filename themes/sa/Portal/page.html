@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>{$post_title} {$site_name} </title>
+		<meta name="keywords" content="{$post_keywords}" />
+		<meta name="description" content="{$post_excerpt}">
+		<tc_include file="Public:head" />
+		<link href="__TMPL__Public/css/style.css" rel="stylesheet">
+	</head>
+	<body>
+		<tc_include file="Public:nav" />
+		<!--content-->
+		<div class="container">
+			<div class="my-page">
+				<div class="my-title">
+					<h3>{$post_title}</h3>
+				</div>
+				<div class="my-content">{$post_content}</div>
+			</div>
+			<img src="__TMPL__Public/img/logo-sa.png" class="center-block" />
+		</div>
+		<tc_include file="Public:footer" />
+		<tc_include file="Public:scripts" />
+	</body>
+</html>

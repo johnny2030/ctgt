@@ -1,0 +1,33 @@
+﻿/* 代码整理：懒人之家 */
+* {
+	margin:0;
+	padding:0;
+}
+body {
+	font-size: 12px;
+}
+.prevMonth, .nextMonth {
+	color: #999;
+}
+.calendar td {
+
+	text-align: center;
+     width: 100px;
+}
+.calendar th {
+
+	text-align: center;
+}
+.calendar th {
+	background-color: #b8eaff;
+	padding:2px 5px;
+	font-weight: normal;
+}
+.calendar td a:visited {
+	color: blue;
+}
+.curDay {
+	background:#ccc;
+	font-weight:bold;
+	color:#000;
+}

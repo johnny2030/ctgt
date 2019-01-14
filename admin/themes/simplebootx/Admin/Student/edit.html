@@ -1,0 +1,752 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('student/index')}">{:L('STUDENT_LIST')}</a></li>
+			<li class="active"><a href="javascript:void(0);">{:L('STUDENT_EDIT')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+			<input type="hidden" name="id" value="{$id}">
+			<div class="row-fluid">
+				<div class="span12">
+					<table class="table table-bordered">
+						<!-- 1 -->
+						<tr>
+							<th width="350">First Name</th>
+							<td colspan="3">
+								<input type="text" style="width:400px;" id="first_name" name="first_name" value="{$first_name}" placeholder="请输入名"/>
+								<span class="form-required" style="color:red;"> *自动生成学生端账号密码均为小写字母全名，中间无空格</span>
+							</td>
+						</tr>
+						<!-- 2 -->
+						<tr>
+							<th>Last Name</th>
+							<td colspan="3">
+								<input type="text" style="width:400px;" id="last_name" name="last_name" value="{$last_name}" placeholder="请输入姓"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<!-- 3 -->
+						<tr>
+							<th>Chinese Name</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="chinese_name" name="chinese_name" value="{$chinese_name}" placeholder="请输入中文名"/>
+							</td>
+						</tr>
+						<!-- 4 -->
+						<tr>
+							<th>Chinese level</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="chinese_level" name="chinese_level" value="{$chinese_level}" placeholder="请输入中文水平"/>
+							</td>
+						</tr>
+						<!-- 5 -->
+						<tr>
+							<th>wechat</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="wechat" name="wechat" value="{$wechat}" placeholder="请输入微信"/>
+							</td>
+						</tr>
+						<!-- 6 -->
+						<tr>
+							<th>phone</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="phone" name="phone" value="{$phone}" placeholder="请输入电话"/>
+							</td>
+						</tr>
+						<!-- 7 -->
+						<tr>
+							<th>Program</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="program" name="program" value="{$program}" placeholder="请输入项目"/>
+							</td>
+						</tr>
+						<!-- 8 -->
+						<tr>
+							<th>Program Location</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="program_location" name="program_location" value="{$program_location}" placeholder="请输入项目地点"/>
+							</td>
+						</tr>
+						<!-- 9 -->
+						<tr>
+							<th>Program Short Name</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="program_short_name" name="program_short_name" value="{$program_short_name}" placeholder="请输入项目简称"/>
+							</td>
+						</tr>
+						<!-- 10 -->
+						<tr>
+							<th>Location City</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="location_city" name="location_city" value="{$location_city}" placeholder="请输入所在城市"/>
+							</td>
+						</tr>
+						<!-- 11 -->
+						<tr>
+							<th>Location Country</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="location_country" name="location_country" value="{$location_country}" placeholder="请输入所在国家"/>
+							</td>
+						</tr>
+						<!-- 12 -->
+						<tr>
+							<th>Term</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="term" name="term" value="{$term}" placeholder="请输入学期（长期：春夏秋冬）"/>
+							</td>
+						</tr>
+						<!-- 13 -->
+						<tr>
+							<th>Year</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="year" name="year" value="{$year}" placeholder="请输入年"/>
+							</td>
+						</tr>
+						<!-- 14 -->
+						<tr>
+							<th>Session</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="session" name="session" value="{$session}" placeholder="请输入学期（夏季项目）"/>
+							</td>
+						</tr>
+						<!-- 15 -->
+						<tr>
+							<th>Institution</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="institution" name="institution" value="{$institution}" placeholder="请输入机构"/>
+							</td>
+						</tr>
+						<!-- 16 -->
+						<tr>
+							<th>Student Email</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="student_email" name="student_email" value="{$student_email}" placeholder="请输入学生邮箱"/>
+							</td>
+						</tr>
+						<!-- 17 -->
+						<tr>
+							<th>Gender</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="gender" name="gender" value="{$gender}" placeholder="请输入学生性别"/>
+							</td>
+						</tr>
+						<!-- 18 -->
+						<tr>
+							<th>Date Of Birth</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="date_of_birth" name="date_of_birth" value="{$date_of_birth}" placeholder="请输入出生日期"/>
+							</td>
+						</tr>
+						<!-- 19 -->
+						<tr>
+							<th>City Of Birth</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="city_of_birth" name="city_of_birth" value="{$city_of_birth}" placeholder="请输入出生城市"/>
+							</td>
+						</tr>
+						<!-- 20 -->
+						<tr>
+							<th>Country Of Birth</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="country_of_birth" name="country_of_birth" value="{$country_of_birth}" placeholder="请输入出生国家"/>
+							</td>
+						</tr>
+						<!-- 21 -->
+						<tr>
+							<th>State Of Birth</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="state_of_birth" name="state_of_birth" value="{$state_of_birth}" placeholder="请输入出生州"/>
+							</td>
+						</tr>
+						<!-- 22 -->
+						<tr>
+							<th>Country Of Citizenship</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="country_of_citizenship" name="country_of_citizenship" value="{$country_of_citizenship}" placeholder="请输入国籍"/>
+							</td>
+						</tr>
+						<!-- 23 -->
+						<tr>
+							<th>Ethnicity</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="ethnicity" name="ethnicity" value="{$ethnicity}" placeholder="请输入种族"/>
+							</td>
+						</tr>
+						<!-- 24 -->
+						<tr>
+							<th>Passport Number</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="passport_number" name="passport_number" value="{$passport_number}" placeholder="请输入护照号码"/>
+							</td>
+						</tr>
+						<!-- 25 -->
+						<tr>
+							<th>Issue Date</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="issue_date" name="issue_date" value="{$issue_date}" placeholder="请输入签发日期"/>
+							</td>
+						</tr>
+						<!-- 26 -->
+						<tr>
+							<th>Expiration Date</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="expiration_date" name="expiration_date" value="{$expiration_date}" placeholder="请输入有效期限"/>
+							</td>
+						</tr>
+						<!-- 27 -->
+						<tr>
+							<th>Issuing Country</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="issuing_country" name="issuing_country" value="{$issuing_country}" placeholder="请输入签发国家"/>
+							</td>
+						</tr>
+						<!-- 28 -->
+						<tr>
+							<th>Issuing City</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="issuing_city" name="issuing_city" value="{$issuing_city}" placeholder="请输入签发城市"/>
+							</td>
+						</tr>
+						<!-- 29 -->
+						<tr>
+							<th>Name On Passport</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="name_on_passport" name="name_on_passport" value="{$name_on_passport}" placeholder="请输入护照上的姓名"/>
+							</td>
+						</tr>
+						<!-- 30 -->
+						<tr>
+							<th>Primary Advisor</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="primary_advisor" name="primary_advisor" value="{$primary_advisor}" placeholder="请输入指导老师"/>
+							</td>
+						</tr>
+						<!-- 31 -->
+						<tr>
+							<th>Advisor Email</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="advisor_email" name="advisor_email" value="{$advisor_email}" placeholder="请输入指导老师邮箱"/>
+							</td>
+						</tr>
+						<!-- 32 -->
+						<tr>
+							<th>Advisor Daytime Phone</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="advisor_daytime_phone" name="advisor_daytime_phone" value="{$advisor_daytime_phone}" placeholder="请输入指导老师日间联系电话"/>
+							</td>
+						</tr>
+						<!-- 33 -->
+						<tr>
+							<th>Advisor Evening Phone</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="advisor_evening_phone" name="advisor_evening_phone" value="{$advisor_evening_phone}" placeholder="请输入指导老师晚间联系电话"/>
+							</td>
+						</tr>
+						<!-- 34 -->
+						<tr>
+							<th>Advisor Mobile Phone</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="advisor_mobile_phone" name="advisor_mobile_phone" value="{$advisor_mobile_phone}" placeholder="请输入指导老师移动电话"/>
+							</td>
+						</tr>
+						<!-- 35 -->
+						<tr>
+							<th>Onsite Address Line 1</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="onsite_address_line_1" name="onsite_address_line_1" value="{$onsite_address_line_1}" placeholder="请输入现场地址线1"/>
+							</td>
+						</tr>
+						<!-- 36 -->
+						<tr>
+							<th>Onsite Address Line 2</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="onsite_address_line_2" name="onsite_address_line_2" value="{$onsite_address_line_2}" placeholder="请输入现场地址线2"/>
+							</td>
+						</tr>
+						<!-- 37 -->
+						<tr>
+							<th>Onsite Address Line 3</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="onsite_address_line_3" name="onsite_address_line_3" value="{$onsite_address_line_3}" placeholder="请输入现场地址线3"/>
+							</td>
+						</tr>
+						<!-- 38 -->
+						<tr>
+							<th>Onsite Room Name</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="onsite_room_name" name="onsite_room_name" value="{$onsite_room_name}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 39 -->
+						<tr>
+							<th>Onsite Room Number</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="onsite_room_number" name="onsite_room_number" value="{$onsite_room_number}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 40 -->
+						<tr>
+							<th>Onsite City</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="onsite_city" name="onsite_city" value="{$onsite_city}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 41 -->
+						<tr>
+							<th>Onsite Postal Code</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="onsite_postal_code" name="onsite_postal_code" value="{$onsite_postal_code}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 42 -->
+						<tr>
+							<th>Onsite Country</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="onsite_country" name="onsite_country" value="{$onsite_country}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 43 -->
+						<tr>
+							<th>Primary Emergency Contact First Name</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="primary_emergency_contact_first_name" name="primary_emergency_contact_first_name" value="{$primary_emergency_contact_first_name}" placeholder="请输入主要紧急联系人 名"/>
+							</td>
+						</tr>
+						<!-- 44 -->
+						<tr>
+							<th>Primary Emergency Contact Last Name</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="primary_emergency_contact_last_name" name="primary_emergency_contact_last_name" value="{$primary_emergency_contact_last_name}" placeholder="请输入主要紧急联系人 姓"/>
+							</td>
+						</tr>
+						<!-- 45 -->
+						<tr>
+							<th>Primary Emergency Contact Relationship</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="primary_emergency_contact_relationship" name="primary_emergency_contact_relationship" value="{$primary_emergency_contact_relationship}" placeholder="请输入与主要紧急联系人的关系"/>
+							</td>
+						</tr>
+						<!-- 46 -->
+						<tr>
+							<th>Primary Emergency Contact Email</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="primary_emergency_contact_email" name="primary_emergency_contact_email" value="{$primary_emergency_contact_email}" placeholder="请输入主要紧急联系人的邮箱"/>
+							</td>
+						</tr>
+						<!-- 47 -->
+						<tr>
+							<th>Primary Emergency Contact Daytime Phone</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="primary_emergency_contact_daytime_phone" name="primary_emergency_contact_daytime_phone" value="{$primary_emergency_contact_daytime_phone}" placeholder="请输入主要紧急联系人日间联系电话"/>
+							</td>
+						</tr>
+						<!-- 48 -->
+						<tr>
+							<th>Primary Emergency Contact Evening Phone</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="primary_emergency_contact_evening_phone" name="primary_emergency_contact_evening_phone" value="{$primary_emergency_contact_evening_phone}" placeholder="请输入主要紧急联系人晚间联系电话"/>
+							</td>
+						</tr>
+						<!-- 49 -->
+						<tr>
+							<th>Primary Emergency Contact Mobile Phone</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="primary_emergency_contact_mobile_phone" name="primary_emergency_contact_mobile_phone" value="{$primary_emergency_contact_mobile_phone}" placeholder="请输入主要紧急联系人移动电话"/>
+							</td>
+						</tr>
+						<!-- 50 -->
+						<tr>
+							<th>Alternate Emergency Contact First Name</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_emergency_contact_first_name" name="alternate_emergency_contact_first_name" value="{$alternate_emergency_contact_first_name}" placeholder="请输入备选紧急联系人 名"/>
+							</td>
+						</tr>
+						<!-- 51 -->
+						<tr>
+							<th>Alternate Emergency Contact Last Name</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_emergency_contact_last_name" name="alternate_emergency_contact_last_name" value="{$alternate_emergency_contact_last_name}" placeholder="请输入备选紧急联系人 姓"/>
+							</td>
+						</tr>
+						<!-- 52 -->
+						<tr>
+							<th>Alternate Emergency Contact Relationship</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_emergency_contact_relationship" name="alternate_emergency_contact_relationship" value="{$alternate_emergency_contact_relationship}" placeholder="请输入与备选紧急联系人的关系"/>
+							</td>
+						</tr>
+						<!-- 53 -->
+						<tr>
+							<th>Alternate Emergency Contact Email</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_emergency_contact_email" name="alternate_emergency_contact_email" value="{$alternate_emergency_contact_email}" placeholder="请输入备选紧急联系人的邮箱"/>
+							</td>
+						</tr>
+						<!-- 54 -->
+						<tr>
+							<th>Alternate Emergency Contact Daytime Phone</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_emergency_contact_daytime_phone" name="alternate_emergency_contact_daytime_phone" value="{$alternate_emergency_contact_daytime_phone}" placeholder="请输入备选紧急联系人日间联系电话"/>
+							</td>
+						</tr>
+						<!-- 55 -->
+						<tr>
+							<th>Alternate Emergency Contact Evening Phone</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_emergency_contact_evening_phone" name="alternate_emergency_contact_evening_phone" value="{$alternate_emergency_contact_evening_phone}" placeholder="请输入备选紧急联系人晚间联系电话"/>
+							</td>
+						</tr>
+						<!-- 56 -->
+						<tr>
+							<th>Alternate Emergency Contact Mobile Phone</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_emergency_contact_mobile_phone" name="alternate_emergency_contact_mobile_phone" value="{$alternate_emergency_contact_mobile_phone}" placeholder="请输入备选紧急联系人移动电话"/>
+							</td>
+						</tr>
+						<!-- 57 -->
+						<tr>
+							<th>Primary Emergency Contact</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="primary_emergency_contact" name="primary_emergency_contact" value="{$primary_emergency_contact}" placeholder="请输入主要紧急联系人"/>
+							</td>
+						</tr>
+						<!-- 58 -->
+						<tr>
+							<th>Secondary Emergency Contact</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="secondary_emergency_contact" name="secondary_emergency_contact" value="{$secondary_emergency_contact}" placeholder="请输入次要紧急联系人"/>
+							</td>
+						</tr>
+						<!-- 59 -->
+						<tr>
+							<th>Health, Safety and Security Officer</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="health_safety_and_security_officer" name="health_safety_and_security_officer" value="{$health_safety_and_security_officer}" placeholder="请输入安全员"/>
+							</td>
+						</tr>
+						<!-- 60 -->
+						<tr>
+							<th>Program Type</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="program_type" name="program_type" value="{$program_type}" placeholder="请输入项目类型"/>
+							</td>
+						</tr>
+						<!-- 61 -->
+						<tr>
+							<th>Permanent Address Line 1</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="permanent_address_line_1" name="permanent_address_line_1" value="{$permanent_address_line_1}" placeholder="请输入固定地址1"/>
+							</td>
+						</tr>
+						<!-- 62 -->
+						<tr>
+							<th>Permanent Address Line 2</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="permanent_address_line_2" name="permanent_address_line_2" value="{$permanent_address_line_2}" placeholder="请输入固定地址2"/>
+							</td>
+						</tr>
+						<!-- 63 -->
+						<tr>
+							<th>Permanent Address Line 3</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="permanent_address_line_3" name="permanent_address_line_3" value="{$permanent_address_line_3}" placeholder="请输入固定地址3"/>
+							</td>
+						</tr>
+						<!-- 64 -->
+						<tr>
+							<th>Permanent City</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="permanent_city" name="permanent_city" value="{$permanent_city}" placeholder="请输入固定城市"/>
+							</td>
+						</tr>
+						<!-- 65 -->
+						<tr>
+							<th>Permanent State</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="permanent_state" name="permanent_state" value="{$permanent_state}" placeholder="请输入固定州"/>
+							</td>
+						</tr>
+						<!-- 66 -->
+						<tr>
+							<th>Permanent Postal Code</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="permanent_postal_code" name="permanent_postal_code" value="{$permanent_postal_code}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 67 -->
+						<tr>
+							<th>Permanent Country</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="permanent_country" name="permanent_country" value="{$permanent_country}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 68 -->
+						<tr>
+							<th>Permanent Daytime Phone</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="permanent_daytime_phone" name="permanent_daytime_phone" value="{$permanent_daytime_phone}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 69 -->
+						<tr>
+							<th>Permanent Evening Phone</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="permanent_evening_phone" name="permanent_evening_phone" value="{$permanent_evening_phone}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 70 -->
+						<tr>
+							<th>Permanent Mobile Phone</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="permanent_mobile_phone" name="permanent_mobile_phone" value="{$permanent_mobile_phone}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 71 -->
+						<tr>
+							<th>Alternate Address Line 1</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_address_line_1" name="alternate_address_line_1" value="{$alternate_address_line_1}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 72 -->
+						<tr>
+							<th>Alternate Address Line 2</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_address_line_2" name="alternate_address_line_2" value="{$alternate_address_line_2}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 73 -->
+						<tr>
+							<th>Alternate Address Line 3</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_address_line_3" name="alternate_address_line_3" value="{$alternate_address_line_3}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 74 -->
+						<tr>
+							<th>Alternate City</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_city" name="alternate_city" value="{$alternate_city}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 75 -->
+						<tr>
+							<th>Alternate State</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_state" name="alternate_state" value="{$alternate_state}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 76 -->
+						<tr>
+							<th>Alternate Postal Code</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_postal_code" name="alternate_postal_code" value="{$alternate_postal_code}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 77 -->
+						<tr>
+							<th>Alternate Country</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_country" name="alternate_country" value="{$alternate_country}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 78 -->
+						<tr>
+							<th>Alternate Daytime Phone</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_daytime_phone" name="alternate_daytime_phone" value="{$alternate_daytime_phone}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 79 -->
+						<tr>
+							<th>Alternate Evening Phone</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_evening_phone" name="alternate_evening_phone" value="{$alternate_evening_phone}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 80 -->
+						<tr>
+							<th>Alternate Mobile Phone</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_mobile_phone" name="alternate_mobile_phone" value="{$alternate_mobile_phone}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 81 -->
+						<tr>
+							<th>Alternate Start Date</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_start_date" name="alternate_start_date" value="{$alternate_start_date}" placeholder="请输入"/>
+							</td>
+						</tr>
+						<!-- 82 -->
+						<tr>
+							<th>Alternate End Date</th>
+							<td colspan="3">
+								<input type="text" style="width: 400px;" id="alternate_end_date" name="alternate_end_date" value="{$alternate_end_date}" placeholder="请输入"/>
+							</td>
+						</tr>
+						
+						<!-- 冗余字段 -->
+						<volist name="rd_fields" id="vo">
+							<tr>
+								<th>{$vo.field_key}</th>
+								<td colspan="3">
+									<if condition="$vo['id'] eq 1" >
+										<input type="text" style="width: 400px;" id="rd_field_1" name="rd_field_1" value="{$rd_field_1}" placeholder="请输入"/>
+									</if>
+									<if condition="$vo['id'] eq 2" >
+										<input type="text" style="width: 400px;" id="rd_field_2" name="rd_field_2" value="{$rd_field_2}" placeholder="请输入"/>
+									</if>
+									<if condition="$vo['id'] eq 3" >
+										<input type="text" style="width: 400px;" id="rd_field_3" name="rd_field_3" value="{$rd_field_3}" placeholder="请输入"/>
+									</if>
+									<if condition="$vo['id'] eq 4" >
+										<input type="text" style="width: 400px;" id="rd_field_4" name="rd_field_4" value="{$rd_field_4}" placeholder="请输入"/>
+									</if>
+									<if condition="$vo['id'] eq 5" >
+										<input type="text" style="width: 400px;" id="rd_field_5" name="rd_field_5" value="{$rd_field_5}" placeholder="请输入"/>
+									</if>
+								</td>
+							</tr>
+						</volist>
+					</table>
+				</div>
+			</div>
+			<div class="form-actions">
+				<button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(".js-ajax-close-btn").on('click', function(e) {
+				e.preventDefault();
+				Wind.use("artDialog", function() {
+					art.dialog({
+						id : "question",
+						icon : "question",
+						fixed : true,
+						lock : true,
+						background : "#CCCCCC",
+						opacity : 0,
+						content : "{:L('CLOSE_PAGE')}",
+						ok : function() {
+							setCookie("refersh_time", 1);
+							window.close();
+							return true;
+						}
+					});
+				});
+			});
+			/////---------------------
+			Wind.use('validate','ajaxForm','artDialog',function() {
+				var form = $('form.js-ajax-forms');
+				//ie处理placeholder提交问题
+				if ($.browser && $.browser.msie) {
+					form.find('[placeholder]').each(function() {
+						var input = $(this);
+						if (input.val() == input
+								.attr('placeholder')) {
+							input.val('');
+						}
+					});
+				}
+				//表单验证开始
+				form.validate({
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//是否在敲击键盘时验证
+					onkeyup : false,
+					//当鼠标掉级时验证
+					onclick : false,
+					//验证错误
+					showErrors : function(errorMap,errorArr) {
+						//errorMap {'name':'错误信息'}
+						//errorArr [{'message':'错误信息',element:({})}]
+						try {
+							$(errorArr[0].element).focus();
+							art.dialog({
+								id : 'error',
+								icon : 'error',
+								lock : true,
+								fixed : true,
+								background : "#CCCCCC",
+								opacity : 0,
+								content : errorArr[0].message,
+								cancelVal : "{:L('OK')}",
+								cancel : function() {
+									$(errorArr[0].element).focus();
+								}
+							});
+						} catch (err) {}
+					},
+					//验证规则
+					rules : {
+						'first_name' : { required : 1 },
+						'last_name' : { required : 1 }
+					},
+					//验证未通过提示消息
+					messages : {
+						'first_name' : { required : '请根据表单提示修正' },
+						'last_name' : { required : '请根据表单提示修正' }
+					},
+					//给未通过验证的元素加效果,闪烁等
+					highlight : false,
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//验证通过，提交表单
+					submitHandler : function(forms) {
+						$(forms).ajaxSubmit({
+							url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+							dataType : 'json',
+							beforeSubmit : function(arr,$form,options) {
+	
+							},
+							success : function(data,statusText,xhr,$form) {
+								if (data.status) {
+									setCookie("refersh_time",1);
+									//添加成功
+									Wind.use("artDialog",function() {
+										art.dialog({
+											id : "succeed",
+											icon : "succeed",
+											fixed : true,
+											lock : true,
+											background : "#CCCCCC",
+											opacity : 0,
+											content : data.info,
+											button : [
+											{
+												name : "{:L('REEDIT')}",
+												callback : function() {
+													reloadPage(window);
+													return true;
+												},
+												focus : true
+											},
+											{
+												name : "{:L('RETURN')}",
+												callback : function() {
+													location.href = "javascript:history.back(-1);";
+													return true;
+												}
+											}
+											]
+										});
+									});
+								} else {
+									alert(data.info);
+								}
+							}
+						});
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

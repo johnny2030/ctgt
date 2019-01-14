@@ -1,0 +1,51 @@
+<?php
+return array(
+		"TEACHER_LIST" => 'Teacher List',
+		"TEACHER_ENTRY_TIME" => 'Registration Time',
+		"TEACHER_DIMISSION_TIME" => 'Dimission Time',
+		"TEACHER_DIMISSION" => 'Dimission',
+		"TEACHER_ON_JOB" => 'On job',
+		
+		"TEACHER_PROFESSION" => 'Teacher Profession',
+		"TEACHER_PROFESSION_LIST" => 'Teacher Profession List',
+		"TEACHER_PROFESSION_ADD" => 'Add Teacher Profession',
+		"TEACHER_PROFESSION_EDIT" => 'Edit Teacher Profession',
+		"TEACHER_PROFESSION_NAME" => 'Profession Name',
+		"TEACHER_PROFESSION_ABSTRACT" => 'Profession Abstract',
+		"TEACHER_PROFESSION_DETAILS" => 'Profession Details',
+		
+		"TEACHER_MSG1" => 'Please enter a professional name',
+		
+		"PARTTIME_TEACHER_LIST" => 'Part-time Teacher List',
+		"PARTTIME_TEACHER_ADD" => 'Add Part-time Teacher',
+		"PARTTIME_TEACHER_EDIT" => 'Edit Part-time Teacher',
+		"PARTTIME_TEACHER_IMPORT" => 'Import Part-time Teachers',
+		"PARTTIME_TEACHER_NAME" => 'Name',
+		"PARTTIME_TEACHER_GENDER" => 'Gender',
+		"PARTTIME_TEACHER_MOBILE" => 'Mobile',
+		"PARTTIME_TEACHER_MAIL" => 'Email',
+		"PARTTIME_TEACHER_GRADUATE_ACADEMY" => 'Graduate academy',
+		"PARTTIME_TEACHER_ENROLLMENT_YEAR" => 'Enrollment Year',
+		"PARTTIME_TEACHER_TEACHING_TIME" => 'Teaching Time in Condition',
+		"PARTTIME_TEACHER_POST_SITUATION" => 'Post Situation',
+		"PARTTIME_TEACHER_DIMISSION" => 'Dimission',
+		"PARTTIME_TEACHER_ADDRESS" => 'Address',
+		"PARTTIME_TEACHER_BIRTH" => 'Date of Birth',
+		"PARTTIME_TEACHER_NATIVE_PLACE" => 'Native Place',
+		"PARTTIME_TEACHER_COUNTRY" => 'Country Of Citizenship',
+		"PARTTIME_TEACHER_INFORMATION_DETAIL" => 'Part-time Teacher Information Detail',
+		"PARTTIME_TEACHER_INFORMATION" => 'Part-time Teacher Information',
+		
+		"RECRUIT_RESUME" => 'Resume',
+		"RECRUIT_REAL_NAME" => 'Name',
+		"RECRUIT_PHONE" => 'Phone Number',
+		"RECRUIT_EMAIL" => 'Email',
+		"RECRUIT_EDUCATION" => 'Education',
+		"RECRUIT_GENDER" => 'Gender',
+		"RECRUIT_SCHOOL" => 'School',
+		"RECRUIT_SPECIALITY" => 'Speciality',
+		"RECRUIT_EXPERIENCE" => 'Experience',
+		"RECRUIT_PRESENT_ADDRESS" => 'Present Address',
+		
+		
+);

@@ -1,0 +1,58 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('user/index')}">{:L('ADMIN_USER_INDEX')}</a></li>
+			<li class="active"><a href="{:U('user/add')}">{:L('ADMIN_USER_ADD')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-form" action="{:U('User/add_post')}">
+			<fieldset>
+				<div class="control-group">
+					<label class="control-label">{:L('USERNAME')}</label>
+					<div class="controls">
+						<input type="text" name="user_login" > {:L('USERNAME_TEXT')}
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label">{:L('NAME')}</label>
+					<div class="controls">
+						<input type="text" name="full_name" >
+					</div>
+				</div>
+				<!-- <div class="control-group">
+					<label class="control-label">{:L('MAJOR')}</label>
+					<div class="controls">
+						<select name="major">
+							<php>$teacher_majors = D('TeacherMajor')->where(array('teacher_major_status' => 1))->order('listorder asc')->select();</php>
+							<option value="">{:L('MAJOR')}</option>
+							<foreach name="teacher_majors" item="vo">
+								<option value="{$vo.id}">{$vo.teacher_major_name}</option>
+							</foreach>
+						</select>
+					</div>
+				</div> -->
+				<!-- <div class="control-group">
+					<label class="control-label">{:L('EMAIL')}</label>
+					<div class="controls">
+						<input type="text" name="user_email">
+					</div>
+				</div> -->
+				<div class="control-group">
+					<label class="control-label">{:L('ROLE')}</label>
+					<div class="controls">
+						<foreach name="roles" item="vo">
+						<label class="checkbox inline"><input value="{$vo.id}" type="checkbox" name="role_id[]" <if condition="sp_get_current_admin_id() neq 1 && $vo['id'] eq 1">disabled="true"</if>>{$vo.name}</label>
+						</foreach>
+					</div>
+				</div>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary js-ajax-submit">{:L('ADD')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+</body>
+</html>

@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>UserCenter</title>
+	
+		<tc_include file='Public:head' />
+		<link href="__TMPL__Public/css/style.css" rel="stylesheet">
+		<link href="__TMPL__Public/css/center.css" rel="stylesheet">
+	
+	</head>
+	<body>
+		<tc_include file="Public:nav" />
+		<!--content-->
+		<div class="container">
+			<div class="my-page">
+				<div class="my-title">
+					<h3>User Center</h3>
+				</div>
+				<div class="col-md-12">
+					<!-- ===== vCard Navigation ===== -->
+					<div class="row w">
+						<div class="col-md-4">
+						<img class="img-responsive" src="__TMPL__Public/assets/images/headicon_128.png" alt="" style="width:380px;">
+							<ul class="nav nav-tabs nav-stacked" role="tablist">
+								<li role="presentation" class="active"><a href="#userInformation" aria-controls="userInformation" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Information</a></li>
+								<li role="presentation"><a href="#myCourse" aria-controls="myCourse" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Course</a></li>
+								<li role="presentation"><a href="#myActivity" aria-controls="myActivity" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Activity</a></li>
+								<li role="presentation"><a href="#servers" aria-controls="servers" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Servers Learning</a></li>
+								<li role="presentation"><a href="#myScore" aria-controls="myScore" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Score</a></li>
+								<li role="presentation"><a href="#others" aria-controls="others" role="tab" data-toggle="tab"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Others</a></li>
+							</ul>    			
+						</div><!-- col-md-4 -->
+		
+						<!-- ===== vCard Content ===== -->
+						<div class="col-md-8">
+							<div class="tab-content" id="user-center">
+								<!-- ===== First Tab ===== -->
+								<div role="tabpanel" class="tab-pane active" id="userInformation">
+									<h3>User Information</h3>
+									<h5>Oneself</h5>
+									<hr>
+									<div class="row">
+										<div class="col-xs-6">
+											<p class="sm">
+												Name : {$full_name|default='null'} <br>
+												Gender : {$gender|default='null'} <br>
+												Location : {$location_city|default='null'} {$location_country|default='null'} <br>
+												Email : {$email|default='null'} <br>
+												Date of Birth : {$date_of_birth|default='null'} <br>
+												Location of Birth : {$city_of_birth|default='null'} {$state_of_birth|default='null'} {$country_of_birth|default='null'}  <br>
+												Ethnicity : {$ethnicity|default='null'} 
+											</p>
+										</div>
+										<div class="col-xs-6">
+											<p class="sm">
+												Application Status : {$application_status|default='null'} <br>
+												Program : {$program|default='null'} <br>
+												Program Location : {$program_location|default='null'} <br>
+												Program Short Name : {$program_short_name|default='null'} <br>
+												Passport Number : {$passport_number|default='null'} <br>
+												Name on Passport : {$name_on_passport|default='null'} <br>
+												Expiration Date: {$expiration_date|default='null'} 
+											</p>
+										</div>
+									</div><!-- row -->
+									<h5>Advisor</h5>
+									<hr>
+									<div class="row">
+										<div class="col-xs-6">
+											<p class="sm">
+												Name : {$primary_advisor|default='null'} <br>
+												Email : {$advisor_email|default='null'} 
+											</p>
+										</div>
+										<div class="col-xs-6">
+											<p class="sm">
+												Daytime Phone : {$advisor_daytime_phone|default='null'} <br>
+												Evening Phone : {$advisor_evening_phone|default='null'} 
+											</p>
+										</div>
+									</div><!-- row -->
+									<h5>Primary Emergency Contact</h5>
+									<hr>
+									<div class="row">
+										<div class="col-xs-6">
+											<p class="sm">
+												Name : {$primary_emergency_contact_first_name|default='null'} {$primary_emergency_contact_last_name} <br>
+												Email : {$primary_emergency_contact_email|default='null'} <br>
+												Relationship : {$primary_emergency_contact_relationship|default='null'} <br>
+											</p>
+										</div>
+										<div class="col-xs-6">
+											<p class="sm">
+												Daytime Phone : {$primary_emergency_contact_daytime_phone|default='null'} <br>
+												Evening Phone : {$primary_emergency_contact_evening_phone|default='null'} <br> 
+												Mobile Phone : {$primary_emergency_contact_mobile_phone|default='null'} <br> 
+											</p>
+										</div>
+									</div><!-- row -->
+									<h5>Alernate Emergency Contact</h5>
+									<hr>
+									<div class="row">
+										<div class="col-xs-6">
+											<p class="sm">
+												Name : {$alternate_emergency_contact_first_name|default='null'} {$alternate_emergency_contact_last_name} <br>
+												Email : {$alternate_emergency_contact_email|default='null'} <br>
+												Relationship : {$alternate_emergency_contact_relationship|default='null'} <br>
+											</p>
+										</div>
+										<div class="col-xs-6">
+											<p class="sm">
+												Daytime Phone : {$alternate_emergency_contact_daytime_phone|default='null'} <br>
+												Evening Phone : {$alternate_emergency_contact_evening_phone|default='null'} <br> 
+												Mobile Phone : {$alternate_emergency_contact_mobile_phone|default='null'} <br> 
+											</p>
+										</div>
+									</div><!-- row -->
+								</div><!-- tab Information -->
+						
+								<!-- ===== Second Tab ===== -->
+								<div role="tabpanel" class="tab-pane" id="myCourse">
+									<h3>Enrolled Courses</h3>
+									<hr>
+									<php>
+										$courses = D('Course')->alias('c')->join('__COURSE_STUDENT_RELATIONSHIP__ cs ON cs.course_id=c.id')->where(array('cs.student_id' => $id)) ->select();
+										$c = -1;
+									</php>
+									<div class="row">
+										<volist name="courses" id="course" >
+											<php>
+												$c++;
+												if ($c > 0 && $c%3 == 0) echo '</div><div class="row">';
+											</php>
+											<div class="col-md-4 centered">
+												<php> $smeta = json_decode($course['smeta'],true); </php>
+												<notempty name="smeta.thumb">
+													<img class="img-thumbnail" src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="{$course.course_name}">
+												<else />
+													<img class="img-thumbnail" src="__TMPL__Public/assets/images/default-thumbnail.png" alt="{$course.course_name}">
+												</notempty>
+												<a href="{:U('portal/course/detail',array('id'=>$course['id']))}"><h6> {$course.course_name}</h6></a>
+											</div>
+										</volist>
+									</div><!-- row -->
+									<h3>Class Schedule</h3>
+									<hr>
+									<div class="row">
+										<div class="col-xs-12 table-responsive">
+											<table class="table table-bordered text-center">
+												<tr style="background: #CCCCCC;">
+													<th width="20%"></th>
+													<th width="15%">Monday</th>
+													<th width="15%">Tuesday</th>
+													<th width="15%">Wednesday</th>
+													<th width="15%">Thursday</th>
+													<th width="15%">Friday</th>
+												</tr>
+												<tr>
+													<td>8:00pm-12:00pm</td>
+													<td colspan="4" rowspan="2">Chinese Language Classes</td>
+													<td rowspan="9">Possible Make-up Classes or Required Area Study Courses Fieldtrips</td>
+												</tr>
+												<tr>
+													<td>10:00am-12:00pm</td>
+												</tr>
+												<tr>
+													<td colspan="5">Lunch 12:00-1:00pm</td>
+												</tr>
+												<tr>
+													<td rowspan="4" style="background: #2AABD2;" >1:00-4:00pm</td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+												</tr>
+												<tr>
+													<td style="background: #EEA236;" >4:00-6:00pm</td>
+													<td>Classical Chinese <br><span style="color:red;">GEB 308-310</span></td>
+													<td>Business Chinese <br><span style="color:red;">GEB 308-310</span></td>
+													<td>Classical Chinese  <br><span style="color:red;">GEB 308-310</span></td>
+													<td>Business Chinese <br><span style="color:red;">GEB 308-310</span></td>
+												</tr>
+												<tr>
+													<td style="background: #D58512;" >4:00-7:00pm</td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+												</tr>
+											</table>
+										</div>
+									</div>
+								</div><!-- Tab Course -->
+							
+								<!-- ===== Third Tab ===== -->
+								<div role="tabpanel" class="tab-pane" id="myActivity">
+									<h3>Registered Activities</h3>
+								  	<hr>
+									<php>
+										$activities = D('Activity')
+													->alias('a')
+													->field('a.*')
+													->join('__ACTIVITY_STUDENT_RELATIONSHIP__ asr ON a.id=asr.activity_id')
+													->join('__USERS__ u ON u.id=asr.student_id')
+													->where(array('u.id' => $id,'a.classify_id' => array('neq',1)))
+													->select();
+										$a = -1;
+									</php>
+									<div class="row">
+										<foreach name="activities" item="activity" >
+											<php>
+												$a++;
+												if ($a > 0 && $a%3 == 0) echo '</div><div class="row">';
+											</php>
+											<div class="col-md-4 centered">
+												<php> $smeta = json_decode($activity['smeta'],true); </php>
+												<notempty name="smeta.thumb">
+													<img class="img-thumbnail" src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="{$activity.activity_name}">
+												<else />
+													<img class="img-thumbnail" src="__TMPL__Public/assets/images/default-thumbnail.png" alt="{$activity.activity_name}">
+												</notempty>
+												<a href="{:U('portal/activity/detail',array('id'=>$activity['id']))}"><h6>{$activity.activity_name}<br/>{:date('Y年m月d日 H:i',strtotime($activity['activity_start_time']))}</h6></a>
+											</div>
+										</foreach>
+									</div><!-- row -->
+								</div><!-- /Tab Activity -->
+								
+								<!-- ===== Servers Learning Tab ===== -->
+								<div role="tabpanel" class="tab-pane" id="servers">
+									<h3>Servers Learning</h3>
+								  	<hr>
+									<php>
+										$activities = D('Activity')
+													->alias('a')
+													->field('a.*')
+													->join('__ACTIVITY_STUDENT_RELATIONSHIP__ asr ON a.id=asr.activity_id')
+													->join('__USERS__ u ON u.id=asr.student_id')
+													->where(array('u.id' => $id,'a.classify_id' => 1))
+													->select();
+										$a = -1;
+									</php>
+									<div class="row">
+										<foreach name="activities" item="activity" >
+											<php>
+												$a++;
+												if ($a > 0 && $a%3 == 0) echo '</div><div class="row">';
+											</php>
+											<div class="col-md-4 centered">
+												<php> $smeta = json_decode($activity['smeta'],true); </php>
+												<notempty name="smeta.thumb">
+													<img class="img-thumbnail" src="{:sp_get_asset_upload_path($smeta['thumb'])}" alt="{activity.activity_name}">
+												<else />
+													<img class="img-thumbnail" src="__TMPL__Public/assets/images/default-thumbnail.png" alt="{activity.activity_name}">
+												</notempty>
+												<a href="{:U('portal/activity/detail',array('id'=>$activity['id']))}"><h6>{$activity.activity_name}<br/>{:date('Y年m月d日 H:i',strtotime($activity['activity_start_time']))}</h6></a>
+											</div>
+										</foreach>
+									</div><!-- row -->
+								</div><!-- /Tab Servers Learning -->
+							
+								<!-- ===== Fourth Tab ===== -->
+								<div role="tabpanel" class="tab-pane" id="myScore">
+									<h3>Score Information</h3>
+									<php>
+										$scores = D('Score')->alias('s')
+															->field('s.test_score,s.test_time')
+															->join('__COURSE__ c ON c.id=s.course_id')
+															->where(array('student_id' => $id))
+															->select();
+									</php>
+									<hr>
+									<div class="row">
+										<div class="col-xs-12">
+											<table class="table table-bordered">
+												<tr>
+													<th>Course Name</th>
+													<th>Test Time</th>
+													<th>Score</th>
+												</tr>
+												<foreach name="scores" item="vo">
+													<tr>
+														<td>{$vo.category_name}</td>
+														<td>{:date('Y年m月d日 H:i',strtotime($vo['test_time']))}</td>
+														<td>{$vo.test_score}</td>
+													</tr>
+												</foreach>
+											</table>
+										</div>
+									</div><!-- row -->
+								</div><!-- Tab Score -->
+								
+								<!-- ===== Five Tab ===== -->
+								<div role="tabpanel" class="tab-pane" id="others">
+									<h4><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Job Experience</h4>
+									<p class="sm">
+										<grey>Black Tie Corp.</grey> | June 2013 - Actual.<br>
+										<grey>Other Corp.</grey> | January 2011 - May 2013.<br>
+									</p>
+								
+									<h4><span class="glyphicon glyphicon-book" aria-hidden="true"></span> Education</h4>
+									<p class="sm">
+										<grey>Web Designer</grey> | Greenville University.<br>
+										<grey>Business Master</grey> | Loyal Univesrity.<br>
+									</p>
+								
+									<h4><span class="glyphicon glyphicon-education" aria-hidden="true"></span> Awards</h4>
+									<p class="sm">
+										<grey>Best Web Design</grey> | Black Tie Site.<br>
+										<grey>Designer of the Year</grey> | 2012.<br>
+									</p>
+								</div><!-- Tab Course -->
+								
+							</div><!-- Tab Content -->
+						</div><!-- col-md-8 -->
+					</div><!-- row w -->
+					<img src="__TMPL__Public/img/logo-sa.png" class="center-block my-logo" />
+				</div>
+			</div>
+		</div><!-- /.container -->
+		<!-- FOOTER -->
+		<tc_include file="Public:footer" />
+		<tc_include file="Public:scripts" />
+	</body>
+</html>

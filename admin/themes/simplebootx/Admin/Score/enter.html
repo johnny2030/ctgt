@@ -1,0 +1,354 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<!-- <ul class="nav nav-tabs">
+			<li><a href="{:U('score/index',array('course' => $course_id,'term_year_sess' => $term_year_sess))}">{:L('ADMIN_SCORE_INDEX')}</a></li>
+			<li class="active"><a href="javascript:void(0);">{:L('SCORE_ENTER')}</a></li>
+		</ul> -->
+		<div class="form-actions" >
+			{:L('SCORE_COURSE')} : <span style="color:blue;"> {$course.course_name}({$course.course_code}) </span> <br>
+			{:L('STUDENT_NAME')} : <span style="color:blue;"> {$student.full_name} </span> {:L('SCORE_ENTER_INFORMATION')} >>
+		</div>
+		<form method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+			<input type="hidden" name="student_id" value="{$student.id}">
+			<input type="hidden" name="course_id" value="{$course_id}">
+			<div class="row-fluid">
+				<div class="span12">
+					<table class="table table-bordered">
+						<tr>
+							<!-- <th width="100">{:L('COURSE_TEACHERING_TIME')}</th> -->
+							<td>
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th style="width:180px;">{:L('SCORE_TEST_DATE')}</th>
+											<th>{:L('SCORE_TEST_TYPE')}</th>
+											<volist name="course_requirements" id="vo">
+												<th>{$vo.requirement_description}<br>
+													(
+													<if condition="$vo.requirement_points_system eq 1">{:L('SCORE_HUNDRED_MARK_SYSTEM')}</if>
+													<if condition="$vo.requirement_points_system eq 10">{:L('SCORE_TEN_POINTS_SYSTEM')}</if>
+													)
+												</th>
+											</volist>
+											<th>{:L('SCORE_TEST_CONTENT')}</th>
+											<th>{:L('ACTIONS')}</th>
+										</tr>
+									</thead>
+									<tbody id="score_enter">
+										<if condition="count($scores) gt 0">
+											<volist name="scores" id="score">
+												<tr>
+													<input type="hidden" name="id[]" value="{$score.id}">
+													<td><input type="date" name="test_date[]" value="{$score.test_date}" style="width:130px;"/><span class="form-required" style="color:red;"> *</span></td>
+													<php>$smeta = json_decode($score['smeta'],true);</php>
+													<td>
+														<if condition="$score.test_type eq 1">
+															<select class="test_type" name="test_type[]" style="width:70px;">
+																<option value="1" style="background-color:#fff;color:gray;" selected >General</option>
+																<option value="2" style="background-color:#fff;color:gray;" > Mid-term/Final</option>
+															</select>
+														</if>
+														<if condition="$score.test_type eq 2">
+															<select class="test_type" name="test_type[]" style="width:70px;color:red;">
+																<option value="1" style="background-color:#fff;color:gray;" >General</option>
+																<option value="2" style="background-color:#fff;color:gray;" selected > Mid-term/Final</option>
+															</select>
+														</if>
+													</td>
+													<volist name="course_requirements" id="vo">
+														<php>
+															$requirement_description = $vo['requirement_description'];
+															$score_val = $smeta[$requirement_description];
+														</php>
+														<if condition="$vo.requirement_type eq 1">
+															<if condition="$vo.requirement_points_system eq 1">
+																<td><input type="text" name="smeta[{$vo.requirement_description}][]" value="{$score_val}" style="width:40px;" onblur= "if( /^\d*(\.\d{1,2})?$/.test(this.value)){if(this.value>100||this.value<0){alert('只能输入小于等于100的非负数，小数点后最多保留两位');this.value='';}else{if(this.value == 0){this.style.color='red';}else{this.style.color='';}}}else{alert('只能输入小于等于100的非负数，小数点后最多保留两位');this.value='';}"/></td>
+															</if>
+															<if condition="$vo.requirement_points_system eq 10">
+																<td><input type="text" name="smeta[{$vo.requirement_description}][]" value="{$score_val}" style="width:40px;" onblur= "if( /^\d*(\.\d{1,2})?$/.test(this.value)){if(this.value>10||this.value<0){alert('只能输入小于等于10的非负数，小数点后最多保留两位');this.value='';}else{if(this.value == 0){this.style.color='red';}else{this.style.color='';}}}else{alert('只能输入小于等于10的非负数，小数点后最多保留两位');this.value='';}"/></td>
+															</if>
+														</if>
+														<if condition="$vo.requirement_type eq 2">
+															<td>
+																<select class="attendance" name="smeta[{$vo.requirement_description}][]" style="width:60px;">
+																	<option value="1" <?php echo $score_val == 1 ? 'selected' : '' ?> >Full</option>
+																	<option value="2" <?php echo $score_val == 2 ? 'selected' : '' ?> >Sick Leave</option>
+																	<option value="3" <?php echo $score_val == 3 ? 'selected' : '' ?> >Late</option>
+																</select>
+																<if condition="$score_val eq 3" >
+																	<div class="attendance" style="display:inline;" ><input type="number" min="1" name="test_late[]" value="{$score.test_late}" style="width:40px;height:15px;" />min</div>
+																<else/>
+																	<div class="attendance" style="display:none;" ><input type="number" min="1" name="test_late[]" value="" style="width:40px;height:15px;" />min</div>
+																</if>
+																
+															</td>
+														</if>
+													</volist>
+													<td><input type="text" name="test_content[]" value="{$score.test_content}" style="width:100px;"/></td>
+													<td style="width:30px;"><a href="javascript:;" onclick="deleteRow(this)">{:L('DELETE')}</a></td>
+												</tr>
+											</volist>
+										<else/>
+											<tr>
+												<td><input type="date" name="test_date[]" value="" style="width:130px;"/><span class="form-required" style="color:red;"> *</span></td>
+												<td>
+													<!-- 1，常规（1倍计分）；2，期中/期末（2倍计分） -->
+													<select class="test_type" name="test_type[]" style="width:70px;">
+														<option value="1" >General</option>
+														<option value="2" >Mid-term/Final</option>
+													</select>
+												</td>
+												<volist name="course_requirements" id="vo">
+													<if condition="$vo.requirement_type eq 1">
+														<if condition="$vo.requirement_points_system eq 1">
+															<td><input type="text" name="smeta[{$vo.requirement_description}][]" value="" style="width:40px;" onblur= "if( /^\d*(\.\d{1,2})?$/.test(this.value)){if(this.value>100||this.value<0){alert('只能输入小于等于100的非负数，小数点后最多保留两位');this.value='';}else{if(this.value == 0){this.style.color='red';}else{this.style.color='';}}}else{alert('只能输入小于等于100的非负数，小数点后最多保留两位');this.value='';}"/></td>
+														</if>
+														<if condition="$vo.requirement_points_system eq 10">
+															<td><input type="text" name="smeta[{$vo.requirement_description}][]" value="" style="width:40px;" onblur= "if( /^\d*(\.\d{1,2})?$/.test(this.value)){if(this.value>10||this.value<0){alert('只能输入小于等于10的非负数，小数点后最多保留两位');this.value='';}else{if(this.value == 0){this.style.color='red';}else{this.style.color='';}}}else{alert('只能输入小于等于10的非负数，小数点后最多保留两位');this.value='';}"/></td>
+														</if>
+													</if>
+													<if condition="$vo.requirement_type eq 2">
+														<td>
+															<!-- 1，全勤；2，病假；3，迟到 -->
+															<select class="attendance" name="smeta[{$vo.requirement_description}][]" style="width:60px;" >
+																<option value="1" >Full</option>
+																<option value="2" >Sick Leave</option>
+																<option value="3" >Late</option>
+															</select>
+															<div class="attendance" style="display:none;" ><input class="attendance" type="number" min="1" name="test_late[]" value="" style="width:40px;height:15px;" />min</div>
+														</td>
+													</if>
+												</volist>
+												<td><input type="text" name="test_content[]" value="" style="width:100px;"/></td>
+												<td style="width:30px;"><a href="javascript:;" onclick="deleteRow(this)">{:L('DELETE')}</a></td>
+											</tr>
+										</if>
+									</tbody>
+								</table>
+								<button class="btn btn-primary" type="button" onclick="addRow();">+{:L('ADD')}</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<script type="text/javascript">
+				var rows;
+				$(function() {
+					rows =  $("#score_enter").find("tr").length;//总行数
+					var index = 0;
+					$('#score_enter tr').each(function() {
+						index ++ ;
+						$(this).attr('id','tr_'+index);
+					});
+					
+					selectListener(rows);
+				});
+				//克隆行
+				function addRow() {
+					var lastRow = $('#score_enter tr:last');//获取最后一行tr
+					lastRow.clone(true).appendTo('#score_enter');//克隆最后一行并添加到table里边
+					var newLastRow = $('#score_enter tr:last');//得到新的最后一行，即新克隆的一行
+					newLastRow.find('input').val('');//设置克隆行的input为空
+					rows =  $("#score_enter").find("tr").length;//总行数
+					newLastRow.attr('id','tr_'+ rows);//赋予克隆行新的id
+					
+					selectListener(rows);
+				}
+				function deleteRow(obj) {
+					var table = obj.parentNode;//当前表格
+					var row = obj.parentNode.parentNode; //A标签所在行
+					rows =  $("#score_enter").find("tr").length;//总行数
+					var rowIndex = row.rowIndex; //A标签所在行下标
+					if (rows <= 1) { 
+						alert("{:L('DELETE_LAST_MESSAGE')}"); 
+						return false; 
+					} 
+					if (window.confirm("{:L('DELETE_CONFIRM_MESSAGE')}")) row.remove(); 
+					//重置tr的id
+					var index = 0;
+					$('#score_enter tr').each(function() {
+						index ++ ;
+						$(this).attr('id','tr_'+index);
+					});
+					
+					selectListener(rows);
+				}
+				//监听下拉框
+				function selectListener(rows) {
+					//监听每个tr的select.attendance
+					for (var i=1; i<=rows; i++) {
+						$('#tr_'+i+' select.attendance').change(function() {
+							var selected_val = $(this).children('option:selected').val();
+							var row = $(this).parent().parent().index()+1; //标签所在行
+							//alert(row);
+							if(selected_val == 3) {
+								$('#tr_'+row+' div.attendance').css('display','inline');
+							} else {
+								$('#tr_'+row+' div.attendance').css('display','none');
+							}
+						});
+					}
+					//监听每个tr的select.test_type
+					for (var i=1; i<=rows; i++) {
+						$('#tr_'+i+' select.test_type').change(function() {
+							var selected_val = $(this).children('option:selected').val();
+							var row = $(this).parent().parent().index()+1; //标签所在行
+							//alert(row);
+							if(selected_val == 2) {
+								$('#tr_'+row+' select.test_type').css('color','red');
+							} else {
+								$('#tr_'+row+' select.test_type').css('color','');
+							}
+						});
+					}
+				}
+			</script>
+			<div class="form-actions">
+				<button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript">
+		//编辑器路径定义
+		var editorURL = GV.WEB_ROOT;
+		
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$("#score_enter input[type='text']").each(function(){
+				if($(this).val() != "" && $(this).val() == 0) $(this).css('color','red');
+			});
+			//学季联动
+			$('#course').change(function(){
+				var course_id = $(this).children('option:selected').val();
+				$.post('{:U("score/getRequirements")}', {course_id: course_id}, function(result){
+					$("#course_requirement").html(result);
+				});
+			});
+			$(".js-ajax-close-btn").on('click', function(e) {
+				e.preventDefault();
+				Wind.use("artDialog", function() {
+					art.dialog({
+						id : "question",
+						icon : "question",
+						fixed : true,
+						lock : true,
+						background : "#CCCCCC",
+						opacity : 0,
+						content : "{:L('CLOSE_PAGE')}",
+						ok : function() {
+							setCookie("refersh_time", 1);
+							window.close();
+							return true;
+						}
+					});
+				});
+			});
+			/////---------------------
+			Wind.use('validate','ajaxForm','artDialog',function() {
+				//编辑器
+				editorcontent = new baidu.editor.ui.Editor();
+				editorcontent.render('attachment_upload');
+				try {
+					editorcontent.sync();
+				} catch (err) {}
+				//增加编辑器验证规则
+				jQuery.validator.addMethod('editorcontent',function() {
+					try {
+						editorcontent.sync();
+					} catch (err) {}
+					return editorcontent.hasContents();
+				});
+				var form = $('form.js-ajax-forms');
+				//ie处理placeholder提交问题
+				if ($.browser && $.browser.msie) {
+					form.find('[placeholder]').each(function() {
+						var input = $(this);
+						if (input.val() == input
+								.attr('placeholder')) {
+							input.val('');
+						}
+					});
+				}
+				//表单验证开始
+				form.validate({
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//是否在敲击键盘时验证
+					onkeyup : false,
+					//当鼠标掉级时验证
+					onclick : false,
+					//验证错误
+					showErrors : function(errorMap,errorArr) {
+						//errorMap {'name':'错误信息'}
+						//errorArr [{'message':'错误信息',element:({})}]
+						try {
+							$(errorArr[0].element).focus();
+							art.dialog({
+								id : 'error',
+								icon : 'error',
+								lock : true,
+								fixed : true,
+								background : "#CCCCCC",
+								opacity : 0,
+								content : errorArr[0].message,
+								cancelVal : "{:L('OK')}",
+								cancel : function() {
+									$(errorArr[0].element).focus();
+								}
+							});
+						} catch (err) {}
+					},
+					//验证规则
+					rules : {
+						'test_date[]' : { required : 1 }
+					},
+					//验证未通过提示消息
+					messages : {
+						'test_date[]' : { required : "{:L('SCORE_TEST_DATE')}" }
+					},
+					//给未通过验证的元素加效果,闪烁等
+					highlight : false,
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//验证通过，提交表单
+					submitHandler : function(forms) {
+						$(forms).ajaxSubmit({
+							url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+							dataType : 'json',
+							beforeSubmit : function(arr,$form,options) {
+	
+							},
+							success : function(data,statusText,xhr,$form) {
+								if (data.status) {
+									setCookie("refersh_time",1);
+									//添加成功
+									Wind.use("artDialog",function() {
+										art.dialog({
+											id : "succeed",
+											icon : "succeed",
+											fixed : true,
+											lock : true,
+											background : "#CCCCCC",
+											opacity : 0,
+											content : data.info
+										});
+									});
+								} else {
+									alert(data.info);
+								}
+							}
+						});
+					}
+				});
+			});
+		////-------------------------
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('course/time_zones')}">{:L('COURSE_TIME_ZONES')}</a></li>
+			<li><a href="{:U('course/add_time')}">{:L('COURSE_TIME_ZONES_ADD')}</a></li>
+		</ul>
+		<form class="js-ajax-form" method="post">
+			<div class="table-actions">
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('course/toggle_time',array('hide'=>1))}" data-subcheck="true">{:L('HIDE')}</button>
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('course/toggle_time',array('display'=>1))}" data-subcheck="true">{:L('DISPLAY')}</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('course/delete_time')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('BATCH_DELETE')}</button>
+			</div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="50">{:L('ID')}</th>
+						<th width="200">{:L('COURSE_TIME_ZONES')}</th>
+						<th width="50">{:L('STATUS')}</th>
+						<th width="100">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<foreach name="list" item="vo">
+				<tr>
+					<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+					<td>{$vo.id}</td>
+					<td>{$vo.time_zones}</td>
+					<td>
+						<notempty name="vo.time_status">
+							<a data-toggle="tooltip" title="{:L('DISPLAY')}"><i class="fa fa-check"></i></a>
+							<else/>
+							<a data-toggle="tooltip" title="{:L('HIDE')}"><i class="fa fa-close"></i></a>
+						</notempty>
+					</td>
+					<td>
+						<a href="{:U('course/delete_time',array('id'=>$vo['id']))}" class="btn btn-danger btn-small js-ajax-delete" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</a>
+						<br />
+					</td>
+				</tr>
+				</foreach>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+		});
+	</script>
+</body>
+</html>

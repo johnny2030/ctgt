@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <title>Teacher Apply</title>
+
+	<tc_include file='Public:head' />
+    <link href="__TMPL__Public/css/style.css" rel="stylesheet">
+  </head>
+  <body>
+	<tc_include file="Public:nav" />
+  	<!--content-->
+  	<div class="container my-page">
+		<h4><img src="__TMPL__Public/img/logo-sa1.png" />RESUME</h4>
+		<hr>
+		
+		<div class="my-content row">
+			<div class="col-md-1"></div>
+				<div class="col-md-10">
+					<tc_include file='Public:form_result' />
+					
+					<form method="post" action="{:leuu('user/register/teacher_applytable')}">
+						<table class="table table-bordered">
+							<tr>
+								<th colspan="4" class="text-center" height="50">RESUME</th>
+							</tr>
+							<!--基本信息-->
+							<tr>
+								<th colspan="4">◆  Basic Information</th>
+							</tr>
+							<tr>
+								<th width="150"><span class="form-required" style="color:red;"> *</span>First Name</th>
+								<td>
+									<input type="text" style="width: 200px;" id="first_name" name="first_name" value="{$formData['first_name']}" placeholder=""/>
+								</td>
+								<th width="150"><span class="form-required" style="color:red;"> *</span>Last Name</th>
+								<td>
+									<input type="text" style="width: 200px;" id="last_name" name="last_name" value="{$formData['last_name']}" placeholder=""/>
+								</td>
+							</tr>
+							<tr>
+								<th width="150">Gender</th>
+								<td>
+									<input type="radio" name="sex" value="1" checked=""/>Male
+									<input type="radio" name="sex" value="2"/>Female
+								</td>
+								<th width="150"><span class="form-required" style="color:red;"> *</span>Work Experience</th>
+								<td>
+									<input type="number" style="width: 200px;" id="work_experience" name="work_experience" value="{$formData['work_experience']}" placeholder=""/> (year)
+								</td>
+							</tr>
+							<tr>
+								<th width="150">Mobile</th>
+								<td>
+									<input type="tel" style="width: 200px;" id="mobile" name="mobile" value="{$formData['mobile']}" placeholder=""/>
+								</td>
+								<th width="150">Email</th>
+								<td>
+									<input type="email" style="width: 200px;" id="user_email" name="user_email" value="{$formData['user_email']}" placeholder=""/>
+								</td>
+							</tr>
+							<!--教育经历-->
+							<tr>
+								<th colspan="4">◆  Education Experience</th>
+							</tr>
+							<tr>
+								<th width="150"><span class="form-required" style="color:red;"> *</span>School Name</th>
+								<td>
+									<input type="text" style="width: 200px;" id="school_name" name="school_name" value="{$formData['school_name']}" placeholder=""/>
+								</td>
+								<th width="150">Academic </th>
+								<td>
+									<input type="text" style="width: 200px;" id="teacher_academic" name="teacher_academic" value="{$formData['teacher_academic']}" placeholder=""/>
+								</td>
+							</tr>
+							<tr>
+								<th width="150">Start Time</th>
+								<td>
+									<input type="text" style="width: 200px;" id="education_start_time" name="education_start_time" value="{$formData['education_start_time']}" placeholder="" class="js-datetime"/>
+								</td>
+								<th width="150">End Time</th>
+								<td>
+									<input type="text" style="width: 200px;" id="education_end_time" name="education_end_time" value="{$formData['education_end_time']}" placeholder="" class="js-datetime"/>
+								</td>
+							</tr>
+							<tr>
+								<th width="150"><span class="form-required" style="color:red;"> *</span>Speciality </th>
+								<td colspan="3">
+									<php>
+										$teacher_majors = D('TeacherMajor')->where(array('teacher_major_status' => 1))->select();
+									</php>
+									<foreach name="teacher_majors" item="vo">
+										<php>$check_yes = "";</php>
+										<foreach name="formData.teacher_major" item="teacher_major">
+											<if condition="$teacher_major eq $vo['id']">
+												<php>$check_yes = " checked";</php>
+											</if>
+										</foreach>
+										<input type="checkbox" name="teacher_major[]" value="{$vo.id}" {$check_yes}/>{$vo.teacher_major_name}
+									</foreach>
+								</td>
+							</tr>
+							<!--教学经验-->
+							<tr>
+								<th colspan="4">◆  Teaching Experience</th>
+							</tr>
+							<tr>
+								<td colspan="4">
+									<textarea name="teaching_experience" id="teaching_experience" style="width: 98%; height: 300px;" placeholder="">{$formData['teaching_experience']}</textarea>
+								</td>
+							</tr>
+							<tr>
+								<th colspan="4" class="text-center" height="50"><input type="submit" value="Submit" class="btn btn-lg btn-success"></th>
+							</tr>
+						</table>
+					</form>
+				</div>
+			<div class="col-md-1"></div>
+		</div>
+		
+		<img src="__TMPL__Public/img/logo-sa.png" class="center-block my-logo" />
+  	</div>
+	<!-- FOOTER -->
+	<tc_include file="Public:footer" />
+	<tc_include file="Public:scripts" />
+  </body>
+</html>

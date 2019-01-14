@@ -1,0 +1,222 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('emailtemplate/index')}">{:L('EMAIL_TEMPLATE')}</a></li>
+			<li class="active"><a href="{:U('emailtemplate/add')}">{:L('EMAIL_TEMPLATE_ADD')}</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-forms">
+			<div class="row-fluid">
+				<div class="span9">
+					<table class="table table-bordered">
+						<tr>
+							<th width="100">{:L('EMAIL_TITLE')}</th>
+							<td>
+								<input type="text" style="width: 500px;" id="email_title" name="email_title" value="{$email_title}" placeholder="{:L('EMAIL_TITLE')}"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th>{:L('EMAIL_CONTENT')}</th>
+							<td>
+								<script type="text/plain" id="email_content" name="email_content">{$email_content}</script>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="span3">
+					<table class="table table-bordered">
+						<tr>
+							<th>{:L('标识符')}</th>
+						</tr>
+						<tr>
+							<td>
+								<p style="font-size:14px;">链接：<span style="color: #ffb752;">http://#link#</span></p>
+							</td>
+						</tr>
+						<tr>
+							<th>{:L('友好家庭标识符')}</th>
+						</tr>
+						<tr>
+							<td>
+								<p style="font-size:14px;">姓名：<span style="color: #ffb752;">#name#</span></p>
+								<p style="font-size:14px;">电话：<span style="color: #ffb752;">#phone#</span></p>
+								<p style="font-size:14px;">邮箱：<span style="color: #ffb752;">#email#</span></p>
+								<p style="font-size:14px;">邮编：<span style="color: #ffb752;">#postcode#</span></p>
+								<p style="font-size:14px;">爱好：<span style="color: #ffb752;">#hobby#</span></p>
+								<p style="font-size:14px;">专业：<span style="color: #ffb752;">#speciality#</span></p>
+								<p style="font-size:14px;">住址：<span style="color: #ffb752;">#address#</span></p>
+							</td>
+						</tr>
+						<tr>
+							<th>{:L('活动替换标识符')}</th>
+						</tr>
+						<tr>
+							<td>
+								<p style="font-size:14px;">活动名称：<span style="color: #ffb752;">#activity_name#</span></p>
+								<p style="font-size:14px;">活动时间：<span style="color: #ffb752;">#time#</span></p>
+								<p style="font-size:14px;">活动地点：<span style="color: #ffb752;">#place#</span></p>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="form-actions">
+				<button class="btn btn-primary js-ajax-submit" type="submit">{:L('ADD')}</button>
+				<a class="btn" href="javascript:history.back(-1);">{:L('BACK')}</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript">
+		//编辑器路径定义
+		var editorURL = GV.WEB_ROOT;
+		
+	</script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$(".js-ajax-close-btn").on('click', function(e) {
+				e.preventDefault();
+				Wind.use("artDialog", function() {
+					art.dialog({
+						id : "question",
+						icon : "question",
+						fixed : true,
+						lock : true,
+						background : "#CCCCCC",
+						opacity : 0,
+						content : "{:L('CLOSE_PAGE')}",
+						ok : function() {
+							setCookie("refersh_time", 1);
+							window.close();
+							return true;
+						}
+					});
+				});
+			});
+			/////---------------------
+			Wind.use('validate','ajaxForm','artDialog',function() {
+				//编辑器
+				editorcontent = new baidu.editor.ui.Editor();
+				editorcontent.render('email_content');
+				try {
+					editorcontent.sync();
+				} catch (err) {}
+				//增加编辑器验证规则
+				jQuery.validator.addMethod('editorcontent',function() {
+					try {
+						editorcontent.sync();
+					} catch (err) {}
+					return editorcontent.hasContents();
+				});
+				
+				var form = $('form.js-ajax-forms');
+				//ie处理placeholder提交问题
+				if ($.browser && $.browser.msie) {
+					form.find('[placeholder]').each(function() {
+						var input = $(this);
+						if (input.val() == input
+								.attr('placeholder')) {
+							input.val('');
+						}
+					});
+				}
+				//表单验证开始
+				form.validate({
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//是否在敲击键盘时验证
+					onkeyup : false,
+					//当鼠标掉级时验证
+					onclick : false,
+					//验证错误
+					showErrors : function(errorMap,errorArr) {
+						//errorMap {'name':'错误信息'}
+						//errorArr [{'message':'错误信息',element:({})}]
+						try {
+							$(errorArr[0].element).focus();
+							art.dialog({
+								id : 'error',
+								icon : 'error',
+								lock : true,
+								fixed : true,
+								background : "#CCCCCC",
+								opacity : 0,
+								content : errorArr[0].message,
+								cancelVal : "{:L('OK')}",
+								cancel : function() {
+									$(errorArr[0].element).focus();
+								}
+							});
+						} catch (err) {}
+					},
+					//验证规则
+					rules : {
+						'email_title' : { required : 1 },
+						'email_content' : { required : 1 }
+					},
+					//验证未通过提示消息
+					messages : {
+						'email_title' : { required : "{:L('EMAIL_TITLE_NOT_NULL')}" },
+						'email_content' : { required : "{:L('EMAIL_CONTENT_NOT_NULL')}" }
+					},
+					//给未通过验证的元素加效果,闪烁等
+					highlight : false,
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//验证通过，提交表单
+					submitHandler : function(forms) {
+						$(forms).ajaxSubmit({
+							url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+							dataType : 'json',
+							beforeSubmit : function(arr,$form,options) {
+	
+							},
+							success : function(data,statusText,xhr,$form) {
+								if (data.status) {
+									setCookie("refersh_time",1);
+									//添加成功
+									Wind.use("artDialog",function() {
+										art.dialog({
+											id : "succeed",
+											icon : "succeed",
+											fixed : true,
+											lock : true,
+											background : "#CCCCCC",
+											opacity : 0,
+											content : data.info,
+											button : [
+											{
+												name : "{:L('CONTINUE')}",
+												callback : function() {
+													reloadPage(window);
+													return true;
+												},
+												focus : true
+											},
+											{
+												name : "{:L('RETURN')}",
+												callback : function() {
+													location.href = "{:U('emailtemplate/index')}";
+													return true;
+												}
+											}
+											]
+										});
+									});
+								} else {
+									alert(data.info);
+								}
+							}
+						});
+					}
+				});
+			});
+		////-------------------------
+		});
+	</script>
+</body>
+</html>

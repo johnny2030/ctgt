@@ -1,0 +1,79 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('textBook/index')}">课件管理</a></li>
+			<li><a href="{:U('textBook/add')}">添加课件</a></li>
+		</ul>
+		<form class="well form-search" method="post" id="cid-form" >
+			<input type="text" name="textbook_name" style="width: 200px;" value="{$textbook_name}" placeholder="请输入课件名称">
+			<button class="btn btn-primary">搜索</button>
+			<a class="btn btn-danger" href="{:U('textBook/index')}">清空</a>
+		</form>
+		<form class="js-ajax-form" method="post">
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="50">ID</th>
+						<th width="100">课程名称</th>
+						<th width="200">课件名称</th>
+						<th width="200">教材</th>
+						<th width="50">上传作者</th>
+						<th width="100">上传时间</th>
+						<th width="100">已下载次数</th>
+						<th width="100">操作</th>
+					</tr>
+				</thead>
+				<foreach name="list" item="vo">
+				<tr>
+					<td>{$vo.id}</td>
+					<td>{$vo.category_name}</td>
+					<td>{$vo.textbook_name}</td>
+					<td>{$vo.textbook_content}</td>
+					<td>{$vo.user_login}</td>
+					<td>{$vo.textbook_modify_time}</td>
+					<td>0</td>
+					<td>
+						<a href="{:U('textBook/edit',array('id'=>$vo['id']))}">{:L('EDIT')}</a>
+						<a href="{:U('textBook/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">{:L('DELETE')}</a>
+						<br />
+					</td>
+				</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						<th width="50">ID</th>
+						<th width="100">课程名称</th>
+						<th width="200">教材名称</th>
+						<th width="200">教材</th>
+						<th width="100">上传作者</th>
+						<th width="100">上传时间</th>
+						<th width="100">已下载次数</th>
+						<th width="100">操作</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<form class="well form-search" method="post" id="cid-form" >
+			<!-- <input type="text" name="keyword" style="width: 200px;" value="{$keyword}" placeholder="">
+			<button class="btn btn-primary">搜索</button>
+			<a class="btn btn-danger" href="{:U('course/index')}">清空</a> -->
+			{:L('COURSE_TERM_SEARCH_HEAD')} >>
+		</form>
+		<form class="js-ajax-form" method="post">
+			<div class="table-actions">
+				<!-- <button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('course/term_toggle',array('hide'=>1))}" data-subcheck="true">隐藏</button>
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('course/term_toggle',array('display'=>1))}" data-subcheck="true">显示</button> -->
+			</div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<!-- <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th> --> 
+						<th width="10">{:L('NO')}</th>
+						<th width="100">Year</th>
+						<th width="100">Term</th>
+						<th width="100">Session</th>
+						<th width="100">Program</th>
+						<th width="50">{:L('COURSE_PROGRAM_MEMBER')}</th>
+						<th width="50">{:L('COURSE_INFORMATION')}</th>
+						<th width="10">{:L('STATUS')}</th> 
+						<th width="100">{:L('ACTIONS')}</th>
+					</tr>
+				</thead>
+				<volist name="list" id="vo">
+					<php>
+						$where = array();
+						if($vo['year']) $where['year'] = $vo['year'];
+						if($vo['term']) $where['term'] = $vo['term'];
+						if($vo['session']) $where['session'] = $vo['session'];
+						if($vo['program']) $where['program'] = $vo['program'];
+						$term_year_sess = trim($vo['year'])."-".trim($vo['term'])."-".trim($vo['session'])."-".trim($vo['program']);
+						$term_courses_count = D('TermCourseRelationship')->alias('tcr')->join('__COURSE__ c ON c.id=tcr.course_id')->where(array('tcr.term_year_sess' => $term_year_sess,'c.course_status' => 1))->count();
+						$term_courses = D('TermCourseRelationship')->alias('tcr')->join('__COURSE__ c ON c.id=tcr.course_id')->where(array('tcr.term_year_sess' => $term_year_sess,'c.course_status' => 1))->select();
+					</php>
+					<tr>
+						<!-- <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="terms[]" value="{$term_year_sess}"></td>  -->
+						<td>{$i}</td>
+						<td>{$vo.year}</td>
+						<td>{$vo.term}</td>
+						<td>{$vo.session}</td>
+						<td>{$vo.program}</td>
+						<td>
+							<a target="_blank" href="{:U('portal/course/program',array('term' => str_replace('&','*',trim($vo['term'])), 'year' => str_replace('&','*',trim($vo['year'])), 'session' => str_replace('&','*',trim($vo['session'])), 'program' => str_replace('&','*',trim($vo['program']))))}">{:L('VIEW_DETAILS')}</a>
+						</td>
+						<td>
+							<if condition="$term_courses_count neq 0">
+								<a href="javascript:open_iframe_dialog('{:U('course/allot_list',array('year' => str_replace('&','*',trim($vo['year'])),'term' => str_replace('&','*',trim($vo['term'])),'session' => str_replace('&','*',trim($vo['session'])),'program' => str_replace('&','*',trim($vo['program']))))}','{:L('COURSE_LIST')}')">{:L('VIEW_DETAILS')}( {$term_courses_count} )</a>
+							<else/>
+								{:L('NO_DATA')}
+							</if>
+						</td>
+						<td>
+							<notempty name="vo.term_status">
+								<a data-toggle="tooltip" title="显示"><i class="fa fa-check"></i></a>
+							<else/>
+								<a data-toggle="tooltip" title="隐藏"><i class="fa fa-close"></i></a>
+							</notempty>
+						</td>
+						<td>
+							<empty name="term_courses">
+								<a href="{:U('course/allot',$where)}" class="btn btn-warning btn-small">{:L('COURSE_ALLOT')}</a>
+							<else/>
+								<a href="{:U('course/allot',$where)}" class="btn btn-warning btn-small">{:L('COURSE_ADJUST')}</a>
+							</empty>
+							<notempty name="vo.term_status">
+								<a href="{:U('course/ban',$where)}" class="btn btn-danger btn-small">{:L('HIDE')}</a>
+							<else/>
+								<a href="{:U('course/cancelban',$where)}" class="btn btn-success btn-small">{:L('DISPLAY')}</a>
+							</notempty>
+						</td>
+					</tr>
+				</volist>
+			</table>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+			//学季三级联动
+			$('#department').change(function(){
+				var department_id=$(this).children('option:selected').val();
+				$.post('{:U("course/getMajors")}', {did: department_id}, function(result){
+					$("#major").html(result);
+					$("#category").html("<option value='0'>请选择课程名称</option>")
+				});
+			});
+			$('#major').change(function(){
+				var major_id=$(this).children('option:selected').val();
+				$.post('{:U("course/getCategories")}', {mid: major_id}, function(result){
+					$("#category").html(result.category_html);
+				});
+			});
+		});
+	</script>
+</body>
+</html>

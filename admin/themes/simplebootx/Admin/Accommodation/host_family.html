@@ -1,0 +1,117 @@
+<admintpl file="header" />
+<style>
+<!--
+.row-fluid table th,td {white-space:nowrap;}
+.row-fluid table th {height:40px;padding:0 5px 4px 9px;}
+.row-fluid table td {height:25px;}
+-->
+</style>
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="javascript:void(0);">友好家庭列表</a></li>
+		</ul>
+		<form class="js-ajax-form" method="post">
+			<div class="row-fluid">
+				<div class="span3">
+					<table class="table table-hover table-bordered table-list">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>姓名</th>
+								<th>年龄(岁)</th>
+							</tr>
+						</thead>
+						<volist name="list" id="vo">
+							<tr>
+								<td>{$vo.id}</td>
+								<td>{$vo.name}</td>
+								<td>{$vo.age}</td>
+							</tr>
+						</volist>
+					</table>
+				</div>
+				<div class="span9" style="overflow-x:auto;margin-left:0;">
+					<table class="table table-hover table-bordered table-list">
+						<thead>
+							<tr>
+								<th>语言</th>
+								<th>作息时间</th>
+								<th>宗教</th>
+								<th>爱好</th>
+								<th>家庭成员</th>
+								<th>孩子年龄(岁)</th>
+								<th>银行卡户主名</th>
+								<th>银行卡卡号</th>
+								<th>开户行信息</th>
+								<th>房间位置</th>
+								<th>房间大小(㎡)</th>
+								<th>房产证明</th>
+								<th>房间图片</th>
+							</tr>
+						</thead>
+						<volist name="list" id="vo">
+							<php>
+								$language = json_decode($vo['language'],true);
+								$language_str = implode(' | ',$language);
+								$time_table = json_decode($vo['time_table'],true);
+								$time_str = implode(' | ',$time_table);
+								$hobby = json_decode($vo['hobby'],true);
+								$hobby_str = implode(' | ',$hobby);
+								$children_age = json_decode($vo['children_age'],true);
+								$child_str = implode(' | ',$children_age);
+								$family_ties = json_decode($vo['family_ties'],true);
+								$family_str = implode(' | ',$family_ties);
+								$poc = json_decode($vo['poc'],true);
+								$room_photos = json_decode($vo['room_photo'],true);
+							</php>
+							<tr>
+								<td>{$language_str}</td>
+								<td>{$time_str}</td>
+								<td>{$vo.religion}</td>
+								<td>{$hobby_str}</td>
+								<td>{$family_str}</td>
+								<td>{$child_str}</td>
+								<td>{$vo.account_holder}</td>
+								<td>{$vo.bank_account}</td>
+								<td>{$vo.opening_bank}</td>
+								<td>{$vo.room_location}</td>
+								<td>{$vo.room_size}</td>
+								<td>
+									<volist name="poc.photos" id="poc_photo">
+										<a href="javascript:parent.image_preview_dialog('http://localhost:8080/cieeassist/public/upload/{$poc_photo.url}');">
+											<img style="width:25px;height:25px;" src="http://localhost:8080/cieeassist/public/upload/{$poc_photo.url}" title="{:L('CLICK_TO_ENLARGE')}"/>
+										</a>
+									</volist>
+								</td>
+								<td>
+									<volist name="room_photos.photos" id="room_photo">
+										<a href="javascript:parent.image_preview_dialog('http://localhost:8080/cieeassist/public/upload/{$room_photo.url}');">
+											<img style="width:25px;height:25px;" src="http://localhost:8080/cieeassist/public/upload/{$room_photo.url}" title="{:L('CLICK_TO_ENLARGE')}"/>
+										</a>
+									</volist>
+								</td>
+							</tr>
+						</volist>
+					</table>
+				</div>
+			</div>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+	</script>
+</body>
+</html>
