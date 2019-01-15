@@ -1,0 +1,127 @@
+<!doctype html>
+<!--[if lt IE 7]><html lang="en" class="no-js ie6"><![endif]-->
+<!--[if IE 7]><html lang="en" class="no-js ie7"><![endif]-->
+<!--[if IE 8]><html lang="en" class="no-js ie8"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+
+<tc_include file="Public/header"/>
+<body>
+    <!-- Wrap all page content here -->
+    <div id="wrap">
+        <tc_include file="Public/top"/>
+
+        <section id="blog">
+            <div class="container">
+                <div class="row">
+                    <tc_include file="Public/bar"/>
+                    <div class="col-md-9">
+                        <div class="article">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="col-sm-11 col-xs-10">
+                                        <span class="divider"></span><h4>个人信息</h4>
+                                        <div class="col-md-1"></div>
+                                        <div class="show_header col-md-9">
+                                            <ul class="show_nav col-md-3">
+                                                <li>
+                                                    公司名：
+                                                </li>
+                                                <li>
+                                                    公司地址：
+                                                </li>
+                                                <li>
+                                                    公司电话：
+                                                </li>
+                                                <li>
+                                                    姓名：
+                                                </li>
+                                                <li>
+                                                    性别：
+                                                </li>
+                                                <li>
+                                                    年龄：
+                                                </li>
+                                                <li>
+                                                    手机号：
+                                                </li>
+                                            </ul>
+                                            <ul class="show_info col-md-7">
+                                                <li>
+                                                    <notempty name="user.company_name">
+                                                        {$user.company_name}
+                                                        <else />
+                                                        未填写
+                                                    </notempty>
+                                                </li>
+                                                <li>
+                                                    <notempty name="user.company_address">
+                                                        {$user.company_address}
+                                                        <else />
+                                                        未填写
+                                                    </notempty>
+                                                </li>
+                                                <li>
+                                                    <notempty name="user.company_phone">
+                                                        {$user.company_phone}
+                                                        <else />
+                                                        未填写
+                                                    </notempty>
+                                                </li>
+                                                <li>
+                                                    <notempty name="user.name">
+                                                        {$user.name}
+                                                        <else />
+                                                        未填写
+                                                    </notempty>
+                                                </li>
+                                                <li>
+                                                    <notempty name="user.sex">
+                                                        {$user.sex}
+                                                        <else />
+                                                        未填写
+                                                    </notempty>
+                                                </li>
+                                                <li>
+                                                    <notempty name="user.age">
+                                                        {$user.age}
+                                                        <else />
+                                                        未填写
+                                                    </notempty>
+                                                </li>
+                                                <li>
+                                                    <notempty name="user.phone">
+                                                        {$user.phone}
+                                                        <else />
+                                                        未填写
+                                                    </notempty>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-2"></div>
+                                    </div>
+                                    <div class="col-sm-1 col-xs-2">
+                                        <div class="row">
+                                            <!--<div class="type">
+                                                <i class="fa fa-picture-o fa-2x"></i>
+                                            </div>-->
+                                            <div class="date">
+                                                {$day}<span>{$ym}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-9" style="text-align:center;"><a href="{:U('portal/user/personal_edit')}" class="submitBtn">编辑信息</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <tc_include file="Public/footer"/>
+    </div>
+    <!--/wrap-->
+</body>
+
+</html>

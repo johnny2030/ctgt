@@ -1,0 +1,111 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('spec/index')}">规格信息</a></li>
+			<li><a href="{:U('spec/add')}">添加规格</a></li>
+		</ul>
+		<form class="well form-search" method="post" id="cid-form" >
+			<input type="text" name="name" style="width: 200px;" value="{$name}" placeholder="请输入规格姓名">
+			<button class="btn btn-primary">搜索</button>
+			<a class="btn btn-danger" href="{:U('spec/index')}">清空</a>
+		</form>
+		<form class="js-ajax-form" method="post">
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('spec/delete')}" data-subcheck="true" data-msg="确定删除？">删除</button>
+			</div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="100">ID</th>
+						<th width="200">开放对象</th>
+						<th width="100">规格名称</th>
+						<th width="100">尺码</th>
+						<th width="100">层数</th>
+						<th width="100">瓦楞</th>
+						<th width="100">用途</th>
+						<th width="100">材质</th>
+						<th width="100">工艺</th>
+						<th width="100">承重</th>
+						<th width="100">配送</th>
+						<th width="100">更新时间</th>
+						<th width="100">创建时间</th>
+						<th width="100">操作</th>
+					</tr>
+				</thead>
+				<foreach name="list" item="vo">
+					<tr>
+						<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+						<td>{$vo.id}</td>
+						<td>
+							<if condition="$vo.user_id == 0">
+								通用规格
+								<else/>
+								{$vo.uname}
+							</if>
+						</td>
+						<td>{$vo.name}</td>
+						<td>{$vo.chima}</td>
+						<td>{$vo.cengshu}</td>
+						<td>{$vo.waleng}</td>
+						<td>{$vo.yongtu}</td>
+						<td>{$vo.caizhi}</td>
+						<td>{$vo.gongyi}</td>
+						<td>{$vo.chengzhong}</td>
+						<td>{$vo.peisong}</td>
+						<td>{$vo.update_time}</td>
+						<td>{$vo.create_time}</td>
+						<td>
+							<a style="margin-top: 5px;" href="{:U('spec/edit',array('id'=>$vo['id']))}" class="btn btn-success btn-small">编辑</a>
+							<a style="margin-top: 5px;" href="{:U('spec/delete',array('id'=>$vo['id']))}" class="btn btn-danger btn-small js-ajax-delete" data-msg="确定删除？">删除</a>
+						</td>
+					</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="100">ID</th>
+						<th width="200">开放对象</th>
+						<th width="100">规格名称</th>
+						<th width="100">尺码</th>
+						<th width="100">层数</th>
+						<th width="100">瓦楞</th>
+						<th width="100">用途</th>
+						<th width="100">材质</th>
+						<th width="100">工艺</th>
+						<th width="100">承重</th>
+						<th width="100">配送</th>
+						<th width="100">更新时间</th>
+						<th width="100">创建时间</th>
+						<th width="100">操作</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('spec/delete')}" data-subcheck="true" data-msg="确定删除？">删除</button>
+			</div>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+.orderConfirmContent{
+	width: 700px;
+	margin: 0 auto;
+	color:#222;
+}
+.orderConfirmContent h1{
+	font-family: '微软雅黑';
+    font-size: 20px;
+    line-height: 32px;
+    border-bottom: 1px dotted #dddddd;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+.copmtDetail{
+    font-size: 12px;
+}
+.tableCont{
+    width: 100%;
+    border: 1px solid #d5eeff;
+    overflow: hidden;
+     margin-top: 25px;
+}
+.tableCont span{
+    width: 33.3%;
+    display: inline-block;
+    float: left;
+    border-left: 1px solid #d5eeff;
+        border-bottom: 1px solid #d5eeff;
+}
+.tableCont li span:first-child{
+    border-left: none;       
+}
+.tableCont li:last-child span{
+    border-bottom: none;       
+}
+
+.tableCont p{
+    height: 48px;
+    line-height:48px;
+    text-align: center;
+    border-color: #d5eeff;
+    background-color:#d5eeff;
+    font-size:14px;
+    font-weight: normal;
+    margin:0
+}
+.tableCont li{
+    height: 48px;
+    line-height:48px;
+    text-align: center;
+    border-color: #d5eeff;
+    font-size:12px;
+    list-style: none;
+}
+.group_choose i{
+    display: inline-block;
+    font-style: normal;
+    height: 30px;
+    width: 90px;
+    line-height: 30px;
+    text-align: center;
+    
+    border-radius: 28px;
+    color: #fff;
+}
+.group_choose i.sign{
+    background: #ff5959;
+    cursor: pointer;
+}
+.group_choose i.over{
+    background: #cccccc;
+}

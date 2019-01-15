@@ -1,0 +1,158 @@
+/*图片开始*/
+.pic_content,.pic_detail{
+	margin-top: 14px;
+	padding-top: 20px;
+}
+.pic_title{
+	height: 34px;
+	line-height: 34px;
+	text-align: left;
+	border-bottom: 1px dashed #cccccc;
+	margin-bottom: 20px;
+	font-size: 16px;
+}
+.pic_title img{
+	width: 36px;
+	position: relative;
+	top: -2px;
+	
+}
+
+.pic_content ul li{
+	display: inline-table;
+	width: 353px;
+	height: 280px;
+	list-style: none;
+	display: inline-block;
+	margin-bottom: 20px;
+}
+.pic_content ul li a{
+	display: table-cell;
+	width: 353px;
+	height: 280px;
+	vertical-align: middle;
+	text-align: center;
+	
+}
+.pic_content ul li a div{
+	display: table-cell;
+	width: 353px;
+	height: 240px;
+	vertical-align: middle;
+	text-align: center;
+	
+}
+.pic_content ul li a img{
+	max-width: 100%;
+	max-height: 100%;
+}
+.pic_content ul li:nth-child(3n+2){
+	margin-left: 20px;
+	margin-right: 20px;
+}
+.pic_content ul li a p{
+	white-space: nowrap;
+	overflow: hidden;
+	text-align: left;
+	text-overflow: ellipsis;
+	width: 353px;
+	height: 20px;
+	line-height: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.pic_detail .title_detail{
+	margin: 50px auto;
+	text-align: center;
+	font-size: 16px;
+	padding: 0 280px;
+}
+
+  #gallery {
+  	padding: 0px;
+  	padding-left: 30px;
+  	padding-right: 30px;
+    
+  }
+  #descriptions {
+    position: relative;
+    height: 50px;
+    background: #EEE;
+    margin-top: 10px;
+    width: 640px;
+    padding: 10px;
+    overflow: hidden;
+  }
+    #descriptions .ad-image-description {
+      position: absolute;
+    }
+      #descriptions .ad-image-description .ad-description-title {
+        display: block;
+      }
+      
+/*图片结束*/     
+/*公益活动开始*/ 
+.active_list p{
+	margin: 12px 0;
+}
+.active_list p:first-child{
+	margin-bottom: 16px;
+}
+.active_list p.registration_time{
+	margin: 0px 0 4px 0;
+}
+.active_list p.active_time{
+	margin: 4px 0 8px 0;
+}
+.active_list ul{
+	display: table;
+	width: 900px;
+	margin: 20px auto;
+}  
+.active_list ul li{
+	border: 1px solid #eee;
+	margin: 10px auto;
+	list-style: none;
+}
+.active_list ul li>div{
+	width: 900px;
+	height: 360px;
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
+}
+.active_list ul li img{
+	max-width: 900px;
+	max-height: 360px;
+	vertical-align: middle;
+	display: block;
+	margin: 0 auto;
+}
+
+.active_list  ul li>p{
+	font-size: 12px;
+	padding:0 20px;
+}
+.active_list  ul li>p:nth-of-type(1){
+	font-size: 16px;
+}
+/*公益活动结束*/ 
+.active_detail .goRegister.sign_up a:last-child.start{
+	background-color: #ff5959;
+	border: 1px solid #ee3333;
+}
+.active_detail .goRegister.sign_up a:last-child.start:hover{
+	background-color: #ee3333;
+	border: 1px solid #ee3333;
+}
+.active_detail .goRegister.sign_up a:last-child.end{
+	background-color: #ccc;
+	border: 1px solid #bebebe;
+	color: #999;
+}
+.active_detail .goRegister.sign_up a:last-child.end:hover{
+	background-color: #bebebe;
+	border: 1px solid #bebebe;
+	color: #999;
+}

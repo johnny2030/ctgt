@@ -1,0 +1,334 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li><a href="{:U('order/index')}">订单信息</a></li>
+			<li class="active"><a href="{:U('order/add')}">添加订单</a></li>
+		</ul>
+		<form method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+			<div class="row-fluid">
+				<div class="span9">
+					货品选择：&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="fg" value="1" onclick="shp()" checked>上线货品&nbsp;&nbsp;
+					<input type="radio" name="fg" value="2" onclick="shp()">拼接货品
+					<div id="fg1">
+						<table class="table table-bordered">
+							<tr>
+								<th width="121px">货品名</th>
+								<td>
+									<select id="gid" name="gid">
+										<option value="">请选择货品</option>
+										<foreach name="goods" item="g">
+											<option value="{$g.id}">{$g.name}</option>
+										</foreach>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div id="fg2" style="display: none;">
+						<table class="table table-bordered">
+							<tr>
+								<th width="121px">货品类别</th>
+								<td>
+									<select id="cid" name="cid">
+										<option value="">请选择类别</option>
+										<foreach name="category" item="c">
+											<option value="{$c.id}">{$c.name}</option>
+										</foreach>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<th width="121px">货品规格</th>
+								<td>
+									<select id="sid" name="sid">
+										<option value="">请选择规格</option>
+										<foreach name="spec" item="s">
+											<option value="{$s.id}">{$s.name}</option>
+										</foreach>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</div>
+					客户选择：&nbsp;&nbsp;&nbsp;&nbsp;
+					<input type="radio" name="ck" value="1" onclick="skh()" checked>现有公司客户&nbsp;&nbsp;
+					<input type="radio" name="ck" value="2" onclick="skh()">现有个人客户&nbsp;&nbsp;
+					<input type="radio" name="ck" value="3" onclick="skh()">重新填写
+					<div id="ck1">
+						<table class="table table-bordered">
+							<tr>
+								<th width="121px">订货公司</th>
+								<td>
+									<select id="payer1" name="payer1">
+										<option value="">请选择订货公司</option>
+										<foreach name="company" item="c">
+											<option value="{$c.id}">{$c.name}</option>
+										</foreach>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div id="ck2" style="display: none;">
+						<table class="table table-bordered">
+							<tr>
+								<th width="121px">订货人</th>
+								<td>
+									<select id="payer" name="payer">
+										<option value="">请选择订货人</option>
+										<foreach name="customer" item="c">
+											<option value="{$c.id}">{$c.name}</option>
+										</foreach>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<div id="ck3" style="display: none;">
+						<table class="table table-bordered">
+							<tr>
+								<th width="121px">订货公司</th>
+								<td>
+									<input type="text" style="width: 300px;" id="company_name" name="company_name" value="{$company_name}" placeholder="请输入订货公司"/>
+									<span class="form-required" style="color:red;"> *</span>
+								</td>
+							</tr>
+							<tr>
+								<th width="121px">公司电话</th>
+								<td>
+									<input type="text" style="width: 200px;" id="company_phone" name="company_phone" value="{$company_phone}" placeholder="请输入公司电话"/>
+									<span class="form-required" style="color:red;"> *</span>
+								</td>
+							</tr>
+							<tr>
+								<th width="121px">订货人</th>
+								<td>
+									<input type="text" style="width: 200px;" id="name" name="name" value="{$name}" placeholder="请输入订货人"/>
+									<span class="form-required" style="color:red;"> *</span>
+								</td>
+							</tr>
+							<tr>
+								<th width="121px">订货人电话</th>
+								<td>
+									<input type="text" style="width: 200px;" id="phone" name="phone" value="{$phone}" placeholder="请输入订货人电话"/>
+									<span class="form-required" style="color:red;"> *</span>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<table class="table table-bordered">
+						<tr>
+							<th>订货数量</th>
+							<td>
+								<input type="text" style="width: 100px;" id="shuliang" name="shuliang" value="{$shuliang}" placeholder="请输入订货数量"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th>订单金额</th>
+							<td>
+								<input type="text" style="width: 100px;" id="money" name="money" value="{$money}" placeholder="请输入订单金额"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th>订单备注</th>
+							<td>
+								<input type="text" style="width: 400px;" id="pay_name" name="pay_name" value="{$pay_name}" placeholder="请输入订单备注"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+						<tr>
+							<th>订单状态</th>
+							<td>
+								<input type="text" style="width: 100px;" id="pay_status" name="pay_status" value="{$pay_status}" placeholder="请输入订单状态"/>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="form-actions">
+				<button class="btn btn-primary js-ajax-submit" type="submit">添加</button>
+				<a class="btn" href="{:U('order/index')}">返回</a>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+	<script type="text/javascript">
+		$(function() {
+            $("input[name=fg]").click(function(){
+                shp();
+            });
+            $("input[name=ck]").click(function(){
+                skh();
+            });
+			$(".js-ajax-close-btn").on('click', function(e) {
+				e.preventDefault();
+				Wind.use("artDialog", function() {
+					art.dialog({
+						id : "question",
+						icon : "question",
+						fixed : true,
+						lock : true,
+						background : "#CCCCCC",
+						opacity : 0,
+						content : "关闭窗口",
+						ok : function() {
+							setCookie("refersh_time", 1);
+							window.close();
+							return true;
+						}
+					});
+				});
+			});
+			/////---------------------
+			Wind.use('validate','ajaxForm','artDialog',function() {
+				var form = $('form.js-ajax-forms');
+				//ie处理placeholder提交问题
+				if ($.browser && $.browser.msie) {
+					form.find('[placeholder]').each(function() {
+						var input = $(this);
+						if (input.val() == input
+								.attr('placeholder')) {
+							input.val('');
+						}
+					});
+				}
+				//表单验证开始
+				form.validate({
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//是否在敲击键盘时验证
+					onkeyup : false,
+					//当鼠标掉级时验证
+					onclick : false,
+					//验证hidden
+					ignore : "",
+					//验证错误
+					showErrors : function(errorMap,errorArr) {
+						//errorMap {'name':'错误信息'}
+						//errorArr [{'message':'错误信息',element:({})}]
+						try {
+							$(errorArr[0].element).focus();
+							art.dialog({
+								id : 'error',
+								icon : 'error',
+								lock : true,
+								fixed : true,
+								background : "#CCCCCC",
+								opacity : 0,
+								content : errorArr[0].message,
+								cancelVal : "确定",
+								cancel : function() {
+									$(errorArr[0].element).focus();
+								}
+							});
+						} catch (err) {}
+					},
+					//验证规则
+					rules : {
+					},
+					//验证未通过提示消息
+					messages : {
+					},
+					//给未通过验证的元素加效果,闪烁等
+					highlight : false,
+					//是否在获取焦点时验证
+					onfocusout : false,
+					//验证通过，提交表单
+					submitHandler : function(forms) {
+						$(forms).ajaxSubmit({
+							url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+							dataType : 'json',
+							beforeSubmit : function(arr,$form,options) {
+	
+							},
+							success : function(data,statusText,xhr,$form) {
+								if (data.status) {
+									setCookie("refersh_time",1);
+									//添加成功
+									Wind.use("artDialog",function() {
+										art.dialog({
+											id : "succeed",
+											icon : "succeed",
+											fixed : true,
+											lock : true,
+											background : "#CCCCCC",
+											opacity : 0,
+											content : data.info,
+											button : [
+											{
+												name : "继续添加？",
+												callback : function() {
+													reloadPage(window);
+													return true;
+												},
+												focus : true
+											},
+											{
+												name : "返回列表",
+												callback : function() {
+													location.href = "{:U('order/index')}";
+													return true;
+												}
+											}
+											]
+										});
+									});
+								} else {
+									alert(data.info);
+								}
+							}
+						});
+					}
+				});
+			});
+            function shp() {
+                var a = $("input[name='fg']:checked").val();
+                if (a == "1") {
+                    $("#fg1").css("display","block");
+                    $("#fg2").css("display","none");
+                    $("#cid").val("").selected();
+                    $("#sid").val("").selected();
+                }else{
+                    $("#fg1").css("display","none");
+                    $("#fg2").css("display","block");
+                    $("#gid").val("").selected();
+                }
+            }
+            function skh() {
+                var a = $("input[name='ck']:checked").val();
+                if (a == "1") {
+                    $("#ck1").css("display","block");
+                    $("#ck2").css("display","none");
+                    $("#ck3").css("display","none");
+                    $("#payer").val("").selected();
+                    $("#company_name").val("");
+                    $("#company_phone").val("");
+                    $("#name").val("");
+                    $("#phone").val("");
+                }else if (a == "2") {
+                    $("#ck1").css("display","none");
+                    $("#ck2").css("display","block");
+                    $("#ck3").css("display","none");
+                    $("#payer1").val("").selected();
+                    $("#company_name").val("");
+                    $("#company_phone").val("");
+                    $("#name").val("");
+                    $("#phone").val("");
+                }else{
+                    $("#ck1").css("display","none");
+                    $("#ck2").css("display","none");
+                    $("#ck3").css("display","block");
+                    $("#payer").val("").selected();
+                    $("#payer1").val("").selected();
+				}
+            }
+		});
+	</script>
+</body>
+</html>

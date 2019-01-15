@@ -1,0 +1,233 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+	<ul class="nav nav-tabs">
+		<li><a href="{:U('goods/index')}">货品信息</a></li>
+		<li class="active"><a href="javascript:void(0);">编辑货品</a></li>
+	</ul>
+	<form method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$id}">
+		<div class="row-fluid">
+			<div class="span9">
+				<table class="table table-bordered">
+					<tr>
+						<th>货品名</th>
+						<td>
+							<input type="text" style="width: 400px;" id="name" name="name" value="{$name}" placeholder="请输入货品名"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+					<tr>
+						<th>类别</th>
+						<td>
+							<select id="cid" name="cid">
+								<foreach name="category" item="c">
+									<if condition="$c.id == $cid">
+										<option value="{$c.id}" selected>{$c.name}</option>
+										<else/>
+										<option value="{$c.id}">{$c.name}</option>
+									</if>
+								</foreach>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th>规格</th>
+						<td>
+							<select id="sid" name="sid">
+								<foreach name="spec" item="s">
+									<if condition="$s.id == $sid">
+										<option value="{$s.id}" selected>{$s.name}</option>
+										<else/>
+										<option value="{$s.id}">{$s.name}</option>
+									</if>
+								</foreach>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<th>商品图片</th>
+						<td>
+							<div>
+								<php>$smeta = json_decode($photo,true);</php>
+								<input type="hidden" name="smeta[thumb]" id="thumb" value="{$smeta.thumb|default=''}">
+								<a href="javascript:upload_one_image('图片上传','#thumb');">
+									<if condition="empty($smeta['thumb'])">
+										<img src="__TMPL__Public/assets/images/default-thumbnail.png" id="thumb-preview" style="cursor: hand;width: 300px;height: 200px;"/>
+										<else />
+										<img src="{:sp_get_image_preview_url($smeta['thumb'])}" id="thumb-preview" style="cursor: hand;width: 300px;height: 200px;"/>
+									</if>
+								</a>
+								<input type="button" class="btn btn-small" onclick="$('#thumb-preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="取消图片">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th>单价</th>
+						<td>
+							<input type="text" style="width: 200px;" id="price" name="price" value="{$price}" placeholder="请输入单价"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+					<tr>
+						<th>配送费</th>
+						<td>
+							<input type="text" style="width: 100px;" id="peisong_price" name="peisong_price" value="{$peisong_price}" placeholder="请输入配送费"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+					<tr>
+						<th>服务</th>
+						<td>
+							<input type="text" style="width: 400px;" id="fuwu" name="fuwu" value="{$fuwu}" placeholder="请输入服务"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+					<tr>
+						<th>库存</th>
+						<td>
+							<input type="text" style="width: 100px;" id="storage" name="storage" value="{$storage}" placeholder="请输入库存"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="form-actions">
+			<button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+			<a class="btn" href="{:U('goods/index')}">返回</a>
+		</div>
+	</form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $(".js-ajax-close-btn").on('click', function(e) {
+            e.preventDefault();
+            Wind.use("artDialog", function() {
+                art.dialog({
+                    id : "question",
+                    icon : "question",
+                    fixed : true,
+                    lock : true,
+                    background : "#CCCCCC",
+                    opacity : 0,
+                    content : "关闭窗口",
+                    ok : function() {
+                        setCookie("refersh_time", 1);
+                        window.close();
+                        return true;
+                    }
+                });
+            });
+        });
+        /////---------------------
+        Wind.use('validate','ajaxForm','artDialog',function() {
+            var form = $('form.js-ajax-forms');
+            //ie处理placeholder提交问题
+            if ($.browser && $.browser.msie) {
+                form.find('[placeholder]').each(function() {
+                    var input = $(this);
+                    if (input.val() == input
+                        .attr('placeholder')) {
+                        input.val('');
+                    }
+                });
+            }
+            //表单验证开始
+            form.validate({
+                //是否在获取焦点时验证
+                onfocusout : false,
+                //是否在敲击键盘时验证
+                onkeyup : false,
+                //当鼠标掉级时验证
+                onclick : false,
+                //验证hidden
+                ignore : "",
+                //验证错误
+                showErrors : function(errorMap,errorArr) {
+                    //errorMap {'name':'错误信息'}
+                    //errorArr [{'message':'错误信息',element:({})}]
+                    try {
+                        $(errorArr[0].element).focus();
+                        art.dialog({
+                            id : 'error',
+                            icon : 'error',
+                            lock : true,
+                            fixed : true,
+                            background : "#CCCCCC",
+                            opacity : 0,
+                            content : errorArr[0].message,
+                            cancelVal : "确定",
+                            cancel : function() {
+                                $(errorArr[0].element).focus();
+                            }
+                        });
+                    } catch (err) {}
+                },
+                //验证规则
+                rules : {
+                    'name' : { required : 1 }
+                },
+                //验证未通过提示消息
+                messages : {
+                    'name' : { required : "请输入货品名" }
+                },
+                //给未通过验证的元素加效果,闪烁等
+                highlight : false,
+                //是否在获取焦点时验证
+                onfocusout : false,
+                //验证通过，提交表单
+                submitHandler : function(forms) {
+                    $(forms).ajaxSubmit({
+                        url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+                        dataType : 'json',
+                        beforeSubmit : function(arr,$form,options) {
+
+                        },
+                        success : function(data,statusText,xhr,$form) {
+                            if (data.status) {
+                                setCookie("refersh_time",1);
+                                //添加成功
+                                Wind.use("artDialog",function() {
+                                    art.dialog({
+                                        id : "succeed",
+                                        icon : "succeed",
+                                        fixed : true,
+                                        lock : true,
+                                        background : "#CCCCCC",
+                                        opacity : 0,
+                                        content : data.info,
+                                        button : [
+                                            {
+                                                name : "继续编辑？",
+                                                callback : function() {
+                                                    reloadPage(window);
+                                                    return true;
+                                                },
+                                                focus : true
+                                            },
+                                            {
+                                                name : "返回列表",
+                                                callback : function() {
+                                                    location.href = "{:U('goods/index')}";
+                                                    return true;
+                                                }
+                                            }
+                                        ]
+                                    });
+                                });
+                            } else {
+                                alert(data.info);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+        ////-------------------------
+    });
+</script>
+</body>
+</html>

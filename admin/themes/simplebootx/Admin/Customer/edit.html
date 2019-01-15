@@ -1,0 +1,268 @@
+<admintpl file="header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+	<ul class="nav nav-tabs">
+		<li><a href="{:U('customer/index')}">客户信息</a></li>
+		<li class="active"><a href="javascript:void(0);">编辑客户</a></li>
+	</ul>
+	<form method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
+		<input type="hidden" name="id" value="{$id}">
+		<div class="row-fluid">
+			<div class="span9">
+				<table class="table table-bordered">
+					<tr>
+						<th width="100">用户名</th>
+						<td>
+							<input type="text" style="width: 300px;" id="user" name="user" value="{$user}" placeholder="请输入用户名"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+					<tr>
+						<th>密码</th>
+						<td>
+							<input type="text" style="width: 300px;" id="password" name="password" value="{$password}" placeholder="请输入密码"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+					<tr>
+						<th>公司名</th>
+						<td>
+							<input type="text" style="width: 200px;" id="company_name" name="company_name" value="{$company_name}" placeholder="请输入公司名"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+					<tr>
+						<th>公司地址</th>
+						<td>
+							<input type="text" style="width: 150px;" id="company_address" name="company_address" value="{$company_address}" placeholder="请输入公司地址"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+					<tr>
+						<th>公司电话</th>
+						<td>
+							<input type="text" style="width: 100px;" id="company_phone" name="company_phone" value="{$company_phone}" placeholder="请输入公司电话"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+					<tr>
+						<th>联系人姓名</th>
+						<td>
+							<input type="text" style="width: 100px;" id="name" name="name" value="{$name}" placeholder="请输入联系人姓名"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+					<tr>
+						<th>联系人性别</th>
+						<td>
+							<if condition="$sex eq '男'">
+								<input type="radio" id="sex" name="sex" value="男" checked/>男&nbsp;&nbsp;
+								<input type="radio" id="sex" name="sex" value="女" />女
+							<else />
+								<input type="radio" id="sex" name="sex" value="男" />男&nbsp;&nbsp;
+								<input type="radio" id="sex" name="sex" value="女" checked/>女
+							</if>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+					<tr>
+						<th>联系人年龄</th>
+						<td>
+							<input type="text" style="width: 200px;" id="age" name="age" value="{$age}" placeholder="请输入联系人年龄"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+					<tr>
+						<th>联系人电话</th>
+						<td>
+							<input type="text" style="width: 200px;" id="phone" name="phone" value="{$phone}" placeholder="请输入联系人电话"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+					<!--<tr>
+						<th>客户级别</th>
+						<td>
+							<if condition="$status eq '一级'">
+								<input type="radio" id="status" name="status" value="一级" checked/>一级&nbsp;&nbsp;
+								<input type="radio" id="status" name="status" value="二级" />二级&nbsp;&nbsp;
+								<input type="radio" id="status" name="status" value="三级" />三级
+							</if>
+							<if condition="$status eq '二级'">
+								<input type="radio" id="status" name="status" value="一级" />一级&nbsp;&nbsp;
+								<input type="radio" id="status" name="status" value="二级" checked/>二级&nbsp;&nbsp;
+								<input type="radio" id="status" name="status" value="三级" />三级
+							</if>
+							<if condition="$status eq '三级'">
+								<input type="radio" id="status" name="status" value="一级" />一级&nbsp;&nbsp;
+								<input type="radio" id="status" name="status" value="二级" />二级&nbsp;&nbsp;
+								<input type="radio" id="status" name="status" value="三级" checked/>三级
+							</if>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>-->
+					<tr>
+						<th>备注</th>
+						<td>
+							<script type="text/plain" id="introduce" name="introduce">{$introduce}</script>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="form-actions">
+			<button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+			<a class="btn" href="{:U('customer/index')}">返回</a>
+		</div>
+	</form>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
+<script type="text/javascript">
+    //编辑器路径定义
+    var editorURL = GV.WEB_ROOT;
+
+</script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        $(".js-ajax-close-btn").on('click', function(e) {
+            e.preventDefault();
+            Wind.use("artDialog", function() {
+                art.dialog({
+                    id : "question",
+                    icon : "question",
+                    fixed : true,
+                    lock : true,
+                    background : "#CCCCCC",
+                    opacity : 0,
+                    content : "关闭窗口",
+                    ok : function() {
+                        setCookie("refersh_time", 1);
+                        window.close();
+                        return true;
+                    }
+                });
+            });
+        });
+        /////---------------------
+        Wind.use('validate','ajaxForm','artDialog',function() {
+            //编辑器
+            editorcontent = new baidu.editor.ui.Editor();
+            editorcontent.render('introduce');
+            try {
+                editorcontent.sync();
+            } catch (err) {}
+            //增加编辑器验证规则
+            jQuery.validator.addMethod('editorcontent',function() {
+                try {
+                    editorcontent.sync();
+                } catch (err) {}
+                return editorcontent.hasContents();
+            });
+
+            var form = $('form.js-ajax-forms');
+            //ie处理placeholder提交问题
+            if ($.browser && $.browser.msie) {
+                form.find('[placeholder]').each(function() {
+                    var input = $(this);
+                    if (input.val() == input
+                        .attr('placeholder')) {
+                        input.val('');
+                    }
+                });
+            }
+            //表单验证开始
+            form.validate({
+                //是否在获取焦点时验证
+                onfocusout : false,
+                //是否在敲击键盘时验证
+                onkeyup : false,
+                //当鼠标掉级时验证
+                onclick : false,
+                //验证hidden
+                ignore : "",
+                //验证错误
+                showErrors : function(errorMap,errorArr) {
+                    //errorMap {'name':'错误信息'}
+                    //errorArr [{'message':'错误信息',element:({})}]
+                    try {
+                        $(errorArr[0].element).focus();
+                        art.dialog({
+                            id : 'error',
+                            icon : 'error',
+                            lock : true,
+                            fixed : true,
+                            background : "#CCCCCC",
+                            opacity : 0,
+                            content : errorArr[0].message,
+                            cancelVal : "确定",
+                            cancel : function() {
+                                $(errorArr[0].element).focus();
+                            }
+                        });
+                    } catch (err) {}
+                },
+                //验证规则
+                rules : {
+                },
+                //验证未通过提示消息
+                messages : {
+				},
+                //给未通过验证的元素加效果,闪烁等
+                highlight : false,
+                //是否在获取焦点时验证
+                onfocusout : false,
+                //验证通过，提交表单
+                submitHandler : function(forms) {
+                    $(forms).ajaxSubmit({
+                        url : form.attr('action'), //按钮上是否自定义提交地址(多按钮情况)
+                        dataType : 'json',
+                        beforeSubmit : function(arr,$form,options) {
+
+                        },
+                        success : function(data,statusText,xhr,$form) {
+                            if (data.status) {
+                                setCookie("refersh_time",1);
+                                //添加成功
+                                Wind.use("artDialog",function() {
+                                    art.dialog({
+                                        id : "succeed",
+                                        icon : "succeed",
+                                        fixed : true,
+                                        lock : true,
+                                        background : "#CCCCCC",
+                                        opacity : 0,
+                                        content : data.info,
+                                        button : [
+                                            {
+                                                name : "继续编辑？",
+                                                callback : function() {
+                                                    reloadPage(window);
+                                                    return true;
+                                                },
+                                                focus : true
+                                            },
+                                            {
+                                                name : "返回列表",
+                                                callback : function() {
+                                                    location.href = "{:U('customer/index')}";
+                                                    return true;
+                                                }
+                                            }
+                                        ]
+                                    });
+                                });
+                            } else {
+                                alert(data.info);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+        ////-------------------------
+    });
+</script>
+</body>
+</html>

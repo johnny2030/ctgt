@@ -1,0 +1,80 @@
+.orderConfirmContent.sign_up{
+	width: 700px;
+	margin: 0 auto;
+	color:#222;
+}
+.orderConfirmContent.sign_up h1{
+	font-family: '微软雅黑';
+    font-size: 20px;
+    line-height: 32px;
+    border-bottom: 1px dotted #dddddd;
+    padding-bottom: 5px;
+}
+.sign_up .orderConfirm_icon{
+	width: 36px;
+    display: inline-block;
+    background: url(../../images/icon/logo.png);
+    height: 32px;
+    float: left;
+    margin-right: 10px;
+    background-size:100% ;
+}
+ .sign_up  .orderConfirmBtn {
+    	    color: #fff;
+    font-size: 16px;
+    background: #ff5959;
+    width: 140px;
+    height: 42px;
+    line-height: 42px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 20px;
+    border-radius: 23px;
+    cursor:pointer
+    }
+  .sign_up  form{
+        width: 330px;
+        margin: 0 auto;
+    }
+   .sign_up ul{
+        list-style: none;
+
+    }
+   .sign_up ul li{
+        height:35px;
+        line-height:35px;
+        margin-bottom: 15px;
+    }
+   .sign_up ul li p:first-child{
+        width:75px;
+        float:left;
+        font-size: 12px;
+    }
+   .sign_up input{
+            height: 33px;
+    width: 250px;
+    border: 1px solid #d5eeff;
+    box-sizing: border-box;
+    padding-left: 5px;
+    }
+   .sign_up select{
+        height: 33px;
+        border: 1px solid #d5eeff;
+        box-sizing: border-box;
+        padding-left: 5px;
+        /* border: solid 1px #000; */
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        -ms-appearance: none;
+        background: url("../../images/DDTY_61.png") no-repeat scroll right center transparent;
+        padding-right: 14px;
+      
+    }
+  .sign_up  select::-ms-expand { display: none; }
+  .sign_up  select.credentials{
+        width: 250px;
+    }
+  .sign_up  select.cityChoice{
+        width: 123px;
+    }

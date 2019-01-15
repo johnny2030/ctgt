@@ -1,0 +1,24 @@
+<?php
+if ( $formError ) {
+?>
+	<div class="form-error">
+		<?php
+		foreach ( $formError as $item ) {
+		?>
+			<li><?php echo $item; ?></li>
+		<?php
+		}
+		?>
+	</div>
+<?php
+}
+?>
+<?php
+if ( $formReturn ) {
+?>
+	<div class="form-return<?php echo $formReturn['success'] ? ' form-return-success' : ' form-return-faild'; ?>">
+		<p><?php echo $formReturn['msg']; ?></p>
+	</div>
+<?php
+}
+?>

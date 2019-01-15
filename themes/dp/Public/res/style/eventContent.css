@@ -1,0 +1,38 @@
+
+
+/*start content*/
+.content_wrap{
+	width: 870px;
+	margin-top: 14px;
+	padding-top: 20px;
+}
+.content_title{
+	padding-bottom: 14px;
+	border-bottom: 1px dashed #ddd;
+}
+
+.content_title h3{
+	font-size: 20px;
+	font-weight: normal;
+	color: #000;
+	margin: 0;
+}
+.content_title span{
+	color: #777;
+	font-size: 12px;
+}
+.content_details{
+	margin-top: 30px;
+}
+.content_details p{
+	color: #666;
+	text-indent: 28px;
+	line-height: 1.8;
+	font-size: 14px;
+}
+.content_details img{
+	display: block;
+	margin: 20px auto;
+	max-width: 870px;
+}
+/*end content*/

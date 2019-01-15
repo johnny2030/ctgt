@@ -1,0 +1,944 @@
+<!doctype html>
+<!--[if lt IE 7]><html lang="en" class="no-js ie6"><![endif]-->
+<!--[if IE 7]><html lang="en" class="no-js ie7"><![endif]-->
+<!--[if IE 8]><html lang="en" class="no-js ie8"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="UTF-8">
+    <title>郑州正朋包装设计有限公司</title>
+    <link rel="icon" type="image/x-icon" href="__TMPL__Portal/img/logo-blue.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="__TMPL__Portal/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__TMPL__Portal/css/animate.css">
+    <link rel="stylesheet" href="__TMPL__Portal/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__TMPL__Portal/css/jquery.easy-pie-chart.css">
+    <link rel="stylesheet" href="__TMPL__Portal/css/styles.css" title="mainStyle">
+
+    <!-- 登录注册样式 -->
+    <link rel="stylesheet" href="__TMPL__Portal/css/common.css"/>
+
+    <!-- REVOLUTION BANNER CSS SETTINGS -->
+    <link rel="stylesheet" type="text/css" href="__TMPL__Portal/rs-plugin/css/settings.css" media="screen" />
+
+    <script src="__TMPL__Portal/js/modernizr.custom.32033.js"></script>
+
+    <!--[if IE]><script type="text/javascript" src="__TMPL__Portal/js/excanvas.compiled.js"></script><![endif]-->
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="__TMPL__Portal/js/jquery.min.js"></script>
+    <script src="__TMPL__Portal/js/bootstrap.min.js"></script>
+    <script src="__TMPL__Portal/js/stellar.js"></script>
+    <script src="__TMPL__Portal/js/isotope.pkgd.min.js"></script>
+    <script src="__TMPL__Portal/js/jquery.easypiechart.min.js"></script>
+
+    <!-- jQuery REVOLUTION Slider  -->
+    <script type="text/javascript" src="__TMPL__Portal/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
+    <script type="text/javascript" src="__TMPL__Portal/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
+    <script src="__TMPL__Portal/js/waypoints.min.js"></script>
+    <script src="__TMPL__Portal/js/script.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            appMaster.preLoader();
+            appMaster.smoothScroll();
+            appMaster.animateScript();
+            appMaster.navSpy();
+            appMaster.revSlider();
+            appMaster.stellar();
+            appMaster.skillsChart();
+            appMaster.isoTop();
+            appMaster.canvasHack();
+        });
+        var w,h,className;
+        function getSrceenWH(){
+            w = $(window).width();
+            h = $(window).height();
+            $('#dialogBg').width(w).height(h);
+        }
+
+        window.onresize = function(){
+            getSrceenWH();
+        }
+        $(window).resize();
+
+        $(function(){
+            getSrceenWH();
+
+            //显示弹框
+            $('.box a').click(function(){
+                className = $(this).attr('class');
+                if (className == "rollIn"){
+                    $("#userForm").attr('action',"{:U('portal/index/login')}");
+                    $("#comit").val("登录");
+                }
+                if (className == "bounceInDown"){
+                    $("#userForm").attr('action',"{:U('portal/index/register')}");
+                    $("#comit").val("注册");
+                }
+                $('#dialogBg').fadeIn(300);
+                $('#dialog').removeAttr('class').addClass('animated '+className+'').fadeIn();
+            });
+
+            //关闭弹窗
+            $('.claseDialogBtn').click(function(){
+                $('#dialogBg').fadeOut(300,function(){
+                    $('#dialog').addClass('bounceOutUp').fadeOut();
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="pre-loader">
+        <div class="load-con">
+            <img src="__TMPL__Portal/img/logo-blue.png" class="animated fadeInDown" alt="">
+            <div class="spinner">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="go-up">
+            <input type="text" name="search" id="search" value="" placeholder="Whole Network Search">
+            <a href="#whoWeAre"><i class="fa fa-search fa-3s"></i></a>
+    </div> -->
+    <div class="go-down">
+        <a href="#whoWeAre">
+            <i class="fa fa-angle-down fa-3x"></i>
+        </a>
+    </div>
+    <div id="wrap" class="home">
+        <header class="masthead">
+            <div class="slider-container" id="slider">
+                <div class="tp-banner-container">
+                    <div class="tp-banner">
+                        <ul>
+                            <li data-transition="slotfade-horizontal" data-slotamount="7" data-masterspeed="500">
+                                <img src="__TMPL__Portal/img/dummy.png" data-lazyload="__TMPL__Portal/img/samples/slider-bk.jpg" alt="slidebg1" data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat">
+                                <div class="tp-caption italic large_white_light sft hidden-xs" data-x="right" data-y="center" data-hoffset="300" data-voffset="-410" data-speed="700" data-start="1100" data-easing="Power4.easeOut">
+                                	<a class="navbar-brand" href="#" style="text-decoration:none;color:#333;">
+                            			<img src="__TMPL__Portal/img/logo-blue.png" alt="">
+                        			</a>
+                        			<a href="#" class="navbar-brand" style="text-decoration:none;color:#22a3df;">
+                        				<h4 style="margin-left:10px;margin-top:30px;" class="thkm">郑州<span>正朋</span>包装设计有限公司</h4>
+                        			</a>
+                                </div>
+                                <div class="tp-caption italic large_white_light sft hidden-xs" data-x="left" data-y="center" data-hoffset="0" data-voffset="-100" data-speed="700" data-start="1300" data-easing="Power4.easeOut">
+                                	我  们  的  座  右  铭 .
+                                </div>
+                                <div class="tp-caption italic large_white_light sfl hidden-xs" data-x="left" data-y="center" data-hoffset="0" data-voffset="-50" data-speed="700" data-start="1500" data-easing="Power4.easeOut">
+                                	正 本 清 源.
+                                </div>
+                                <div class="tp-caption italic large_white_light sfr hidden-xs" data-x="left" data-y="center" data-hoffset="235" data-voffset="-50" data-speed="700" data-start="1900" data-easing="Power4.easeOut">
+                                   	 朋 心 合 力
+                                </div>
+                                <div class="tp-caption lfb " data-x="left" data-y="center" data-hoffset="0" data-voffset="25" data-speed="1000" data-start="1900" data-easing="Power4.easeOut">
+                                    <a href="#about" class="btn btn-naked">关 于 我 们   <span class="fa fa-angle-right"></span></a>
+                                </div>
+
+                            </li>
+                            <li data-transition="slotfade-horizontal" data-slotamount="7" data-masterspeed="500">
+
+                                <img src="__TMPL__Portal/img/dummy.png" data-lazyload="__TMPL__Portal/img/samples/slider-bk3.jpg" alt="slidebg1" data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat">
+                                <div class="tp-caption italic large_white_light sft hidden-xs" data-x="right" data-y="center" data-hoffset="300" data-voffset="-410" data-speed="700" data-start="1100" data-easing="Power4.easeOut">
+                                	<a class="navbar-brand" href="#" style="text-decoration:none;color:#333;">
+                            			<img src="__TMPL__Portal/img/logo-blue.png" alt="">
+                        			</a>
+                        			<a href="#" class="navbar-brand" style="text-decoration:none;color:#22a3df;">
+                        				<h4 style="margin-left:10px;margin-top:30px;" class="thkm">郑州<span>正朋</span>包装设计有限公司</h4>
+                        			</a>
+                                </div>
+                                <div class="tp-caption sft fadeout" data-x="center" data-y="center" data-hoffset="0" data-voffset="0" data-speed="500" data-start="700" data-easing="Power4.easeOut">
+                                    <img src="__TMPL__Portal/img/samples/macbook-bl.png" class="macbook-image" alt="">
+                                </div>
+
+                                <div class="tp-caption large_white_light italic sfb hidden-xs" data-x="left" data-y="center" data-hoffset="0" data-voffset="0" data-speed="1000" data-start="1300" data-easing="Power4.easeOut">
+                                    <a href="#portfolio" class="btn btn-naked">我   们   的   内   涵</a>
+                                </div>
+                                <div class="tp-caption italic large_white_light sft hidden-xs" data-x="right" data-y="center" data-hoffset="0" data-voffset="0" data-speed="1000" data-start="1300" data-easing="Power4.easeOut">
+                                    <a href="#services" class="btn btn-naked">我   们   的   服   务</a>
+                                </div>
+                            </li>
+                            <li data-transition="slotfade-horizontal" data-slotamount="7" data-masterspeed="500">
+
+                                <img src="__TMPL__Portal/img/dummy.png" data-lazyload="__TMPL__Portal/img/samples/slider-bk2.jpg" alt="slidebg1" data-bgfit="cover" data-bgposition="center center" data-bgrepeat="no-repeat">
+                                <div class="tp-caption italic large_white_light sft hidden-xs" data-x="right" data-y="center" data-hoffset="300" data-voffset="-410" data-speed="700" data-start="1100" data-easing="Power4.easeOut">
+                                	<a class="navbar-brand" href="#" style="text-decoration:none;color:#333;">
+                            			<img src="__TMPL__Portal/img/logo-blue.png" alt="">
+                        			</a>
+                        			<a href="#" class="navbar-brand" style="text-decoration:none;color:#22a3df;">
+                        				<h4 style="margin-left:10px;margin-top:30px;" class="thkm">郑州<span>正朋</span>包装设计有限公司</h4>
+                        			</a>
+                                </div>
+                                <div class="tp-caption lfl fadeout" data-x="left" data-y="center" data-hoffset="0" data-voffset="0" data-speed="500" data-start="700" data-easing="Power4.easeOut">
+                                    <img src="__TMPL__Portal/img/samples/iphone.png" alt="">
+                                </div>
+                                <div class="tp-caption large_white_bold sft" data-x="520" data-y="center" data-hoffset="0" data-voffset="-120" data-speed="500" data-start="1200" data-easing="Power4.easeOut">
+                                    <h1>.欢  迎  到  访</h1>
+                                </div>
+                                <div class="tp-caption large_white_light sfb" data-x="520" data-y="center" data-hoffset="0" data-voffset="-40" data-speed="1000" data-start="1300" data-easing="Power4.easeOut">
+                                   	 博采众长，源自真诚!
+                                </div>
+                                <div class="tp-caption large_white_light sfb" data-x="520" data-y="center" data-hoffset="0" data-voffset="10" data-speed="1000" data-start="1300" data-easing="Power4.easeOut">
+                                   	 文明点亮心灯，创意照亮人生!
+                                </div>
+                                <div class="tp-caption large_white_light sfb" data-x="520" data-y="center" data-hoffset="0" data-voffset="60" data-speed="1000" data-start="1300" data-easing="Power4.easeOut">
+                                   	 让我们尽心尽力，让生活尽善尽美!
+                                </div>
+                                <div class="tp-caption sfb hidden-xs" data-x="520" data-y="center" data-hoffset="0" data-voffset="150" data-speed="1000" data-start="1700" data-easing="Power4.easeOut">
+                                    <a href="#get-in-touch" class="btn btn-primary btn-lg">联  系  我  们</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="tp-bannertimer"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar navbar-static-top" id="nav" role="navigation">
+                <!--<div class="theme-switcher">
+                    <div class="colors">
+                        <a href="javascript:void(0)" class="blue"></a>
+                        <a href="javascript:void(0)" class="orange"></a>
+                        <a href="javascript:void(0)" class="red"></a>
+                    </div>
+                    <a href="javascript:void(0)" class="Switcher"><span class="fa fa-pencil fa-lg"></span></a>
+                </div>-->
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only"></span>
+                            <i class="fa fa-align-justify"></i>
+                        </button>
+                        <a class="navbar-brand" href="#">
+                            <img src="__TMPL__Portal/img/logo-blue.png" alt="" style="width:60px;height:60px;">
+                        </a>
+                        <a href="#" class="navbar-brand" style="text-decoration:none;color:#333;"><h4 style="margin-left:20px;margin-top:30px;">郑州<span class="thkm">正朋</span>包装设计有限公司</h4></a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="active"><a href="#slider">首页</a>
+                            </li>
+                            <li><a href="#about">关于我们</a>
+                            </li>
+                            <li><a href="#services">我们的服务</a>
+                            </li>
+                            <li><a href="#portfolio">我们的内涵</a>
+                            </li>
+                            <li><a href="#get-in-touch">联系我们</a>
+                            </li>
+                            <li class="social-nav visible-lg">
+                                <a href="#"><i class="fa fa-qq"></i></a>
+                                <a href="#"><i class="fa fa-wechat"></i></a>
+                                <a href="#"><i class="fa fa-envelope"></i></a>
+                                <a href="#"><i class="fa fa-phone"></i></a>
+                            </li>
+                            <li class="social-nav visible-lg">
+                                <notempty name="login_id">
+                                    <a href="javascript:void(0)" ><span style="text-transform:lowercase;color: #1E90FF;">{$login_user}</span></a>
+                                    <a href="{:U('portal/user/index')}"><span style="color: #CD5555;">个人中心</span></a>
+                                    <else />
+                                    <div class="box">
+                                        <div class="demo">
+                                            <a href="javascript:;" class="rollIn">登录</a>
+                                            <a href="javascript:;" class="bounceInDown">注册</a>
+                                            <!--<a href="javascript:;" class="bounceIn">DEMO1</a>
+                                            <a href="javascript:;" class="flipInX">DEMO4</a>-->
+                                        </div>
+                                        <div id="dialogBg"></div>
+                                        <div id="dialog" class="animated">
+                                            <img class="dialogIco" width="50" height="50" src="__TMPL__Portal/img/ico.png" alt="" />
+                                            <div class="dialogTop">
+                                                <a href="javascript:;" class="claseDialogBtn" style="float: right">关闭</a>
+                                                <div style="clear:both;"></div>
+                                            </div>
+                                            <form method="post" action="" id="userForm">
+                                                <ul class="editInfos">
+                                                    <li><label><font color="#ff0000">* </font>账号：<input type="text" id="user" name="user" value="" class="ipt" /></label></li>
+                                                    <li><label><font color="#ff0000">* </font>密码：<input type="password" id="password" name="password" value="" class="ipt" /></label></li>
+                                                    <li><input type="submit" id="comit" value="" class="submitBtn" /></li>
+                                                </ul>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </notempty>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section id="whoWeAre">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-push-2 clearfix">
+                        <div class="section-heading scrollpoint sp-effect3">
+                            <h1>我 们 的 自 <span>白</span>
+                            </h1>
+                            <h4></h4>
+                            <span class="divider"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="media scrollpoint sp-effect2">
+                            <a class="pull-left" href="#">
+                                <i class="media-object fa fa-comments-o fa-4x"></i>
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">重要通知</h4>
+                                <p>重要通知.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="media right scrollpoint sp-effect1">
+                            <a class="pull-right" href="#">
+                                <i class="media-object fa fa-reorder fa-4x"></i>
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">更新记录</h4>
+                                <p>更新记录.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-push-2 clearfix">
+                        <div class="section-heading scrollpoint sp-effect3">
+                            <h1>关 于 我 <span>们</span>
+                            </h1>
+                            <h4>我们的家就在河南省郑州市龙子湖学府广场A座1101</h4>
+                            <span class="divider"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12 scrollpoint sp-effect4">
+                                <img src="__TMPL__Portal/img/samples/imac.png" class="img-responsive img-center" alt="">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="media vertical scrollpoint sp-effect5">
+                                    <a href="#">
+                                        <i class="media-object fa fa-user fa-2x"></i>
+                                    </a>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">我们是什么</h4>
+                                        <p>我们是一家已设计为主，印刷为辅的包装设计公司.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="media vertical scrollpoint sp-effect5">
+                                    <a href="#">
+                                        <i class="media-object fa fa-dot-circle-o fa-2x"></i>
+                                    </a>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">我们做什么</h4>
+                                        <p>我们囊括了多种创新设计思路及名片，彩页，不干胶，纸箱设计与印刷.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="media vertical scrollpoint sp-effect5">
+                                    <a href="#">
+                                        <i class="media-object fa fa-quote-left fa-2x"></i>
+                                    </a>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">我们的优势</h4>
+                                        <p>用我们优秀的管理，真心的服务，合理的价格，一流的质量，精致的做工，满意的产品来为客户提供多重选择.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="media vertical scrollpoint sp-effect5">
+                                    <a href="#">
+                                        <i class="media-object fa fa-support fa-2x"></i>
+                                    </a>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">我们的支持</h4>
+                                        <p>我们由郑州正朋包装设计有限公司开发推广，如有任何疑问均可通过网页底部<a href="#get-in-touch" class="thkm">“联系我们”</a>.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="highlights">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                            <!-- Indicators -->
+                            <ol class="carousel-indicators vertical">
+                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+                            </ol>
+
+                            <!-- Wrapper for slides -->
+                            <div class="carousel-inner">
+                                <div class="item active">
+                                    <img src="__TMPL__Portal/img/samples/600-300/2.jpg" alt="">
+                                </div>
+                                <div class="item">
+                                    <img src="__TMPL__Portal/img/samples/600-300/3.jpg" alt="">
+                                </div>
+                                <div class="item">
+                                    <img src="__TMPL__Portal/img/samples/600-300/1.jpg" alt="">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4>推广信息</h4>
+                        <h5>********</h5>
+                        <p>**************</p>
+                        <ul>
+                            <li><a href="#">********</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-5 scrollpoint sp-effect1">
+                        <img src="__TMPL__Portal/img/samples/ipad-bl.png" class="img-responsive ipad-image img-center" alt="" style="height:350px;">
+                    </div>
+                    <div class="col-md-7 scrollpoint sp-effect2">
+                        <h1>我 们 的 核 <span>心</span>
+                        </h1>
+                        <div class="media media-circle">
+                            <a class="pull-left" href="#">
+                                <i class="media-object fa fa-angle-right fa-2x"></i>
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">丰富</h4>
+                                <p>我们与饿了吗、美团、中国国旅、携程等多个平台合作，同时我们自有许多优质商家，能够满足您的多种需求.</p>
+                            </div>
+                        </div>
+                        <div class="media media-circle">
+                            <a class="pull-left" href="#">
+                                <i class="media-object fa fa-angle-right fa-2x"></i>
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">快捷</h4>
+                                <p>我们与顺丰速运、中通快递、申通快递等多家知名快递物流公司合作，会以最快的速度送给您最好的货物.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-push-2 clearfix">
+                        <div class="section-heading scrollpoint sp-effect3">
+                            <h1>我 们 的 服 <span>务</span></h1>
+                            <h4>公司本着客户至上的原则，为客户提供全方位精品服务，设计，印刷，后工，运输一条龙专业服务产业链！如有其它问题请点击底部<a href="#get-in-touch" class="thkm">“联系我们”</a>.</h4>
+                            <span class="divider"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="media media-services right scrollpoint sp-effect1">
+                                    <a class="pull-right" href="#">
+                                        <i class="media-object fa fa-th-large fa-2x"></i>
+                                    </a>
+                                    <div class="media-body">
+                                        <h4 class="media-heading" style="margin-top:25px;">名片，彩页，不干胶设计及印刷.</h4>
+                                    </div>
+                                </div>
+                                <div class="media media-services right scrollpoint sp-effect1">
+                                    <a class="pull-right" href="#">
+                                        <i class="media-object fa fa-th-large fa-2x"></i>
+                                    </a>
+                                    <div class="media-body">
+                                        <h4 class="media-heading" style="margin-top:25px;">广告创新设计.</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                            	<div class="media media-services scrollpoint sp-effect2">
+                                    <a class="pull-left" href="#">
+                                        <i class="media-object fa fa-th-large fa-2x"></i>
+                                    </a>
+                                    <div class="media-body">
+                                        <h4 class="media-heading" style="margin-top:25px;">纸箱设计及制作.</h4>
+                                    </div>
+                                </div>
+                                <div class="media media-services scrollpoint sp-effect2">
+                                    <a class="pull-left" href="#">
+                                        <i class="media-object fa fa-comments fa-2x"></i>
+                                    </a>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">用我们专业的设计，精湛的印工，贴心的服务，为您提供完美的产品</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       <section id="buyNow">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-7 scrollpoint sp-effect2">
+                        <img src="__TMPL__Portal/img/samples/macbook-bl.png" alt="" class="img-responsive macbook-image img-center">
+                    </div>
+                    <div class="col-md-5 scrollpoint sp-effect1">
+                        <h1>.加入我<span>们</span>
+                        </h1>
+                        <p>青春是挽不回的水，转眼消失在指尖，用力的浪费，再用力的后悔，不要沉溺于过去，接受新的生活，新的自己，新的团队！在这里，你能收获的不仅仅是高薪，还有技能、知识和家人！ 收拾行李，寻找新的自己，加入我们吧！</p>
+                        <a href="#get-in-touch" class="btn btn-primary btn-lg">加入我们</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="portfolio">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-push-2 clearfix">
+                        <div class="section-heading scrollpoint sp-effect3">
+                            <h1>我 们 的 内 <span>涵</span></h1>
+                            <h4>标准的设备 ，正规的管理，创新的设计，满意的产品.</h4>
+                            <span class="divider"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="filters" class="button-group">
+                        <button data-filter="*" class="current">所有</button>
+                        <button data-filter=".design">设计</button>
+                        <button data-filter=".device">设备</button>
+                    </div>
+                    <div id="container">
+                        <div class="item col-md-3 col-sm-6 design">
+                            <div class="details">
+                                <img src="__TMPL__Portal/img/zp/sample1.png" alt="" class="img-responsive" style="width:260px;height:230px;">
+                                <div class="info-wrapper">
+                                    <span class="heart"><i class="fa fa-facebook"></i>
+                                    </span>
+                                    <div class="info">
+                                        <div class="name-tag">
+                                            <h5>查  看  更  多.</h5>
+                                            <span class="divider"></span>
+                                            <p>设计</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-md-3 col-sm-6 design">
+                            <div class="details">
+                                <img src="__TMPL__Portal/img/zp/sample2.png" alt="" class="img-responsive" style="width:260px;height:230px;">
+                                <div class="info-wrapper">
+                                    <span class="heart"><i class="fa fa-star-o"></i>
+                                    </span>
+                                    <div class="info">
+                                        <div class="name-tag">
+                                            <h5>查  看  更  多.</h5>
+                                            <span class="divider"></span>
+                                            <p>设计</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-md-3 col-sm-6 design">
+                            <div class="details">
+                                <img src="__TMPL__Portal/img/zp/sample3.png" alt="" class="img-responsive" style="width:260px;height:230px;">
+                                <div class="info-wrapper">
+                                    <span class="heart"><i class="fa fa-star-o"></i>
+                                    </span>
+                                    <div class="info">
+                                        <div class="name-tag">
+                                            <h5>查  看  更  多.</h5>
+                                            <span class="divider"></span>
+                                            <p>设计</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-md-3 col-sm-6 design">
+                            <div class="details">
+                                <img src="__TMPL__Portal/img/zp/sample4.png" alt="" class="img-responsive" style="width:260px;height:230px;">
+                                <div class="info-wrapper">
+                                    <span class="heart"><i class="fa fa-star-o"></i>
+                                    </span>
+                                    <div class="info">
+                                        <div class="name-tag">
+                                            <h5>查  看  更  多.</h5>
+                                            <span class="divider"></span>
+                                            <p>设计</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-md-3 col-sm-6 design">
+                            <div class="details">
+                                <img src="__TMPL__Portal/img/zp/sample6.png" alt="" class="img-responsive" style="width:260px;height:230px;">
+                                <div class="info-wrapper">
+                                    <span class="heart"><i class="fa fa-star-o"></i>
+                                    </span>
+                                    <div class="info">
+                                        <div class="name-tag">
+                                            <h5>查  看  更  多.</h5>
+                                            <span class="divider"></span>
+                                            <p>设计</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-md-3 col-sm-6 design">
+                            <div class="details">
+                                <img src="__TMPL__Portal/img/zp/sample7.png" alt="" class="img-responsive" style="width:260px;height:230px;">
+                                <div class="info-wrapper">
+                                    <span class="heart"><i class="fa fa-star-o"></i>
+                                    </span>
+                                    <div class="info">
+                                        <div class="name-tag">
+                                            <h5>查  看  更  多.</h5>
+                                            <span class="divider"></span>
+                                            <p>设计</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-md-3 col-sm-6 design">
+                            <div class="details">
+                                <img src="__TMPL__Portal/img/zp/sample9.png" alt="" class="img-responsive" style="width:260px;height:230px;">
+                                <div class="info-wrapper">
+                                    <span class="heart"><i class="fa fa-star-o"></i>
+                                    </span>
+                                    <div class="info">
+                                        <div class="name-tag">
+                                            <h5>查  看  更  多.</h5>
+                                            <span class="divider"></span>
+                                            <p>设计</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-md-3 col-sm-6 design">
+                            <div class="details">
+                                <img src="__TMPL__Portal/img/zp/sample10.png" alt="" class="img-responsive" style="width:260px;height:230px;">
+                                <div class="info-wrapper">
+                                    <span class="heart"><i class="fa fa-star-o"></i>
+                                    </span>
+                                    <div class="info">
+                                        <div class="name-tag">
+                                            <h5>查  看  更  多.</h5>
+                                            <span class="divider"></span>
+                                            <p>设计</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-md-3 col-sm-6 device">
+                            <div class="details">
+                                <img src="__TMPL__Portal/img/zp/4+2小森对开印刷机1.png" alt="" class="img-responsive" style="width:260px;height:230px;">
+                                <div class="info-wrapper">
+                                    <span class="heart"><i class="fa fa-facebook"></i>
+                                    </span>
+                                    <div class="info">
+                                        <div class="name-tag">
+                                            <h5>查  看  更  多.</h5>
+                                            <span class="divider"></span>
+                                            <p>设备</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-md-3 col-sm-6 device">
+                            <div class="details">
+                                <img src="__TMPL__Portal/img/zp/4色小森对开印刷机1.png" alt="" class="img-responsive" style="width:260px;height:230px;">
+                                <div class="info-wrapper">
+                                    <span class="heart"><i class="fa fa-facebook"></i>
+                                    </span>
+                                    <div class="info">
+                                        <div class="name-tag">
+                                            <h5>查  看  更  多.</h5>
+                                            <span class="divider"></span>
+                                            <p>设备</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-md-3 col-sm-6 device">
+                            <div class="details">
+                                <img src="__TMPL__Portal/img/zp/5色水印机1.png" alt="" class="img-responsive" style="width:260px;height:230px;">
+                                <div class="info-wrapper">
+                                    <span class="heart"><i class="fa fa-facebook"></i>
+                                    </span>
+                                    <div class="info">
+                                        <div class="name-tag">
+                                            <h5>查  看  更  多.</h5>
+                                            <span class="divider"></span>
+                                            <p>设备</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-md-3 col-sm-6 device">
+                            <div class="details">
+                                <img src="__TMPL__Portal/img/zp/覆膜机1.png" alt="" class="img-responsive" style="width:260px;height:230px;">
+                                <div class="info-wrapper">
+                                    <span class="heart"><i class="fa fa-facebook"></i>
+                                    </span>
+                                    <div class="info">
+                                        <div class="name-tag">
+                                            <h5>查  看  更  多.</h5>
+                                            <span class="divider"></span>
+                                            <p>设备</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-md-3 col-sm-6 device">
+                            <div class="details">
+                                <img src="__TMPL__Portal/img/zp/全自动裱纸机1.png" alt="" class="img-responsive" style="width:260px;height:230px;">
+                                <div class="info-wrapper">
+                                    <span class="heart"><i class="fa fa-facebook"></i>
+                                    </span>
+                                    <div class="info">
+                                        <div class="name-tag">
+                                            <h5>查  看  更  多.</h5>
+                                            <span class="divider"></span>
+                                            <p>设备</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-md-3 col-sm-6 device">
+                            <div class="details">
+                                <img src="__TMPL__Portal/img/zp/全自动模切机1.png" alt="" class="img-responsive" style="width:260px;height:230px;">
+                                <div class="info-wrapper">
+                                    <span class="heart"><i class="fa fa-facebook"></i>
+                                    </span>
+                                    <div class="info">
+                                        <div class="name-tag">
+                                            <h5>查  看  更  多.</h5>
+                                            <span class="divider"></span>
+                                            <p>设备</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-md-3 col-sm-6 device">
+                            <div class="details">
+                                <img src="__TMPL__Portal/img/zp/三层瓦楞纸生产线1.png" alt="" class="img-responsive" style="width:260px;height:230px;">
+                                <div class="info-wrapper">
+                                    <span class="heart"><i class="fa fa-facebook"></i>
+                                    </span>
+                                    <div class="info">
+                                        <div class="name-tag">
+                                            <h5>查  看  更  多.</h5>
+                                            <span class="divider"></span>
+                                            <p>设备</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="item col-md-3 col-sm-6 device">
+                            <div class="details">
+                                <img src="__TMPL__Portal/img/zp/粘箱生产线1.png" alt="" class="img-responsive" style="width:260px;height:230px;">
+                                <div class="info-wrapper">
+                                    <span class="heart"><i class="fa fa-facebook"></i>
+                                    </span>
+                                    <div class="info">
+                                        <div class="name-tag">
+                                            <h5>查  看  更  多.</h5>
+                                            <span class="divider"></span>
+                                            <p>设备</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="twitter">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-push-2 clearfix">
+                        <div class="section-heading white scrollpoint sp-effect3">
+                            <h1>我们的伙<span>伴</span></h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div id="carousel-twitter" class="carousel slide" data-ride="carousel">
+                        <!--
+                        <ol class="carousel-indicators">
+                            <li data-target="#carousel-twitter" data-slide-to="0" class="active"></li>
+                            <li data-target="#carousel-twitter" data-slide-to="1"></li>
+                            <li data-target="#carousel-twitter" data-slide-to="2"></li>
+                        </ol> -->
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner">
+                            <div class="item active">
+                                <div class="row">
+                                    <div class="col-md-2 col-md-push-1">
+                                    	<img src="__TMPL__Portal/img/jd.jpg" alt="" style="width:5rem;height:5rem;">
+                                    </div>
+                                    <div class="col-md-2 col-md-push-1">
+                                    	<img src="__TMPL__Portal/img/tb.jpg" alt="" style="width:5rem;height:5rem;">
+                                    	</div>
+                                    <div class="col-md-2 col-md-push-1">
+                                    	<img src="__TMPL__Portal/img/zfb.jpg" alt="" style="width:5rem;height:5rem;">
+                                    	</div>
+                                    <div class="col-md-2 col-md-push-1">
+                                    	<img src="__TMPL__Portal/img/wx.jpg" alt="" style="width:5rem;height:5rem;">
+                                    	</div>
+                                    <div class="col-md-2 col-md-push-1">
+                                    	<img src="__TMPL__Portal/img/kq.jpg" alt="" style="width:5rem;height:5rem;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="follow">
+                        <a href="#" class="btn btn-empty text-center">
+                            <i class="fa fa-info-circle"></i>&nbsp;&nbsp;查看更多
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="get-in-touch">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-md-push-2 clearfix">
+                        <div class="section-heading scrollpoint sp-effect3">
+                            <h1>联  系  我  们</h1>
+                            <h4>您可以通过下方联系方式直接联系我们，同时也可以通过填写右侧表单与我们联系，我们会在三个工作日内给您回复，谢谢到访.</h4>
+                            <span class="divider"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="contact-details">
+                            <div class="detail">
+                                <h4>我们的地址.</h4>
+                                <p>郑州市  龙子湖  学府广场  A座1101</p>
+                            </div>
+                            <div class="detail">
+                                <h4>我们的固话</h4>
+                                <p>021-6672195</p>
+                            </div>
+                            <div class="detail">
+                                <h4>我们的手机</h4>
+                                <p>17746961961</p>
+                            </div>
+                            <div class="detail">
+                                <h4>我们的邮箱</h4>
+                                <p>2901703261@qq.com</p>
+                            </div>
+                            <div class="detail">
+                                <ul class="clearfix">
+                                    <li><a href="#"><i class="fa fa-qq fa-2x"></i></a>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-wechat fa-2x"></i></a>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-envelope fa-2x"></i></a>
+                                    </li>
+                                    <li><a href="#"><i class="fa fa-phone fa-2x"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <form method="post" action="{:U('portal/user/suggest_add')}">
+                            <div class="form-group has-feedback left">
+                                <input type="text" class="form-control" name="title" placeholder="标题">
+                                <i class="fa fa-user form-control-feedback"></i>
+                            </div>
+                            <div class="form-group has-feedback left">
+                                <!--<input type="email" class="form-control" name="title" placeholder="邮箱">-->
+                                <select id="type" name="type" class="form-control">
+                                    <option value="技术支持">技术支持</option>
+                                    <option value="业务需求">业务需求</option>
+                                    <option value="问题漏洞">问题漏洞</option>
+                                    <option value="其他">其他</option>
+                                </select>
+                                <i class="fa fa-bookmark form-control-feedback"></i>
+                            </div>
+                            <div class="form-group has-feedback left">
+                                <textarea class="form-control" rows="7" name="content" placeholder="内容"></textarea>
+                                <i class="fa fa-pencil-square-o form-control-feedback"></i>
+                            </div>
+                            <button class="btn btn-primary btn-lg pull-right" type="submit">提交</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer id="site-footer">
+            <div class="container">
+                <div class="row">
+                    <span class="divider grey"></span>
+                    <h4><span class="brandy">Z</span> P.</h4>
+                    <h5><a href="" target="_blank">正朋包装设计</a> - Z P - <a href="" target="_blank">正朋包装设计</a>
+                    </h5>
+                    <a href="#" class="scroll-top">
+                        <img src="__TMPL__Portal/img/top.png" alt="" class="top">
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <!--/wrap-->
+</body>
+</html>

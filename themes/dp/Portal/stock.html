@@ -1,0 +1,92 @@
+<!doctype html>
+<!--[if lt IE 7]><html lang="en" class="no-js ie6"><![endif]-->
+<!--[if IE 7]><html lang="en" class="no-js ie7"><![endif]-->
+<!--[if IE 8]><html lang="en" class="no-js ie8"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<style type="text/css">
+    .table thead tr td{
+        word-wrap:break-word;
+        word-break:break-all;
+    }
+</style>
+<tc_include file="Public/header"/>
+<body>
+    <!-- Wrap all page content here -->
+    <div id="wrap">
+        <tc_include file="Public/top"/>
+
+        <section id="blog">
+            <div class="container">
+                <div class="row">
+                    <tc_include file="Public/bar"/>
+                    <div class="col-md-9">
+                        <form method="post" action="" id="userForm">
+                            <div class="article">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-sm-11 col-xs-10">
+                                            <span class="divider"></span><h4>库存管理</h4>
+                                            <div class="col-md-1"></div>
+                                            <div class="show_header">
+                                                <table class="table table-striped col-md-10" style="table-layout: fixed;border: 1px solid #DBDBDB;">
+                                                    <thead>
+                                                    <tr>
+                                                        <th width="20%">备货名</th>
+                                                        <th width="10%">货品类别</th>
+                                                        <th width="10%">货品规格</th>
+                                                        <th width="10%">备货数量</th>
+                                                        <th width="10%">货品金额</th>
+                                                        <th width="10%">货品状态</th>
+                                                        <th width="15%">货品备注</th>
+                                                        <th width="15%">备货时间</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <notempty name="stock_list">
+                                                        <foreach name="stock_list" item="vo">
+                                                            <tr>
+                                                                <td>{$vo.name}</td>
+                                                                <td>{$vo.cname}</td>
+                                                                <td>{$vo.sname}</td>
+                                                                <td>{$vo.storage}</td>
+                                                                <td>{$vo.money} </td>
+                                                                <td>{$vo.status}</td>
+                                                                <td>{$vo.remarks}</td>
+                                                                <td>{$vo.create_time}</td>
+                                                            </tr>
+                                                        </foreach>
+                                                        <else />
+                                                        <tr>
+                                                            <td colspan="8">暂无库存</td>
+                                                        </tr>
+                                                    </notempty>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1 col-xs-2">
+                                            <div class="row">
+                                                <!--<div class="type">
+                                                    <i class="fa fa-picture-o fa-2x"></i>
+                                                </div>-->
+                                                <div class="date">
+                                                    {$day}<span>{$ym}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <tc_include file="Public/footer"/>
+    </div>
+    <!--/wrap-->
+</body>
+
+</html>

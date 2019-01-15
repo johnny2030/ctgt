@@ -1,0 +1,102 @@
+<admintpl file="header" />
+</head>
+<body>
+	<div class="wrap js-check-wrap">
+		<ul class="nav nav-tabs">
+			<li class="active"><a href="{:U('order/index')}">订单信息</a></li>
+			<li><a href="{:U('order/add')}">添加订单</a></li>
+		</ul>
+		<form class="well form-search" method="post" id="cid-form" >
+			<input type="text" name="pay_id" style="width: 200px;" value="{$pay_id}" placeholder="请输入订单号">
+			<input type="text" name="name" style="width: 200px;" value="{$name}" placeholder="请输入公司名/联系人名">
+			<button class="btn btn-primary">搜索</button>
+			<a class="btn btn-danger" href="{:U('order/index')}">清空</a>
+		</form>
+		<form class="js-ajax-form" method="post">
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('order/delete')}" data-subcheck="true" data-msg="确定删除？">删除</button>
+			</div>
+			<table class="table table-hover table-bordered table-list">
+				<thead>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="100">订单号</th>
+						<th width="100">货品名</th>
+						<th width="100">货品类别</th>
+						<th width="100">货品规格</th>
+						<th width="100">订货公司</th>
+						<th width="100">订货人</th>
+						<th width="80">订货数量</th>
+						<th width="80">订单金额</th>
+						<th width="100">订单备注</th>
+						<th width="100">订单状态</th>
+						<th width="100">变更时间</th>
+						<th width="100">下单时间</th>
+						<th width="100">操作</th>
+					</tr>
+				</thead>
+				<foreach name="list" item="vo">
+					<tr>
+						<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
+						<td>{$vo.pay_id}</td>
+						<td>{$vo.gname}</td>
+						<td>{$vo.cname}</td>
+						<td>{$vo.sname}</td>
+						<td>{$vo.company_name}</td>
+						<td>{$vo.cuname}</td>
+						<td>{$vo.shuliang}</td>
+						<td>{$vo.money}</td>
+						<td>{$vo.pay_name}</td>
+						<td>{$vo.pay_status}</td>
+						<td>{$vo.update_time}</td>
+						<td>{$vo.create_time}</td>
+						<td>
+							<a style="margin-top: 5px;" href="{:U('order/delete',array('id'=>$vo['id']))}" class="btn btn-danger btn-small js-ajax-delete" data-msg="确定删除？">删除</a>
+						</td>
+					</tr>
+				</foreach>
+				<tfoot>
+					<tr>
+						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
+						<th width="100">订单号</th>
+						<th width="100">货品名</th>
+						<th width="100">货品类别</th>
+						<th width="100">货品规格</th>
+						<th width="100">订货公司</th>
+						<th width="100">订货人</th>
+						<th width="80">订货数量</th>
+						<th width="80">订单金额</th>
+						<th width="100">订单备注</th>
+						<th width="100">订单状态</th>
+						<th width="100">变更时间</th>
+						<th width="100">下单时间</th>
+						<th width="100">操作</th>
+					</tr>
+				</tfoot>
+			</table>
+			<div class="table-actions">
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('order/delete')}" data-subcheck="true" data-msg="确定删除？">删除</button>
+			</div>
+			<div class="pagination">{$page}</div>
+		</form>
+	</div>
+	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+		});
+	</script>
+</body>
+</html>

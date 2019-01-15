@@ -1,0 +1,93 @@
+<!doctype html>
+<!--[if lt IE 7]><html lang="en" class="no-js ie6"><![endif]-->
+<!--[if IE 7]><html lang="en" class="no-js ie7"><![endif]-->
+<!--[if IE 8]><html lang="en" class="no-js ie8"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<tc_include file="Public/header"/>
+<body>
+    <!-- Wrap all page content here -->
+    <div id="wrap">
+        <tc_include file="Public/top"/>
+
+        <section id="blog">
+            <div class="container">
+                <div class="row">
+                    <tc_include file="Public/bar"/>
+                    <div class="col-md-9">
+                        <form method="post" action="" id="userForm">
+                            <div class="article">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-sm-11 col-xs-10">
+                                            <span class="divider"></span><h4>申请备货</h4>
+                                            <div class="col-md-1"></div>
+                                            <div class="show_header">
+                                                <section id="get-in-touch" style="padding:20px 0;">
+                                                    <div class="container">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <form method="post" action="{:U('portal/user/stock_apply')}">
+                                                                    <div class="form-group has-feedback left">
+                                                                        <input type="text" name="name" class="form-control" placeholder="备货名">
+                                                                        <i class="fa fa-calendar-o form-control-feedback"></i>
+                                                                    </div>
+                                                                    <div class="form-group has-feedback left">
+                                                                        <select id="cid" name="cid" class="form-control">
+                                                                            <option value="">请选择货品类别</option>
+                                                                            <foreach name="category" item="c">
+                                                                                <option value="{$c.id}">{$c.name}</option>
+                                                                            </foreach>
+                                                                        </select>
+                                                                        <i class="fa fa-bookmark form-control-feedback"></i>
+                                                                    </div>
+                                                                    <div class="form-group has-feedback left">
+                                                                        <select id="sid" name="sid" class="form-control">
+                                                                            <option value="">请选择货品规格</option>
+                                                                            <foreach name="spec" item="s">
+                                                                                <option value="{$s.id}">{$s.name}</option>
+                                                                            </foreach>
+                                                                        </select>
+                                                                        <i class="fa fa-bookmark-o form-control-feedback"></i>
+                                                                    </div>
+                                                                    <div class="form-group has-feedback left">
+                                                                        <input type="text" name="storage" class="form-control" placeholder="备货数量">
+                                                                        <i class="fa fa-star-half-empty form-control-feedback"></i>
+                                                                    </div>
+                                                                    <div class="form-group has-feedback left">
+                                                                        <textarea class="form-control" name="remarks" rows="7" placeholder="备注"></textarea>
+                                                                        <i class="fa fa-pencil-square-o form-control-feedback"></i>
+                                                                    </div>
+                                                                    <button class="btn btn-primary btn-lg pull-right" type="submit">提交</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </section>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1 col-xs-2">
+                                            <div class="row">
+                                                <!--<div class="type">
+                                                    <i class="fa fa-picture-o fa-2x"></i>
+                                                </div>-->
+                                                <div class="date">
+                                                    {$day}<span>{$ym}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <tc_include file="Public/footer"/>
+    </div>
+    <!--/wrap-->
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+<!doctype html>
+<!--[if lt IE 7]><html lang="en" class="no-js ie6"><![endif]-->
+<!--[if IE 7]><html lang="en" class="no-js ie7"><![endif]-->
+<!--[if IE 8]><html lang="en" class="no-js ie8"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+
+<tc_include file="Public/header"/>
+<body>
+    <!-- Wrap all page content here -->
+    <div id="wrap">
+        <tc_include file="Public/top"/>
+
+        <section id="blog">
+            <div class="container">
+                <div class="row">
+                    <tc_include file="Public/bar"/>
+                    <div class="col-md-9">
+                        <form method="post" action="{:U('portal/user/personal_edit')}">
+                            <div class="article">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-sm-11 col-xs-10">
+                                            <span class="divider"></span><h4>个人信息</h4>
+                                            <div class="col-md-1"></div>
+                                            <div class="show_header col-md-9">
+                                                <ul class="show_nav col-md-3">
+                                                    <li>
+                                                        公司名：
+                                                    </li>
+                                                    <li>
+                                                        公司地址：
+                                                    </li>
+                                                    <li>
+                                                        公司电话：
+                                                    </li>
+                                                    <li>
+                                                        姓名：
+                                                    </li>
+                                                    <li>
+                                                        性别：
+                                                    </li>
+                                                    <li>
+                                                        年龄：
+                                                    </li>
+                                                    <li>
+                                                        手机号：
+                                                    </li>
+                                                </ul>
+                                                <ul class="show_input col-md-7">
+                                                    <li>
+                                                        <input type="text" name="company_name" value="{$user.company_name}">
+                                                    </li>
+                                                    <li>
+                                                        <input type="text" name="company_address" value="{$user.company_address}">
+                                                    </li>
+                                                    <li>
+                                                        <input type="text" name="company_phone" value="{$user.company_phone}">
+                                                    </li>
+                                                    <li>
+                                                        <input type="text" name="name" value="{$user.name}">
+                                                    </li>
+                                                    <li>
+                                                        <input type="text" name="sex" value="{$user.sex}">
+                                                    </li>
+                                                    <li>
+                                                        <input type="text" name="age" value="{$user.age}">
+                                                    </li>
+                                                    <li>
+                                                        <input type="text" name="phone" value="{$user.phone}">
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-2"></div>
+                                        </div>
+                                        <div class="col-sm-1 col-xs-2">
+                                            <div class="row">
+                                                <!--<div class="type">
+                                                    <i class="fa fa-picture-o fa-2x"></i>
+                                                </div>-->
+                                                <div class="date">
+                                                    {$day}<span>{$ym}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9" style="text-align:center;"><button type="submit" class="submitBtn">保存</button></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <tc_include file="Public/footer"/>
+    </div>
+    <!--/wrap-->
+</body>
+
+</html>
