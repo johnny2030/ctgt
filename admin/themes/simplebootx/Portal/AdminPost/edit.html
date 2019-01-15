@@ -26,48 +26,48 @@
 				<div class="span9">
 					<table class="table table-bordered">
 						<tr>
-							<th width="80">{:L('CATEGORY')}</th>
+							<th width="80">分类</th>
 							<td>
 								<select multiple="multiple" style="max-height: 100px;"name="term[]">{$taxonomys}</select>
 								<div>windows：按住 Ctrl 按钮来选择多个选项,Mac：按住 command 按钮来选择多个选项</div>
 							</td>
 						</tr>
 						<tr>
-							<th>{:L('TITLE')}</th>
+							<th>标题</th>
 							<td>
 								<input type="hidden" name="post[id]" value="{$post.id}">
-								<input type="text" style="width: 400px;" name="post[post_title]" required value="{$post.post_title}" placeholder="{:L('TITLE')}"/>
+								<input type="text" style="width: 400px;" name="post[post_title]" required value="{$post.post_title}" placeholder="请输入标题"/>
 								<span class="form-required">*</span>
 							</td>
 						</tr>
 						<tr>
-							<th>{:L('KEYWORDS')}</th>
+							<th>关键词</th>
 							<td>
-								<input type="text" name="post[post_keywords]" style="width: 400px" value="{$post['post_keywords']}" placeholder="{:L('KEYWORDS')}">
+								<input type="text" name="post[post_keywords]" style="width: 400px" value="{$post['post_keywords']}" placeholder="请输入关键字">
 								多关键词之间用空格或者英文逗号隔开
 							</td>
 						</tr>
 	
 						<tr>
-							<th>{:L('ARTICLE_SOURCE')}</th>
+							<th>文章来源</th>
 							<td>
-								<input type="text" name="post[post_source]" value="{$post['post_source']}" style="width: 400px" placeholder="{:L('ARTICLE_SOURCE')}">
+								<input type="text" name="post[post_source]" value="{$post['post_source']}" style="width: 400px" placeholder="请输入文章来源">
 							</td>
 						</tr>
 						<tr>
-							<th>{:L('ABSTRACT')}</th>
+							<th>摘要</th>
 							<td>
-								<textarea name="post[post_excerpt]" style="width: 98%; height: 50px;" placeholder="{:L('ABSTRACT')}">{$post.post_excerpt}</textarea>
+								<textarea name="post[post_excerpt]" style="width: 98%; height: 50px;" placeholder="请填写摘要">{$post.post_excerpt}</textarea>
 							</td>
 						</tr>
 						<tr>
-							<th>{:L('CONTENT')}</th>
+							<th>内容</th>
 							<td>
 								<script type="text/plain" id="content" name="post[post_content]">{$post.post_content}</script>
 							</td>
 						</tr>
 						<tr>
-							<th>{:L('PHOTO_ALBUM')}</th>
+							<th>相册图集</th>
 							<td>
 								<ul id="photos" class="pic-list unstyled">
 									<notempty name="smeta['photo']">
@@ -77,13 +77,13 @@
 											<input id="photo-{$key}" type="hidden" name="photos_url[]" value="{$img_url}"> 
 											<input id="photo-{$key}-name" type="text" name="photos_alt[]" value="{$vo.alt}" style="width: 200px;" title="图片名称">
 											<img id="photo-{$key}-preview" src="{:sp_get_image_preview_url($vo['url'])}" style="height:36px;width: 36px;" onclick="parent.image_preview_dialog(this.src);">
-											<a href="javascript:upload_one_image('{:L('IMAGE_UPLOAD')}','#photo-{$key}');">{:L('REPLACE')}</a>
-											<a href="javascript:(function(){ $('#savedimage{$key}').remove();})();">{:L('REMOVE')}</a>
+											<a href="javascript:upload_one_image('图片上传','#photo-{$key}');">替换</a>
+											<a href="javascript:(function(){ $('#savedimage{$key}').remove();})();">移除</a>
 										</li>
 										</foreach>
 									</notempty>
 								</ul>
-								<a href="javascript:upload_multi_image('{:L('IMAGE_UPLOAD')}','#photos','photos-item-wrapper');" class="btn btn-small">{:L('SELECT_IMAGE')}</a>
+								<a href="javascript:upload_multi_image('图片上传','#photos','photos-item-wrapper');" class="btn btn-small">选择图片</a>
 							</td>
 						</tr>
 					</table>
@@ -91,38 +91,38 @@
 				<div class="span3">
 					<table class="table table-bordered">
 						<tr>
-							<td><b>{:L('THUMBNAIL')}({:L('RECOMMEND')} 500*500)</b></td>
+							<td><b>缩略图</b></td>
 						</tr>
 						<tr>
 							<td>
 								<div style="text-align: center;">
 									<input type="hidden" name="smeta[thumb]" id="thumb" value="{$smeta.thumb|default=''}">
-									<a href="javascript:upload_one_image('{:L('IMAGE_UPLOAD')}','#thumb');">
+									<a href="javascript:upload_one_image('图片上传','#thumb');">
 										<if condition="empty($smeta['thumb'])">
 											<img src="__TMPL__Public/assets/images/default-thumbnail.png" id="thumb-preview" width="135" style="cursor: hand"/>
 										<else />
 											<img src="{:sp_get_image_preview_url($smeta['thumb'])}" id="thumb-preview" width="135" style="cursor: hand"/>
 										</if>
 									</a>
-									<input type="button" class="btn btn-small" onclick="$('#thumb-preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="{:L('CANCEL')}">
+									<input type="button" class="btn btn-small" onclick="$('#thumb-preview').attr('src','__TMPL__Public/assets/images/default-thumbnail.png');$('#thumb').val('');return false;" value="取消图片">
 								</div>
 							</td>
 						</tr>
 						<tr>
-							<th>{:L('PUBDATE')}</th>
+							<th>发布时间</th>
 						</tr>
 						<tr>
 							<td><input type="text" name="post[post_date]" value="{$post.post_date}" class="js-datetime" style="width: 160px;"></td>
 						</tr>
 						<tr>
-							<th>{:L('COMMENT')}</th>
+							<th>评论</th>
 						</tr>
 						<tr>
-							<td><label style="width: 88px"><a href="javascript:open_iframe_dialog('{:U('comment/commentadmin/index',array('post_id'=>$post['id']))}','评论列表')">{:L('VIEW_COMMENTS')}</a></label>
+							<td><label style="width: 88px"><a href="javascript:open_iframe_dialog('{:U('comment/commentadmin/index',array('post_id'=>$post['id']))}','评论列表')">查看评论</a></label>
 							</td>
 						</tr>
 						<tr>
-							<th>{:L('STATUS')}</th>
+							<th>状态</th>
 						</tr>
 						<tr>
 							<td>
@@ -134,24 +134,24 @@
 									$recommended_yes=$post['recommended']==1?"checked":"";
 									$recommended_no=$post['recommended']==0?"checked":""; 
 								</php>
-								<label class="radio"><input type="radio" name="post[post_status]" value="1" {$status_yes}>{:L('HAVE_PASSED')}</label>
-								<label class="radio"><input type="radio" name="post[post_status]" value="0" {$status_no}>{:L('NOCHECK')}</label>
+								<label class="radio"><input type="radio" name="post[post_status]" value="1" {$status_yes}>审核通过</label>
+								<label class="radio"><input type="radio" name="post[post_status]" value="0" {$status_no}>未审核</label>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label class="radio"><input type="radio" name="post[istop]" value="1" {$istop_yes}>{:L('STICK')}</label>
-								<label class="radio"><input type="radio" name="post[istop]" value="0" {$istop_no}>{:L('NOSTICK')}</label>
+								<label class="radio"><input type="radio" name="post[istop]" value="1" {$istop_yes}>置顶</label>
+								<label class="radio"><input type="radio" name="post[istop]" value="0" {$istop_no}>未置顶</label>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<label class="radio"><input type="radio" name="post[recommended]" value="1" {$recommended_yes}>{:L('RECOMMEND')}</label>
-								<label class="radio"><input type="radio" name="post[recommended]" value="0" {$recommended_no}>{:L('NOT_RECOMMENDED')}</label>
+								<label class="radio"><input type="radio" name="post[recommended]" value="1" {$recommended_yes}>推荐</label>
+								<label class="radio"><input type="radio" name="post[recommended]" value="0" {$recommended_no}>未推荐</label>
 							</td>
 						</tr>
 						<tr>
-							<th>{:L('TEMPLET')}</th>
+							<th>文章模板</th>
 						</tr>
 						<tr>
 							<td>
@@ -160,7 +160,7 @@
 									unset($tpl_list['page']);
 								</php>
 								<select style="min-width: 190px;" name="smeta[template]">
-									<option value="">{:L('PLEASE_SELECT')}</option>
+									<option value="">请选择模板</option>
 									<foreach name="tpl_list" item="vo">
 										<php>$template_selected=$smeta['template']==$vo?"selected":"";</php>
 										<option value="{$vo}"{$template_selected}>{$vo}{:C("TMPL_TEMPLATE_SUFFIX")}</option>
@@ -172,8 +172,8 @@
 				</div>
 			</div>
 			<div class="form-actions">
-				<button class="btn btn-primary js-ajax-submit" type="submit">{:L('SAVE')}</button>
-				<a class="btn" href="{:U('AdminPost/index')}">{:L('BACK')}</a>
+				<button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
+				<a class="btn" href="{:U('AdminPost/index')}">返回</a>
 			</div>
 		</form>
 	</div>
@@ -198,7 +198,7 @@
 						lock : true,
 						background : "#CCCCCC",
 						opacity : 0,
-						content : "{:L('CLOSE_PAGE')}",
+						content : "您确定需要关闭当前页面嘛？",
 						ok : function() {
 							setCookie("refersh_time", 1);
 							window.close();
@@ -259,7 +259,7 @@
 								background : "#CCCCCC",
 								opacity : 0,
 								content : errorArr[0].message,
-								cancelVal : "{:L('OK')}",
+								cancelVal : '确定',
 								cancel : function() {
 									$(errorArr[0].element).focus();
 								}
@@ -279,10 +279,10 @@
 					//验证未通过提示消息
 					messages : {
 						'post[post_title]' : {
-							required : "{:L('TITLE')}"
+							required : '请输入标题'
 						},
 						'post[post_content]' : {
-							editorcontent : "{:L('CONTENT')} {:L('NOT_NULL')}"
+							editorcontent : '内容不能为空'
 						}
 					},
 					//给未通过验证的元素加效果,闪烁等
@@ -311,14 +311,14 @@
 											opacity : 0,
 											content : data.info,
 											button : [ {
-												name : "{:L('CONTINUE')}",
+												name : '继续编辑？',
 												callback : function() {
 													//reloadPage(window);
 													return true;
 												},
 												focus : true
 											}, {
-												name : "{:L('RETURN')}",
+												name : '返回列表页',
 												callback : function() {
 													location = "{:U('AdminPost/index')}";
 													return true;

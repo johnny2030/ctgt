@@ -441,16 +441,6 @@
         });
     }
 
-    //时间选择器
-    var timeInput = $("input.js-time");
-    if (timeInput.length) {
-        Wind.use('datePicker', function () {
-            timeInput.datePicker({
-                onlytime: true
-            });
-        });
-    }
-    
     //日期+时间选择器
     var dateTimeInput = $("input.js-datetime");
     if (dateTimeInput.length) {
@@ -473,22 +463,6 @@
         });
     }
 
-	//Bootstrap datetimepicker
-	//年月选择器
-	var nowdate = new Date();
-	var year = nowdate.getFullYear();
-	var month = nowdate.getMonth()+1;
-	var year_month = year+"-"+month;
-	$('input.js-year-month').datetimepicker({
-		language: 'zh-CN',
-		autoclose: 1,
-		todayHighlight: 1,
-		startView: 'year',
-		minView: 'year',
-		forceParse: 0,
-		format: 'yyyy-mm'
-	});
-    
     //tab
     var tabs_nav = $('ul.js-tabs-nav');
     if (tabs_nav.length) {
@@ -567,25 +541,7 @@ function open_iframe_dialog(url, title, options) {
         art.dialog.open(url, params);
     });
 }
-/**
- * 打开iframe式的窗口对话框
- * @param url
- * @param title
- * @param options
- */
-function open_iframe_dialog_uploadimg(url, title, options) {
-    var params = {
-        title: title,
-        lock: true,
-        opacity: 0,
-        width: "650px",
-        height: '450px'
-    };
-    params = options ? $.extend(params, options) : params;
-    Wind.use('artDialog', 'iframeTools', function () {
-        art.dialog.open(url, params);
-    });
-}
+
 /**
  * 打开地图对话框
  *
@@ -804,25 +760,3 @@ function open_iframe_layer(url, title, options) {
     });
 
 }
-
-function open_iframe_layer_small(url, title, options) {
-
-    var params = {
-        type: 2,
-        title: title,
-        shadeClose: true,
-        skin: 'layui-layer-nobg',
-        shade: [0.5, '#000000'],
-        area: ['30%', '60%'],
-        content: url
-    };
-    params = options ? $.extend(params, options) : params;
-
-    Wind.css('layer');
-
-    Wind.use("layer", function () {
-        layer.open(params);
-    });
-
-}
-

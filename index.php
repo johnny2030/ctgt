@@ -18,7 +18,7 @@ if (ini_get('magic_quotes_gpc')) {
 	$_POST = stripslashesRecursive($_POST);
 }
 //开启调试模式
-define("APP_DEBUG", false);
+define("APP_DEBUG", true);
 //网站当前路径
 define('SITE_PATH', dirname(__FILE__)."/");
 //项目路径，不可更改
@@ -50,9 +50,6 @@ if(function_exists('saeAutoLoader') || isset($_SERVER['HTTP_BAE_ENV_APPID'])){
 }
 //uc client root
 define("UC_CLIENT_ROOT", './api/uc_client/');
-
-//china city插件
-define("PLUGIN", 'plugin_');
 
 if(file_exists(UC_CLIENT_ROOT."config.inc.php")){
 	include UC_CLIENT_ROOT."config.inc.php";

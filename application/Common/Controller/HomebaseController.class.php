@@ -34,13 +34,10 @@ class HomebaseController extends AppframeController {
 			}else{
 			}
 		}
-		
 		if(sp_is_user_login()){
 			$this->assign("user",sp_get_current_user());
 		}
-		
 	}
-	
 	/**
 	 * 检查用户登录
 	 */
@@ -49,7 +46,6 @@ class HomebaseController extends AppframeController {
 		if(empty($session_user)){
 			$this->error('您还没有登录！',leuu('user/login/index',array('redirect'=>base64_encode($_SERVER['HTTP_REFERER']))));
 		}
-		
 	}
 	
 	/**

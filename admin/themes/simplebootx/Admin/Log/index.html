@@ -3,27 +3,27 @@
 <body>
 	<div class="wrap js-check-wrap">
 		<ul class="nav nav-tabs">
-			<li class="active"><a href="{:U('log/index')}">{:L('LOG_LIST')}</a></li>
+			<li class="active"><a href="{:U('log/index')}">日志列表</a></li>
 		</ul>
 		<form class="well form-search" method="post" id="cid-form" >
-			<input type="text" name="keyword" style="width: 200px;" value="{$keyword}" placeholder="{:L('LOG_OPERATER')}">
-			<button class="btn btn-primary">{:L('SEARCH')}</button>
-			<a class="btn btn-danger" href="{:U('log/index')}">{:L('EMPTY')}</a>
+			<input type="text" name="keyword" style="width: 200px;" value="{$keyword}" placeholder="操作人">
+			<button class="btn btn-primary">搜索</button>
+			<a class="btn btn-danger" href="{:U('log/index')}">清空</a>
 		</form>
 		<form class="js-ajax-form" method="post">
 			<div class="table-actions">
-				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('log/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('log/delete')}" data-subcheck="true" data-msg="删除日志">删除</button>
 			</div> 
 			<table class="table table-hover table-bordered table-list">
 				<thead>
 					<tr>
 						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
-						<th width="50">{:L('ID')}</th>
-						<th width="100">{:L('LOG_SERVICE_NAME')}</th>
-						<th width="100">{:L('LOG_SERVICE_KEY')}</th>
-						<th width="50">{:L('LOG_OPERATER')}</th>
-						<th width="100">{:L('LOG_OPERATION_TIME')}</th>
-						<th width="100">{:L('ACTIONS')}</th>
+						<th width="50">ID</th>
+						<th width="100">业务名称</th>
+						<th width="100">业务主键</th>
+						<th width="50">操作人</th>
+						<th width="100">操作时间</th>
+						<th width="100">操作</th>
 					</tr>
 				</thead>
 				<foreach name="logs" item="vo">
@@ -36,12 +36,12 @@
 					<td>{:date('Y-m-d H:i',$vo['last_time'])}</td>
 					<td>
 						<if condition="$vo['type'] eq 3">
-							<a href="{:U($vo['menu_model'].'/'.$vo['menu_action'],array('id'=>$vo['id'],'object'=>$vo['object'],'restore'=>1))}">{:L('RESTORE')}</a>
-							<a href="{:U($vo['menu_model'].'/'.$vo['menu_action'],array('id'=>$vo['id'],'object'=>$vo['object'],'complete_delete'=>1))}" class="js-ajax-delete">{:L('COMPLETE_DELETE')}</a>
+							<a href="{:U($vo['menu_model'].'/'.$vo['menu_action'],array('id'=>$vo['id'],'object'=>$vo['object'],'restore'=>1))}">恢复</a>
+							<a href="{:U($vo['menu_model'].'/'.$vo['menu_action'],array('id'=>$vo['id'],'object'=>$vo['object'],'complete_delete'=>1))}" class="js-ajax-delete">彻底删除</a>
 						<elseif condition="$vo['type'] eq 4"/>
-							{:L('RESTORED')}
+							已恢复
 						<elseif condition="$vo['type'] eq 5"/>
-							{:L('COMPLETE_DELETED')}
+							已彻底删除
 						<else/>
 							--
 						</if>
@@ -52,18 +52,18 @@
 				<tfoot>
 					<tr>
 						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
-						<th width="50">{:L('ID')}</th>
-						<th width="100">{:L('LOG_SERVICE_NAME')}</th>
-						<th width="100">{:L('LOG_SERVICE_KEY')}</th>
-						<th width="50">{:L('LOG_OPERATER')}</th>
-						<th width="100">{:L('LOG_OPERATION_TIME')}</th>
-						<th width="100">{:L('ACTIONS')}</th>
+						<th width="50">ID</th>
+						<th width="100">业务名称</th>
+						<th width="100">业务主键</th>
+						<th width="50">操作人</th>
+						<th width="100">操作时间</th>
+						<th width="100">操作</th>
 					</tr>
 				</tfoot>
 			</table>
 			<div class="table-actions">
-				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('log/delete')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
-			</div> 
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('log/delete')}" data-subcheck="true" data-msg="删除日志">删除</button>
+			</div>
 			<div class="pagination">{$page}</div>
 		</form>
 	</div>

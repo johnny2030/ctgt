@@ -41,8 +41,7 @@ class IndexController extends HomebaseController {
     		echo uc_user_synlogout();
     	}
     	session("user",null);//只有前台用户退出
-    	$referer = $_SERVER['HTTP_REFERER'];
-    	redirect($referer ? $referer : __ROOT__."/");
+    	redirect(__ROOT__."/");
     }
 
 }

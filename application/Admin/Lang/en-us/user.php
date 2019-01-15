@@ -23,19 +23,6 @@ return array(
 		"BLOCK_USER_CONFIRM_MESSAGE" =>'Are you sure you want to pull black this user?',
 		"ACTIVATE_USER" =>'Activate',
 		"ACTIVATE_USER_CONFIRM_MESSAGE" =>'Are you sure you want to enable this user?',
-		"USER_HAVENOT_LOGIN" => 'This user haven\'t login!',
-		
-		"FIRST_NAME" => 'First Name',
-		"LAST_NAME" => 'Last Name',
-		"MAJOR" => 'Speciality',
-		"USERNAME" => 'Username',
-		"EMAIL" => 'Email',
-		"ROLE" => 'Role',
-		"STUDENT_NO" => 'Student No',
-		"CARD_NO" => 'Card No',
-		"RECEIVER" => 'Receiver',
-		"RECEIVER_STUDENT_NO" => 'Receiver Student No',
-		"RECEIVER_CARD_NO" => 'Receiver Card No',
-		"USERNAME_TEXT" => 'The password to add the administrator account for the first time is the same as the user name. If you need to change the password, please log in to the administrator account and enter the personal center for modification',
+		"USER_HAVENOT_LOGIN" => 'This user haven\'t login!'
 
 );

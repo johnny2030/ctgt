@@ -1,57 +1,25 @@
 <?php
-/*
- * 会员登录
- * llk
- */
 namespace User\Controller;
 
 use Common\Controller\HomebaseController;
 
 class LoginController extends HomebaseController {
 	
-	private $formData = array();
-	private $formError = array();
-	
-	// 用户登录
+    // 前台用户登录
 	public function index(){
-		if ( sp_is_user_login() ) { //已经登录时直接跳转到首页
-			redirect( __ROOT__.'/' );
-		} else {
-			if ( IS_POST ) {
-				$this->formData = $_POST;
-				$username = trim( $_POST['username'] );
-				$password = trim( $_POST['password'] );
-				
-				if ( empty( $username ) ) $this->formError[] = 'Please enter a username';
-				if ( empty( $password ) ) $this->formError[] = 'Please provide a password';
-				if ( !$this->formError ) {
-					$user = D( 'Users' )->where( array( 'user_login' => $username ) )->find();
-					
-					if ( $user ) { //用户存在
-						if ( sp_compare_password( $password , $user['user_pass'] ) ) { //校验密码
-							$_SESSION['user'] = $user;
-							$data = array(
-								'last_login_time' => date('Y-m-d H-i-s'),
-								'last_login_ip' => get_client_ip( 0 , true )
-							);
-							D('Users')->where(array('id' => $user['id']))->save($data);
-							$referer = $_SERVER['HTTP_REFERER'];
-							$redirect = empty($_SESSION['login_http_referer']) ? ($referer ? $referer : __ROOT__.'/') : $_SESSION['login_http_referer'];
-							$_SESSION['login_http_referer'] = '';
-							redirect($redirect);
-							exit;
-						} else {
-							$this->formError[] = 'Password error';
-						}
-					} else {
-						$this->formError[] = 'The user does not exist';
-					}
-				}
-			}
-		}
-	    $this->assign('formData',$this->formData);
-	    $this->assign('formError',$this->formError);
-	    $this->display(':login');
+	    $redirect=I('get.redirect','');
+	    if(empty($redirect)){
+	        $redirect=$_SERVER['HTTP_REFERER'];
+	    }else{
+	        $redirect=base64_decode($redirect);
+	    }
+	    session('login_http_referer',$redirect);
+	    
+	    if(sp_is_user_login()){ //已经登录时直接跳到首页
+	        redirect(__ROOT__."/");
+	    }else{
+	        $this->display(":login");
+	    }
 	}
 	
 	// 前台用户邮箱激活

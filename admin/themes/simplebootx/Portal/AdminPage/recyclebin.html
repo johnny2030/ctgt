@@ -6,26 +6,26 @@
 			<li class="active"><a href="javascript:;">{:L('PORTAL_ADMINPAGE_RECYCLEBIN')}</a></li>
 		</ul>
 		<form class="well form-search" method="post" action="{:U('AdminPage/recyclebin')}">
-			{:L('TIME')}： 
+			时间： 
 			<input type="text" name="start_time" class="js-datetime" value="{$formget.start_time|default=''}" style="width:120px;" autocomplete="off">-
 			<input autocomplete="off" type="text" class="js-datetime" name="end_time" value="{$formget.end_time|default=''}" style="width: 120px;">
-			{:L('KEYWORDS')}：
-			<input type="text" class="input" name="keyword" style="width: 200px;" value="{$formget.keyword|default=''}" placeholder="{:L('KEYWORDS')}">
-			<button class="btn btn-primary">{:L('SEARCH')}</button>
+			关键字：
+			<input type="text" class="input" name="keyword" style="width: 200px;" value="{$formget.keyword|default=''}" placeholder="请输入关键字...">
+			<button class="btn btn-primary">搜索</button>
 		</form>
 		<form class="js-ajax-form" method="post">
 			<div class="table-actions">
-				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('AdminPage/clean')}" data-subcheck="true" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('AdminPage/clean')}" data-subcheck="true" data-msg="你确定删除吗？">{:L('DELETE')}</button>
 			</div>
 			<table class="table table-hover table-bordered table-list">
 				<thead>
 					<tr>
 						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
-						<th width="100">{:L('ID')}</th>
-						<th>{:L('TITLE')}</th>
+						<th width="100">ID</th>
+						<th>标题</th>
 						<!-- <th>点击量</th> -->
-						<th width="80">{:L('PUBLISHER')}</th>
-						<th width="120"><span>{:L('PUBDATE')}</span></th>
+						<th width="80">发布人</th>
+						<th width="120"><span>发布时间</span></th>
 						<th width="120">{:L('ACTIONS')}</th>
 					</tr>
 				</thead>
@@ -38,7 +38,7 @@
 					<td>{$users[$vo['post_author']]['user_login']}</td>
 					<td>{$vo.post_date}</td>
 					<td>
-						<a href="{:U('AdminPage/restore',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="确定还原吗？">{:L('RESTORE')}</a>| 
+						<a href="{:U('AdminPage/restore',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="确定还原吗？">还原</a>| 
 						<a href="{:U('AdminPage/clean',array('id'=>$vo['id']))}" class="js-ajax-delete">{:L('DELETE')}</a>
 					</td>
 				</tr>
@@ -46,11 +46,11 @@
 				<tfoot>
 					<tr>
 						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
-						<th width="100">{:L('ID')}</th>
-						<th>{:L('TITLE')}</th>
+						<th width="100">ID</th>
+						<th>标题</th>
 						<!-- <th>点击量</th> -->
-						<th width="80">{:L('PUBLISHER')}</th>
-						<th width="120"><span>{:L('PUBDATE')}</span></th>
+						<th width="80">发布人</th>
+						<th width="120"><span>发布时间</span></th>
 						<th width="120">{:L('ACTIONS')}</th>
 					</tr>
 				</tfoot>

@@ -1,29 +1,30 @@
 <?php
-/**
- *首页
- */
 namespace Admin\Controller;
 
 use Common\Controller\AdminbaseController;
 
 class MainController extends AdminbaseController {
 	
-	function _initialize() {
-		parent::_initialize();
-	}
-	//多语言切换
-	public function lang() {
-		if (IS_AJAX){
-			//$configs = include 'application/Common/Conf/config.php';
-			$lang = I('l');
-			$configs['DEFAULT_LANG'] = $lang;
-			sp_set_dynamic_config($configs);
-			$this->ajaxReturn();
-		}
-	}
-	//首页信息
-	public function index() {
-		redirect(U('admin/student/index'));
-	}
-	
+    public function index(){
+    	
+    	$mysql= M()->query("select VERSION() as version");
+    	$mysql=$mysql[0]['version'];
+    	$mysql=empty($mysql)?L('UNKNOWN'):$mysql;
+    	
+    	//server infomaions
+    	$info = array(
+    			L('OPERATING_SYSTEM') => PHP_OS,
+    			L('OPERATING_ENVIRONMENT') => $_SERVER["SERVER_SOFTWARE"],
+    	        L('PHP_VERSION') => PHP_VERSION,
+    			L('PHP_RUN_MODE') => php_sapi_name(),
+				L('PHP_VERSION') => phpversion(),
+    			L('MYSQL_VERSION') =>$mysql,
+    			L('PROGRAM_VERSION') => THINKCMF_VERSION . "&nbsp;&nbsp;&nbsp; [<a href='http://www.thinkcmf.com' target='_blank'>ThinkCMF</a>]",
+    			L('UPLOAD_MAX_FILESIZE') => ini_get('upload_max_filesize'),
+    			L('MAX_EXECUTION_TIME') => ini_get('max_execution_time') . "s",
+    			L('DISK_FREE_SPACE') => round((@disk_free_space(".") / (1024 * 1024)), 2) . 'M',
+    	);
+    	$this->assign('server_info', $info);
+    	$this->display();
+    }
 }

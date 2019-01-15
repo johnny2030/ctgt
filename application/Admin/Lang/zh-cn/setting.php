@@ -39,34 +39,5 @@ return array(
 		"WEBSITE_SITE_NAME_REQUIRED_MESSAGE" =>"请输入网站名称！",
 		"WEBSITE_SITE_HOST_REQUIRED_MESSAGE" =>"请输入网站域名！",
 		
-		"SYSTEM_INFORMATIONS" => '系统信息',
-		"OPERATING_SYSTEM" => '操作系统',
-		"OPERATING_ENVIRONMENT" => '运行环境',
-		"PHP_VERSION" => 'PHP版本',
-		"PHP_RUN_MODE" => 'PHP运行方式',
-		"MYSQL_VERSION" => 'MYSQL版本',
-		"PROGRAM_VERSION" => '程序版本',
-		"UPLOAD_MAX_FILESIZE" => '上传附件限制',
-		"MAX_EXECUTION_TIME" => '执行时间限制',
-		"DISK_FREE_SPACE" => '剩余空间',
-		"BROWSER_VERSION" => '浏览器版本',
-		'SECONDS' => '秒',
-		'UNKNOWN' => '未知',
-		'NO_NOTICE' => '没有通知啦',
-		
-		'CDN_SETTING' => 'CDN设置',
-		'ADMIN_SITE_URL_ENCRYPTION' => '后台地址加密',
-		'ADMIN_SITE_URL' => '后台地址',
-		'ADMIN_SITE_URL_TEXT' => '设置加密码后必须通过以下地址访问后台,请劳记此地址，为了安全，您也可以定期更换此加密码!',
-		"BROWSER_VERSION_TEXT" => '兼容Firefox、Chrome、Safari、Opera、IE、360等主流浏览器(IE推荐使用最新版本，IE10以下版本及360浏览器上可能有部分功能无法正常体验)',
-		'STATIC_RESOURCE_CDN_ADDRESS' => '静态资源cdn地址',
-		
-		'PICTURE_FILE' => '图片文件',
-		'VIDEO_FILE' => '视频文件',
-		'AUDIO_FILE' => '音频文件',
-		'ANNEX' => '附件',
-		
-		
-		
 		
 );

@@ -5,7 +5,7 @@
 <!-- Set render engine for 360 browser -->
 <meta name="renderer" content="webkit">
 <meta charset="utf-8">
-<title>CIEE {:L('ADMIN_CENTER')}</title>
+<title>正朋 {:L('ADMIN_CENTER')}</title>
 
 <meta name="description" content="This is page-header (.page-header &gt; h1)">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -153,8 +153,8 @@ right: initial !important;}
 	<div class="navbar">
 		<div class="navbar-inner">
 			<div class="container-fluid">
-				<a href="{:U('admin/index/index')}" class="brand"> <small> 
-					CIEE{:L('ADMIN_CENTER')}
+				<a href="{:U('admin/index/index')}" class="brand"> <small>
+					正朋 {:L('ADMIN_CENTER')}
 				</small>
 				</a>
 				<div class="pull-left nav_shortcuts" >
@@ -187,10 +187,7 @@ right: initial !important;}
 					</a>
 					</if>
 				</div>
-				
 				<ul class="nav simplewind-nav pull-right">
-					<li><a href="javascript:void(0);" onclick="exchange_lang('zh-cn');">简体中文</a></li>
-					<li><a href="javascript:void(0);" onclick="exchange_lang('en-us');">English</a></li>
 					<li class="light-blue">
 						<a data-toggle="dropdown" href="#" class="dropdown-toggle">
     						<if condition="$admin['avatar']">
@@ -291,11 +288,6 @@ right: initial !important;}
 		$(closest_a_next).slideToggle(150).parent().toggleClass("open");
 		return false;
 	});
-	function exchange_lang(lang) {
-		$.post('{:U("main/lang")}', {l: lang}, function(){
-			location.reload();
-		});
-	}
 	</script>
 	<script src="__PUBLIC__/js/common.js"></script>
 	<script src="__TMPL__Public/assets/js/index.js"></script>

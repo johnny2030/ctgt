@@ -16,15 +16,10 @@
     <link href="__PUBLIC__/simpleboot/css/simplebootadmin.css" rel="stylesheet">
     <link href="__PUBLIC__/js/artDialog/skins/default.css" rel="stylesheet" />
     <link href="__PUBLIC__/simpleboot/font-awesome/4.4.0/css/font-awesome.min.css"  rel="stylesheet" type="text/css">
-    
     <style>
 		form .input-order{margin-bottom: 0px;padding:3px;width:40px;}
 		.table-actions{margin-top: 5px; margin-bottom: 5px;padding:0px;}
 		.table-list{margin-bottom: 0px;}
-		select {height:35px;}
-		input[type='checkbox'] {margin-bottom:6px;}
-		input[type='radio'] {margin-bottom:6px;}
-		.datetimepicker {background-color:white;}
 	</style>
 	<!--[if IE 7]>
 	<link rel="stylesheet" href="__PUBLIC__/simpleboot/font-awesome/4.4.0/css/font-awesome-ie7.min.css">
@@ -41,17 +36,6 @@
     <script src="__PUBLIC__/js/jquery.js"></script>
     <script src="__PUBLIC__/js/wind.js"></script>
     <script src="__PUBLIC__/simpleboot/bootstrap/js/bootstrap.min.js"></script>
-    <script src="__PUBLIC__/js/loading.js"></script>
-    <!-- 多选下拉框插件 -->
-	<link href="__PUBLIC__/simpleboot/bootstrap/css/bootstrap-multiselect.css" rel="stylesheet" type="text/css">
-	<script src="__PUBLIC__/simpleboot/bootstrap/js/bootstrap-multiselect.js"></script>
-	<!-- 日期插件 -->
-	<link href="__PUBLIC__/simpleboot/bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css">
-	<script src="__PUBLIC__/simpleboot/bootstrap/js/bootstrap-datetimepicker.min.js"></script>
-	<script src="__PUBLIC__/simpleboot/bootstrap/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
-	<!-- 颜色拾取器插件 -->
-	<link href="__PUBLIC__/simpleboot/farbtastic/farbtastic.css" rel="stylesheet" type="text/css">
-	<script src="__PUBLIC__/simpleboot/farbtastic/farbtastic.js"></script>
     <script>
     	$(function(){
     		$("[data-toggle='tooltip']").tooltip();
@@ -62,5 +46,9 @@
 		#think_page_trace_open{
 			z-index:9999;
 		}
+        .table-actions .tips_error{
+            color: crimson;
+            margin-left: 30px;
+        }
 	</style>
 </if>

@@ -17,6 +17,5 @@ return array(
 	'DISK_FREE_SPACE' => '剩余空间',
 	'SECONDS' => '秒',
 	'UNKNOWN' => '未知',
-	'NO_NOTICE' => '没有通知啦',
-		
+	'NO_NOTICE' => '没有通知啦'
 );

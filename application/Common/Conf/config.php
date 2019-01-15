@@ -37,12 +37,11 @@ $configs= array(
         'DEFAULT_FILTER'        =>  'htmlspecialchars', // 默认参数过滤方法 用于I函数...htmlspecialchars
         
         'LANG_SWITCH_ON'        =>  true,   // 开启语言包功能
-        'DEFAULT_LANG'          =>  'en-us', // 默认语言
+        'DEFAULT_LANG'          =>  'zh-cn', // 默认语言
         'LANG_LIST'				=>  'zh-cn,en-us,zh-tw',
         'LANG_AUTO_DETECT'		=>  true,
         'ADMIN_LANG_SWITCH_ON'        =>  false,   // 后台开启语言包功能
-		'VAR_LANGUAGE'          =>  'l',
-		
+        
         'VAR_MODULE'            =>  'g',     // 默认模块获取变量
         'VAR_CONTROLLER'        =>  'm',    // 默认控制器获取变量
         'VAR_ACTION'            =>  'a',    // 默认操作获取变量
@@ -94,7 +93,14 @@ $configs= array(
         	'__UPLOAD__' => __ROOT__.'/data/upload/',
         	'__STATICS__' => __ROOT__.'/statics/',
             '__WEB_ROOT__'=>__ROOT__
-        )
+        ),
+        'WEIXINPAY_CONFIG'       => array(
+            'APPID'              => 'wx69217b5af9a538fb', // 微信支付APPID
+            'MCHID'              => '1489351262', // 微信支付MCHID 商户收款账号
+            'KEY'                => 'blaumdqfginslrv1vqcxh9bfygtzs073', // 微信支付KEY
+            'APPSECRET'          => '98e91168e2ac5e907068e62ea340ec23', // 公众帐号secert (公众号支付专用)
+            'NOTIFY_URL'         => 'http://www.jkwdr.cn/wx_payment_notify.php', // 接收支付状态的连接
+        ),
 );
 
 return  array_merge($configs,$db,$runtime_config);

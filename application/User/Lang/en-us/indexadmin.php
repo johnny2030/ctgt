@@ -17,7 +17,5 @@ return array(
 		"ACTIVATE_USER" =>'Activate',
 		"ACTIVATE_USER_CONFIRM_MESSAGE" =>'Are you sure you want to enable this user?',
 		"THIRD_PARTY_USER" => "Third Party User",
-		"NOT_FILLED" => "Not Filled",
-		
-		"USER_ID" => "User ID",
+		"NOT_FILLED" => "Not Filled"
 );

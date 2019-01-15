@@ -1,132 +1,17 @@
 <?php
-/* 
- * 会员注册
- * 11k
- */
 namespace User\Controller;
 
 use Common\Controller\HomebaseController;
 
 class RegisterController extends HomebaseController {
-	private $formData = array();
-	private $formError = array();
-	private $formReturn = array();
-	private $user_model;
-	private $teacher_major_model;
 	
-	function _initialize(){
-		parent::_initialize();
-		$this->user_model = D('Users');
-		$this->teacher_major_model = D('TeacherMajorRelationship');
-	}
     // 前台用户注册
 	public function index(){
 	    if(sp_is_user_login()){ //已经登录时直接跳到首页
 	        redirect(__ROOT__."/");
 	    }else{
-	        if(IS_POST) {
-	        	$this->formData = $_POST;
-	        	$username = I('post.username1');
-	        	$password = I('post.password1');
-	        	$confirm_password = I('post.confirm_password');
-	        	$user_type = I('post.user_type');
-	        	$agree = I('post.agree');
-	        	if (empty($username)) $this->formError[] = '请输入用户名';
-	        	if (empty($password)) $this->formError[] = '请输入密码';
-	        	if (empty($agree)) $this->formError[] = '请阅读并同意用户协议';
-	        	if ($password != $confirm_password) $this->formError[] = '密码与确认密码不一致';
-	        	if ($this->user_model->where(array('user_login' => $username))->count() > 0) $this->formError[] = '用户名已被注册';
-	        	if (!$this->formError) {
-	        		if ($user_type == 1) {
-		        		$data = array(
-		        				'user_login' => $username,
-		        				'user_pass' => sp_password( $password ),
-		        				'last_login_ip' => get_client_ip( 0, true ),
-		        				'create_time' => date( 'Y-m-d H:i:s' ),
-		        				'last_login_time' => date( 'Y-m-d H:i:s' ),
-		        				'user_status' => 2,//未审核
-		        				'user_type' => 1,  //teacher
-		        				'teacher_apply_status' => 0
-		        		);
-	        		}
-	        		if ($user_type == 3) {
-	        			$data = array(
-	        					'user_login' => $username,
-	        					'user_pass' => sp_password( $password ),
-	        					'last_login_ip' => get_client_ip( 0, true ),
-	        					'create_time' => date( 'Y-m-d H:i:s' ),
-	        					'last_login_time' => date( 'Y-m-d H:i:s' ),
-	        					'user_status' => 1,//正常
-	        					'user_type' => 3  //user
-	        			);
-	        		}
-	        		$result = $this->user_model->add($data);
-	        		if ($result) {
-	        			//注册成功跳转页面
-	        			$data['id'] = $result;
-	        			session('user',$data);
-	        			if ($user_type == 1) {
-	        				redirect(leuu('portal/list/index',array('id' => 11)));
-	        			}
-	        			if ($user_type == 3) {
-		        			$referer = $_SERVER['HTTP_REFERER'];
-		        			$redirect = empty($_SESSION['login_http_referer']) ? ($referer ? $referer : __ROOT__.'/') : $_SESSION['login_http_referer'];
-		        			$_SESSION['login_http_referer'] = '';
-		        			redirect($redirect);
-	        			}
-	        		} else {
-	        			$this->formReturn['success'] = false;
-	        			$this->formReturn['msg'] = '注册失败';
-	        		}
-	        	}
-	        }
+	        $this->display(":register");
 	    }
-	    $this->assign('formData',$this->formData);
-	    $this->assign('formError',$this->formError);
-	    $this->assign('formReturn',$this->formReturn);
-	    $this->display(':register');
-	}
-	// 教师申请
-	public function teacher_applytable(){
-		if(IS_POST) {
-			$this->formData = $_POST;
-			if (empty($_POST['first_name'])) $this->formError[] = '请填写名';
-			if (empty($_POST['last_name'])) $this->formError[] = '请填写姓';
-			if (empty($_POST['school_name'])) $this->formError[] = '请填写学校名称';
-			if (empty($_POST['work_experience'])) $this->formError[] = '请工作经验';
-			$_POST['full_name'] = $_POST['first_name']." ".$_POST['last_name'];
-			$_POST['teacher_apply_status'] = 1;
-			
-			$teacher_majors = array();
-			$user_id = sp_get_current_userid();
-			if (!empty($_POST['teacher_major'])) {
-				foreach ($_POST['teacher_major'] as $teacher_major) {
-					$teacher_major = (int)$teacher_major;
-					if ($teacher_major) $teacher_majors[] = array('major_id' => $teacher_major,'teacher_id' => $user_id);
-				}
-			} else {
-				$this->formError[] = '请选择专业';
-			}
-			unset($_POST['teacher_major']);
-			if (!$this->formError) {
-				
-				$result = $this->user_model->where(array('id' => $user_id))->save($_POST);
-				
-				if ($result) {
-					foreach ($teacher_majors as $teacher_major) {
-						$this->teacher_major_model->add($teacher_major);
-					}
-					$this->success('提交申请成功',__ROOT__.'/');
-				} else {
-					$this->formReturn['success'] = false;
-					$this->formReturn['msg'] = '提交申请失败';
-				}
-			}
-		}
-		$this->assign('formData',$this->formData);
-		$this->assign('formError',$this->formError);
-		$this->assign('formReturn',$this->formReturn);
-		$this->display(':teacher_applytable');
 	}
 	
 	// 前台用户注册提交

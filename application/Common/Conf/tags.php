@@ -5,8 +5,7 @@ return array( // 添加下面一行定义即可
     ),
     'app_begin' => array(
         'Behavior\CheckLangBehavior',
-        'Common\Behavior\UrldecodeGetBehavior',
-    		
+        'Common\Behavior\UrldecodeGetBehavior'
     ),
     'view_filter' => array(
         'Common\Behavior\TmplStripSpaceBehavior'

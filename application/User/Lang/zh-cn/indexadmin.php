@@ -17,10 +17,6 @@ return array(
 		"ACTIVATE_USER" =>'启用',
 		"ACTIVATE_USER_CONFIRM_MESSAGE" =>'您确定要启用此用户吗？',
 		"THIRD_PARTY_USER" => "第三方用户",
-		"NOT_FILLED" => "未填写",
-		
-		"USER_ID" => "用户ID",
-		
-		
+		"NOT_FILLED" => "未填写"
 		
 );

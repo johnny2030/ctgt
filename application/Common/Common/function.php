@@ -646,7 +646,7 @@ function _sp_get_menu_datas($id){
 				$href=$hrefold;
 			}
 		}
-		$nav['href']=$href;
+		$nav['href']=$href."&parentid=".$nav['parentid']."&navid=".$nav['id'];
 		$navs[$key]=$nav;
 	}
 	F("site_nav_".$oldid,$navs);
@@ -817,9 +817,9 @@ function sp_strip_chars($str, $chars='?<*.>\'\"'){
 
 /**
  * 发送邮件
- * @param string $address 需要发送的邮箱地址 发送给多个地址需要写成数组形式
- * @param string $subject 标题
- * @param string $message 内容
+ * @param string $address
+ * @param string $subject
+ * @param string $message
  * @return array<br>
  * 返回格式：<br>
  * array(<br>
@@ -828,9 +828,6 @@ function sp_strip_chars($str, $chars='?<*.>\'\"'){
  * );
  */
 function sp_send_email($address,$subject,$message){
-	$admin_id = sp_get_current_admin_id();
-	$email_conf = D('EmailConf')->where(array('admin_id' => $admin_id))->find();
-	
 	$mail=new \PHPMailer();
 	// 设置PHPMailer使用SMTP服务器发送Email
 	$mail->IsSMTP();
@@ -838,95 +835,29 @@ function sp_send_email($address,$subject,$message){
 	// 设置邮件的字符编码，若不指定，则为'UTF-8'
 	$mail->CharSet='UTF-8';
 	// 添加收件人地址，可以多次使用来添加多个收件人
-	if(is_array($address)){
-		foreach($address as $addr){
-			$mail->AddAddress($addr);
-		}
-	}else{
-		$mail->AddAddress($address);
-	}
+	$mail->AddAddress($address);
 	// 设置邮件正文
 	$mail->Body=$message;
 	// 设置邮件头的From字段。
-	$mail->From=empty($email_conf) ? C('SP_MAIL_ADDRESS') : $email_conf['email_address'];
+	$mail->From=C('SP_MAIL_ADDRESS');
 	// 设置发件人名字
-	$mail->FromName=empty($email_conf) ? C('SP_MAIL_SENDER') : $email_conf['email_sender'];
+	$mail->FromName=C('SP_MAIL_SENDER');;
 	// 设置邮件标题
 	$mail->Subject=$subject;
 	// 设置SMTP服务器。
-	$mail->Host=empty($email_conf) ? C('SP_MAIL_SMTP') : $email_conf['email_smtp'];
+	$mail->Host=C('SP_MAIL_SMTP');
 	//by Rainfer
 	// 设置SMTPSecure。
-	$Secure=empty($email_conf) ? C('SP_MAIL_SECURE') : $email_conf['email_secure'];
+	$Secure=C('SP_MAIL_SECURE');
 	$mail->SMTPSecure=empty($Secure)?'':$Secure;
 	// 设置SMTP服务器端口。
-	$port=empty($email_conf) ? C('SP_MAIL_SMTP_PORT') : $email_conf['email_smtp_port'];
+	$port=C('SP_MAIL_SMTP_PORT');
 	$mail->Port=empty($port)?"25":$port;
 	// 设置为"需要验证"
 	$mail->SMTPAuth=true;
 	// 设置用户名和密码。
-	$mail->Username=empty($email_conf) ? C('SP_MAIL_LOGINNAME') : $email_conf['email_login_name'];
-	$mail->Password=empty($email_conf) ? C('SP_MAIL_PASSWORD') : $email_conf['email_password'];
-	// 发送邮件。
-	if(!$mail->Send()) {
-		$mailerror=$mail->ErrorInfo;
-		return array("error"=>1,"message"=>$mailerror);
-	}else{
-		return array("error"=>0,"message"=>"success");
-	}
-} 
-/**
- * 发送邮件
- * @param string $address 需要发送的邮箱地址 发送给多个地址需要写成数组形式
- * @param string $subject 标题
- * @param string $message 内容
- * @param string $admin_id 管理员id
- * @return array<br>
- * 返回格式：<br>
- * array(<br>
- * 	"error"=>0|1,//0代表出错<br>
- * 	"message"=> "出错信息"<br>
- * );
- */
-function sp_send_email_front($address,$subject,$message,$admin_id){
-	$email_conf = D('EmailConf')->where(array('admin_id' => $admin_id))->find();
-
-	$mail=new \PHPMailer();
-	// 设置PHPMailer使用SMTP服务器发送Email
-	$mail->IsSMTP();
-	$mail->IsHTML(true);
-	// 设置邮件的字符编码，若不指定，则为'UTF-8'
-	$mail->CharSet='UTF-8';
-	// 添加收件人地址，可以多次使用来添加多个收件人
-	if(is_array($address)){
-		foreach($address as $addr){
-			$mail->AddAddress($addr);
-		}
-	}else{
-		$mail->AddAddress($address);
-	}
-	// 设置邮件正文
-	$mail->Body=$message;
-	// 设置邮件头的From字段。
-	$mail->From=empty($email_conf) ? C('SP_MAIL_ADDRESS') : $email_conf['email_address'];
-	// 设置发件人名字
-	$mail->FromName=empty($email_conf) ? C('SP_MAIL_SENDER') : $email_conf['email_sender'];
-	// 设置邮件标题
-	$mail->Subject=$subject;
-	// 设置SMTP服务器。
-	$mail->Host=empty($email_conf) ? C('SP_MAIL_SMTP') : $email_conf['email_smtp'];
-	//by Rainfer
-	// 设置SMTPSecure。
-	$Secure=empty($email_conf) ? C('SP_MAIL_SECURE') : $email_conf['email_secure'];
-	$mail->SMTPSecure=empty($Secure)?'':$Secure;
-	// 设置SMTP服务器端口。
-	$port=empty($email_conf) ? C('SP_MAIL_SMTP_PORT') : $email_conf['email_smtp_port'];
-	$mail->Port=empty($port)?"25":$port;
-	// 设置为"需要验证"
-	$mail->SMTPAuth=true;
-	// 设置用户名和密码。
-	$mail->Username=empty($email_conf) ? C('SP_MAIL_LOGINNAME') : $email_conf['email_login_name'];
-	$mail->Password=empty($email_conf) ? C('SP_MAIL_PASSWORD') : $email_conf['email_password'];
+	$mail->Username=C('SP_MAIL_LOGINNAME');
+	$mail->Password=C('SP_MAIL_PASSWORD');
 	// 发送邮件。
 	if(!$mail->Send()) {
 		$mailerror=$mail->ErrorInfo;
@@ -2230,4 +2161,23 @@ function sp_mobile_code_log($mobile,$code,$expire_time){
     }
     
     return $result;
+}
+
+/**
+ * 使用curl获取远程数据
+ * @param  string $url url连接
+ * @return string      获取到的数据
+ */
+function curl_get_contents($url){
+    $ch=curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);                //设置访问的url地址
+    // curl_setopt($ch,CURLOPT_HEADER,1);               //是否显示头部信息
+    curl_setopt($ch, CURLOPT_TIMEOUT, 5);               //设置超时
+    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);   //用户访问代理 User-Agent
+    curl_setopt($ch, CURLOPT_REFERER,$_SERVER['HTTP_HOST']);        //设置 referer
+    curl_setopt($ch,CURLOPT_FOLLOWLOCATION,1);          //跟踪301
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);        //返回结果
+    $r=curl_exec($ch);
+    curl_close($ch);
+    return $r;
 }

@@ -3,59 +3,96 @@
 <body>
 	<div class="wrap js-check-wrap">
 		<ul class="nav nav-tabs">
-			<li class="active"><a href="{:U('ad/index')}">{:L('ADMIN_AD_INDEX')}</a></li>
-			<li><a href="{:U('ad/add')}">{:L('ADMIN_AD_ADD')}</a></li>
+			<li class="active"><a href="{:U('ad/index')}">广告信息</a></li>
+			<li><a href="{:U('ad/add')}">添加广告</a></li>
 		</ul>
-		<form method="post" class="js-ajax-form">
+		<form class="well form-search" method="post" id="cid-form" >
+			<input type="text" name="name" style="width: 200px;" value="{$name}" placeholder="请输入广告名">
+			<button class="btn btn-primary">搜索</button>
+			<a class="btn btn-danger" href="{:U('ad/index')}">清空</a>
+		</form>
+		<form class="js-ajax-form" method="post">
 			<div class="table-actions">
-				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('ad/toggle',array('display'=>1))}" data-subcheck="true">{:L('DISPLAY')}</button>
-				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('ad/toggle',array('hide'=>1))}" data-subcheck="true">{:L('HIDE')}</button>
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('ad/recommend',array('recommend'=>1))}" data-subcheck="true" data-msg="确定使用？">使用</button>
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('ad/recommend',array('recommend'=>0))}" data-subcheck="true" data-msg="确定取消使用？">取消使用</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('ad/delete')}" data-subcheck="true" data-msg="确定删除？">删除</button>
 			</div>
-			<php> $status=array("1"=>L('DISPLAY'),"0"=>L('HIDDEN')); </php>
 			<table class="table table-hover table-bordered table-list">
 				<thead>
 					<tr>
 						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
-						<th width="50">ID</th>
-						<th>{:L('NAME')}</th>
-						<th>{:L('HOW_TO_USE')}</th>
-						<th width="45">{:L('STATUS')}</th>
-						<th width="120">{:L('ACTIONS')}</th>
+						<th width="100">广告名</th>
+						<th width="300">广告图片</th>
+						<th width="100">使用状态</th>
+						<th width="100">操作</th>
 					</tr>
 				</thead>
-				<tbody>
-					<foreach name="ads" item="vo">
+				<foreach name="list" item="ad">
 					<tr>
-						<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.ad_id}"></td>
-						<td>{$vo.ad_id}</td>
-						<td>{$vo.ad_name}</td>
-						<php>$usercode="{".":sp_getad('".$vo['ad_name']."')}";</php>
-						<td>{$usercode}</td>
-						<td>{$status[$vo['status']]}</td>
+						<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$ad.id}"></td>
+						<td>{$ad.name}</td>
 						<td>
-							<a href="{:U('ad/edit',array('id'=>$vo['ad_id']))}">{:L('EDIT')}</a> |
-							<a href="{:U('ad/delete',array('id'=>$vo['ad_id']))}" class="js-ajax-delete">{:L('DELETE')}</a>
+							<php>$smeta=json_decode($ad['photo'],true);</php>
+							<notempty name="smeta.thumb">
+								<a href="javascript:parent.image_preview_dialog('{:sp_get_image_preview_url($smeta['thumb'])}');">
+									<img src="{:sp_get_image_preview_url($smeta['thumb'])}" style="width:90px;height:50px;" title="点击查看大图"/>
+								</a>
+							</notempty>
+						</td>
+						<td>
+							<if condition="$ad.recommend eq 0">
+								未使用
+							</if>
+							<if condition="$ad.recommend eq 1">
+								使用中
+							</if>
+						</td>
+						<td>
+							<a style="margin-top: 5px;" href="{:U('ad/edit',array('id'=>$ad['id']))}" class="btn btn-success btn-small">编辑</a>
+							<a style="margin-top: 5px;" href="{:U('ad/delete',array('id'=>$ad['id']))}" class="btn btn-danger btn-small js-ajax-delete" data-msg="确定删除？">删除</a>
+							<if condition="$ad.recommend eq 0">
+								<a style="margin-top: 5px;" href="{:U('ad/recommend',array('id'=>$ad['id'],'recommend'=>1))}" class="btn btn-success btn-small js-ajax-delete" data-msg="确定使用？">使用</a>
+							<else />
+								<a style="margin-top: 5px;" href="{:U('ad/recommend',array('id'=>$ad['id'],'recommend'=>0))}" class="btn btn-success btn-small js-ajax-delete" data-msg="确定取消使用？">取消使用</a>
+							</if>
 						</td>
 					</tr>
-					</foreach>
-				</tbody>
+				</foreach>
 				<tfoot>
 					<tr>
 						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
-						<th width="50">ID</th>
-						<th>{:L('NAME')}</th>
-						<th>{:L('HOW_TO_USE')}</th>
-						<th width="45">{:L('STATUS')}</th>
-						<th width="120">{:L('ACTIONS')}</th>
+						<th width="100">广告名</th>
+						<th width="300">广告图片</th>
+						<th width="100">使用状态</th>
+						<th width="100">操作</th>
 					</tr>
 				</tfoot>
 			</table>
 			<div class="table-actions">
-				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('ad/toggle',array('display'=>1))}" data-subcheck="true">{:L('DISPLAY')}</button>
-				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('ad/toggle',array('hide'=>1))}" data-subcheck="true">{:L('HIDE')}</button>
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('ad/recommend',array('recommend'=>1))}" data-subcheck="true" data-msg="确定使用？">使用</button>
+				<button class="btn btn-primary btn-small js-ajax-submit" type="submit" data-action="{:U('ad/recommend',array('recommend'=>0))}" data-subcheck="true" data-msg="确定取消使用？">取消使用</button>
+				<button class="btn btn-danger btn-small js-ajax-submit" type="submit" data-action="{:U('ad/delete')}" data-subcheck="true" data-msg="确定删除？">删除</button>
 			</div>
+			<div class="pagination">{$page}</div>
 		</form>
 	</div>
 	<script src="__PUBLIC__/js/common.js"></script>
+	<script>
+		setCookie('refersh_time', 0);
+		function refersh_window() {
+			var refersh_time = getCookie('refersh_time');
+			if (refersh_time == 1) {
+				window.location.reload();
+			}
+		}
+		setInterval(function() {
+			refersh_window()
+		}, 2000);
+		$(function() {
+			$("#selected-cid").change(function() {
+				$("#cid-form").submit();
+			});
+		});
+	</script>
 </body>
 </html>

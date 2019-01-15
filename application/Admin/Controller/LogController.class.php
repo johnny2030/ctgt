@@ -1,8 +1,6 @@
 <?php
 /**
  * 系统操作日志记录
- * 11k
- * likun_19911227@163.com
  */
 namespace Admin\Controller;
 

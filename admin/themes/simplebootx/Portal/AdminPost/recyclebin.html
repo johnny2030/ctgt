@@ -6,17 +6,17 @@
 			<li class="active"><a href="{:U('AdminPost/recyclebin')}">{:L('PORTAL_ADMINPOST_RECYCLEBIN')}</a></li>
 		</ul>
 		<form class="well form-search" method="post" action="{:U('AdminPost/recyclebin')}">
-			{:L('CATEGORY')}： 
+			分类： 
 			<select name="term" style="width: 120px;">
-				<option value='0'>{:L('ALL')}</option>{$taxonomys}
+				<option value='0'>全部</option>{$taxonomys}
 			</select> &nbsp;&nbsp;
-			{:L('TIME')}：
+			时间：
 			<input type="text" name="start_time" class="js-datetime" value="{$formget.start_time|default=''}" style="width: 120px;" autocomplete="off">-
 			<input type="text" class="js-datetime" name="end_time" value="{$formget.end_time}" style="width: 120px;" autocomplete="off"> &nbsp; &nbsp;
-			{:L('KEYWORDS')}： 
-			<input type="text" name="keyword" style="width: 200px;" value="{$formget.keyword}" placeholder="{:L('KEYWORDS')}">
-			<input type="submit" class="btn btn-primary" value="{:L('SEARCH')}" />
-			<a class="btn btn-danger" href="{:U('AdminPost/recyclebin')}">{:L('EMPTY')}</a>
+			关键字： 
+			<input type="text" name="keyword" style="width: 200px;" value="{$formget.keyword}" placeholder="请输入关键字...">
+			<input type="submit" class="btn btn-primary" value="搜索" />
+			<a class="btn btn-danger" href="{:U('AdminPost/recyclebin')}">清空</a>
 		</form>
 		<form class="js-ajax-form" method="post">
 			<div class="table-actions">

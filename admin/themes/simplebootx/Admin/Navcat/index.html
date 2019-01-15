@@ -25,7 +25,7 @@
 					<td><php>$mainmenu=$vo['active']?L('YES'):L('NO');</php> {$mainmenu}</td>
 					<td>
 						<a href="{:U('navcat/edit',array('id'=>$vo['navcid']))}">{:L('EDIT')}</a>|
-						<a href="{:U('navcat/delete',array('id'=>$vo['navcid']))}" class="js-ajax-delete" data-msg="{:L('DELETE_CONFIRM_MESSAGE')}">{:L('DELETE')}</a>
+						<a href="{:U('navcat/delete',array('id'=>$vo['navcid']))}" class="js-ajax-delete">{:L('DELETE')}</a>
 					</td>
 				</tr>
 				</foreach>

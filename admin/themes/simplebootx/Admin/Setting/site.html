@@ -1,27 +1,16 @@
 <admintpl file="header" />
-<style>
-.home_info li em {
-	float: left;
-	width: 120px;
-	font-style: normal;
-}
-li {
-	list-style: none;
-}
-</style>
 </head>
 <body>
 	<div class="wrap js-check-wrap">
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="#A" data-toggle="tab">{:L('WEB_SITE_INFOS')}</a></li>
-			<li><a href="#S" data-toggle="tab">{:L('SYSTEM_INFORMATIONS')}</a></li>
 			<li><a href="#B" data-toggle="tab">{:L('SEO_SETTING')}</a></li>
 			<li><a href="#C" data-toggle="tab">{:L('URL_SETTING')}</a></li>
 			<li><a href="{:U('route/index')}">{:L('URL_OPTIMIZATION')}</a></li>
 			<!-- <li><a href="#D" data-toggle="tab">{:L('UCENTER_SETTING')}</a></li> -->
 			<li><a href="#E" data-toggle="tab">{:L('COMMENT_SETTING')}</a></li>
 			<li><a href="#F" data-toggle="tab">{:L("USERNAME_FILTER")}</a></li>
-			<li><a href="#G" data-toggle="tab">{:L("CDN_SETTING")}</a></li>
+			<li><a href="#G" data-toggle="tab">CDN设置</a></li>
 		</ul>
 		<form class="form-horizontal js-ajax-forms" action="{:U('setting/site_post')}" method="post">
 			<fieldset>
@@ -39,13 +28,13 @@ li {
 									</div>
 								</div>
 								<div class="control-group">
-									<label class="control-label">{:L('ADMIN_SITE_URL_ENCRYPTION')}</label>
+									<label class="control-label">后台地址加密码：</label>
 									<div class="controls">
 										<input type="text" name="options[site_admin_url_password]" value="{$site_admin_url_password}" id="js-site-admin-url-password"><span class="form-required">*</span>
-										<span class="help-block" style="color: red;">{:L('ADMIN_SITE_URL_TEXT')}</span>
+										<span class="help-block" style="color: red;">设置加密码后必须通过以下地址访问后台,请劳记此地址，为了安全，您也可以定期更换此加密码!</span>
 										<php>$site_admin_url_password =C("SP_SITE_ADMIN_URL_PASSWORD");</php>
 										<if condition="!empty($site_admin_url_password)">
-										<span class="help-block">{:L('ADMIN_SITE_URL')}<span id="js-site-admin-url">{:sp_get_host()}__ROOT__?g=admin&upw={:C('SP_SITE_ADMIN_URL_PASSWORD')}</span></span>
+										<span class="help-block">后台地址：<span id="js-site-admin-url">{:sp_get_host()}__ROOT__?g=admin&upw={:C('SP_SITE_ADMIN_URL_PASSWORD')}</span></span>
 										</if>
 									</div>
 								</div>
@@ -111,16 +100,6 @@ li {
 									</div>
 								</div>
 							</fieldset>
-						</div>
-						<div class="tab-pane" id="S">
-							<div class="home_info">
-								<ul>
-									<volist name="server_info" id="vo">
-										<li><em>{$key}</em> <span>{$vo}</span></li>
-									</volist>
-									<li><em>{:L('BROWSER_VERSION')}</em> <span>{:L('BROWSER_VERSION_TEXT')}</span></li>
-								</ul>
-							</div>
 						</div>
 						<div class="tab-pane" id="B">
 							<fieldset>
@@ -198,7 +177,7 @@ li {
 						<div class="tab-pane" id="G">
 							<fieldset>
 								<div class="control-group">
-									<label class="control-label">{:L('STATIC_RESOURCE_CDN_ADDRESS')}</label>
+									<label class="control-label">静态资源cdn地址</label>
 									<div class="controls">
 										<input type="text" name="cdn_settings[cdn_static_root]" value="{$cdn_settings.cdn_static_root}">
 										<span class="help-block">

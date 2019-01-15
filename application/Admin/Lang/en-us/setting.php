@@ -39,32 +39,5 @@ return array(
 		"WEBSITE_SITE_NAME_REQUIRED_MESSAGE" =>"Website name is required!",
 		"WEBSITE_SITE_HOST_REQUIRED_MESSAGE" =>"Website domain is required",
 		
-		"SYSTEM_INFORMATIONS" => 'System Informations',
-		"OPERATING_SYSTEM" => 'OS',
-		"OPERATING_ENVIRONMENT" => 'Server Software',
-		"PHP_VERSION" => 'PHP Version',
-		"PHP_RUN_MODE" => 'PHP Run Mode',
-		"MYSQL_VERSION" => 'MySQL Version',
-		"PROGRAM_VERSION" => 'Program Version',
-		"UPLOAD_MAX_FILESIZE" => 'Upload Limit',
-		"MAX_EXECUTION_TIME" => 'Execution Limit',
-		"DISK_FREE_SPACE" => 'Disk Free Space',
-		"BROWSER_VERSION" => 'Browser Version',
-		'SECONDS' => 's',
-		'UNKNOWN' => 'Unknown',
-		'NO_NOTICE' => 'No notice',
-		
-		'CDN_SETTING' => 'CDN Setting',
-		'ADMIN_SITE_URL_ENCRYPTION' => 'Admin site url encryption',
-		'ADMIN_SITE_URL' => 'Admin site url',
-		'ADMIN_SITE_URL_TEXT' => 'After setting up the password, you must use the following address to access the backstage. Please take this address. For security, you can also change the password on a regular basis!',
-		"BROWSER_VERSION_TEXT" => 'Mainstream browsers such as Firefox, Safari, Safari, and 360, etc. (IE is recommended to use the latest version, and there may be partial functionality in IE10 and 360 browsers)',
-		'STATIC_RESOURCE_CDN_ADDRESS' => 'Static resource CDN address',
-		
-		'PICTURE_FILE' => 'Picture File',
-		'VIDEO_FILE' => 'Video File',
-		'AUDIO_FILE' => 'Audio File',
-		'ANNEX' => 'Annex',
-		
 		
 );

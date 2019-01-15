@@ -2,5 +2,5 @@
 return array (
   'COMMENT_COMMENTADMIN_CHECK' => '评论审核',
   'COMMENT_COMMENTADMIN_DELETE' => '删除评论',
-  'COMMENT_COMMENTADMIN_INDEX' => '评论管理 Comment Management',
+  'COMMENT_COMMENTADMIN_INDEX' => '评论管理',
 );

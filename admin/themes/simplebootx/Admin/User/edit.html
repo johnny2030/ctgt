@@ -5,43 +5,28 @@
 		<ul class="nav nav-tabs">
 			<li><a href="{:U('user/index')}">{:L('ADMIN_USER_INDEX')}</a></li>
 			<li><a href="{:U('user/add')}">{:L('ADMIN_USER_ADD')}</a></li>
-			<li class="active"><a>{:L('ADMIN_USER_EDIT')}</a></li>
+			<li class="active"><a>编辑管理员</a></li>
 		</ul>
 		<form method="post" class="form-horizontal js-ajax-form" action="{:U('User/edit_post')}">
 			<fieldset>
 				<div class="control-group">
 					<label class="control-label">{:L('USERNAME')}</label>
 					<div class="controls">
-						<input type="text" name="user_login" value="{$user_login}" readonly> {:L('USERNAME_TEXT')}
+						<input type="text" name="user_login" value="{$user_login}">
 					</div>
 				</div>
 				<div class="control-group">
-					<label class="control-label">{:L('NAME')}</label>
+					<label class="control-label">{:L('PASSWORD')}</label>
 					<div class="controls">
-						<input type="text" name="full_name" value="{$full_name}">
+						<input type="password" name="user_pass" value="" placeholder="******">
 					</div>
 				</div>
-				<!-- <div class="control-group">
-					<label class="control-label">{:L('MAJOR')}</label>
-					<div class="controls">
-						<select name="major">
-							<php>
-								$teacher_majors = D('TeacherMajor')->where(array('teacher_major_status' => 1))->select();
-							</php>
-							<option value="">{:L('MAJOR')}</option>
-							<foreach name="teacher_majors" item="vo">
-								<php>$teacher_major_checked=$vo['id']==$teacher_major['major_id']?"selected":"";</php>
-								<option value="{$vo.id}" {$teacher_major_checked}>{$vo.teacher_major_name}</option>
-							</foreach>
-						</select>
-					</div>
-				</div> -->
-				<!-- <div class="control-group">
+				<div class="control-group">
 					<label class="control-label">{:L('EMAIL')}</label>
 					<div class="controls">
 						<input type="text" name="user_email" value="{$user_email}">
 					</div>
-				</div> -->
+				</div>
 				<div class="control-group">
 					<label class="control-label">{:L('ROLE')}</label>
 					<div class="controls">

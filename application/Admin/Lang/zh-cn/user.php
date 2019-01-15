@@ -24,20 +24,6 @@ return array(
 		"BLOCK_USER_CONFIRM_MESSAGE" =>'您确定要拉黑此用户吗？',
 		"ACTIVATE_USER" =>'启用',
 		"ACTIVATE_USER_CONFIRM_MESSAGE" =>'您确定要启用此用户吗？',
-		"USER_HAVENOT_LOGIN" => '该用户还没登陆过',
-		"FIRST_NAME" => '名',
-		"LAST_NAME" => '姓',
-		"MAJOR" => '专业',
-		
-		"USERNAME" => '用户名',
-		"EMAIL" => '邮箱',
-		"ROLE" => '角色',
-		"STUDENT_NO" => '学号',
-		"CARD_NO" => '卡号',
-		"RECEIVER" => '代收人',
-		"RECEIVER_STUDENT_NO" => '代收人学号',
-		"RECEIVER_CARD_NO" => '代收人卡号',
-		"USERNAME_TEXT" => '(用户名唯一，不可修改)首次添加管理员账户的密码和用户名相同，如需修改密码请登录此管理员账户进入个人中心修改！',
-		
+		"USER_HAVENOT_LOGIN" => '该用户还没登陆过'
 
 );

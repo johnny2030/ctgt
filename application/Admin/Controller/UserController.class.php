@@ -5,15 +5,12 @@ use Common\Controller\AdminbaseController;
 
 class UserController extends AdminbaseController{
 
-	protected $users_model,$role_model,$teacher_major_model;
-	private $email_conf;
+	protected $users_model,$role_model;
 
 	public function _initialize() {
 		parent::_initialize();
 		$this->users_model = D("Common/Users");
 		$this->role_model = D("Common/Role");
-		$this->teacher_major_model = D("Common/TeacherMajorRelationship");
-		$this->email_conf = D("EmailConf");
 	}
 
 	// 管理员列表
@@ -62,13 +59,9 @@ class UserController extends AdminbaseController{
 			if(!empty($_POST['role_id']) && is_array($_POST['role_id'])){
 				$role_ids=$_POST['role_id'];
 				unset($_POST['role_id']);
-				$_POST['user_pass'] = $_POST['user_login'];
-				$_POST['teacher_join_time'] = date('Y-m-d H:i:s',time());
-				$_POST['full_name'] = $_POST['full_name'];
 				if ($this->users_model->create()!==false) {
 					$result=$this->users_model->add();
 					if ($result!==false) {
-						//$this->teacher_major_model->add(array('teacher_id' => $result,'major_id' => $_POST['major']));
 						$role_user_model=M("RoleUser");
 						foreach ($role_ids as $role_id){
 							if(sp_get_current_admin_id() != 1 && $role_id == 1){
@@ -98,9 +91,6 @@ class UserController extends AdminbaseController{
 		$role_user_model=M("RoleUser");
 		$role_ids=$role_user_model->where(array("user_id"=>$id))->getField("role_id",true);
 		$this->assign("role_ids",$role_ids);
-		
-		$teacher_major = $this->teacher_major_model->where(array('teacher_id' => $id))->find();
-		$this->assign('teacher_major',$teacher_major);
 
 		$user=$this->users_model->where(array("id"=>$id))->find();
 		$this->assign($user);
@@ -111,22 +101,15 @@ class UserController extends AdminbaseController{
 	public function edit_post(){
 		if (IS_POST) {
 			if(!empty($_POST['role_id']) && is_array($_POST['role_id'])){
-				/* if(empty($_POST['user_pass'])){
+				if(empty($_POST['user_pass'])){
 					unset($_POST['user_pass']);
-				} */
+				}
 				$role_ids = I('post.role_id/a');
 				unset($_POST['role_id']);
-				$_POST['full_name'] = $_POST['full_name'];
 				if ($this->users_model->create()!==false) {
 					$result=$this->users_model->save();
 					if ($result!==false) {
 						$uid = I('post.id',0,'intval');
-						/* $teacher_major = $this->teacher_major_model->where(array('teacher_id' => $uid))->find();
-						if ($teacher_major) {
-							$this->teacher_major_model->where(array('teacher_id' => $uid))->save(array('major_id' => $_POST['major']));
-						} else {
-							$this->teacher_major_model->add(array('teacher_id' => $uid,'major_id' => $_POST['major']));
-						} */
 						$role_user_model=M("RoleUser");
 						$role_user_model->where(array("user_id"=>$uid))->delete();
 						foreach ($role_ids as $role_id){
@@ -166,31 +149,10 @@ class UserController extends AdminbaseController{
 
 	// 管理员个人信息修改
 	public function userinfo(){
-		
-		if (IS_POST) {
-			$_POST['id']=sp_get_current_admin_id();
-			$_POST['full_name'] = $_POST['full_name'];
-			
-			$create_result=$this->users_model
-							->field("id,user_nicename,sex,birthday,first_name,last_name,user_email,full_name,teacher_student_no,teacher_card_no,receiver,receiver_student_no,receiver_card_no")
-							->create();
-			if ($create_result!==false) {
-				if ($this->users_model->save()!==false) {
-					$this->success("保存成功！");
-				} else {
-					$this->error("保存失败！");
-				}
-			} else {
-				$this->error($this->users_model->getError());
-			}
-		} else {
-			$id=sp_get_current_admin_id();
-			$email_conf = $this->email_conf->where(array('admin_id' => $id))->find();
-			$user=$this->users_model->where(array("id"=>$id))->find();
-			$this->assign($user);
-			$this->assign('email_conf',$email_conf);
-			$this->display();
-		}
+		$id=sp_get_current_admin_id();
+		$user=$this->users_model->where(array("id"=>$id))->find();
+		$this->assign($user);
+		$this->display();
 	}
 
 	// 管理员个人信息修改提交
@@ -231,7 +193,7 @@ class UserController extends AdminbaseController{
     public function cancelban(){
     	$id = I('get.id',0,'intval');
     	if (!empty($id)) {
-    		$result = $this->users_model->where(array("id"=>$id,"user_type"=>1))->save(array('user_status' => 1,'teacher_join_time' => date('Y-m-d H:i:s',time())));
+    		$result = $this->users_model->where(array("id"=>$id,"user_type"=>1))->setField('user_status','1');
     		if ($result!==false) {
     			$this->success("管理员启用成功！", U("user/index"));
     		} else {

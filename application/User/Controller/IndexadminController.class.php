@@ -45,11 +45,11 @@ class IndexadminController extends AdminbaseController {
     public function ban(){
     	$id= I('get.id',0,'intval');
     	if ($id) {
-    		$result = M("Users")->where(array("id"=>$id,"user_type" => array("neq",1)))->setField('user_status',0);
+    		$result = M("Users")->where(array("id"=>$id,"user_type"=>2))->setField('user_status',0);
     		if ($result) {
     			$this->success("会员拉黑成功！", U("indexadmin/index"));
     		} else {
-    			$this->error('会员拉黑失败,此会员为管理员账户，如确定拉黑请前往管理组！');
+    			$this->error('会员拉黑失败,会员不存在,或者是管理员！');
     		}
     	} else {
     		$this->error('数据传入失败！');
@@ -60,11 +60,11 @@ class IndexadminController extends AdminbaseController {
     public function cancelban(){
     	$id= I('get.id',0,'intval');
     	if ($id) {
-    		$result = M("Users")->where(array("id"=>$id,"user_type" => array("neq",1)))->setField('user_status',1);
+    		$result = M("Users")->where(array("id"=>$id,"user_type"=>2))->setField('user_status',1);
     		if ($result) {
     			$this->success("会员启用成功！", U("indexadmin/index"));
     		} else {
-    			$this->error('会员启用失败,此会员为管理员账户，如确定启用请前往管理组！');
+    			$this->error('会员启用失败！');
     		}
     	} else {
     		$this->error('数据传入失败！');
