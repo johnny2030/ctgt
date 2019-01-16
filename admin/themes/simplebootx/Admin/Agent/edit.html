@@ -3,8 +3,8 @@
 <body>
 <div class="wrap js-check-wrap">
 	<ul class="nav nav-tabs">
-		<li><a href="{:U('stock/index')}">库存信息</a></li>
-		<li class="active"><a href="javascript:void(0);">编辑库存</a></li>
+		<li><a href="{:U('agent/index')}">经纪人信息</a></li>
+		<li class="active"><a href="javascript:void(0);">编辑经纪人</a></li>
 	</ul>
 	<form method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
 		<input type="hidden" name="id" value="{$id}">
@@ -12,72 +12,65 @@
 			<div class="span9">
 				<table class="table table-bordered">
 					<tr>
-						<th width="100">客户</th>
+						<th width="100">关联登录账号</th>
 						<td>
-							<select id="user_id" name="user_id">
-								<foreach name="user" item="u">
-									<if condition="$u.id == $user_id">
-										<option value="{$u.id}" selected>{$u.company_name}</option>
-										<else/>
-										<option value="{$u.id}">{$u.company_name}</option>
-									</if>
-								</foreach>
+							<select id="login_id" name="login_id" style="width: 217px;">
+								<notempty name="login_id">
+									<option value="{$login_id}" selected>{$user_login}</option>
+									<foreach name="list" item="l">
+										<option value="{$l.user_id}">{$l.user_login}</option>
+									</foreach>
+									<else />
+									<option value="" selected>请选择关联登录账号</option>
+									<foreach name="list" item="l">
+										<option value="{$l.user_id}">{$l.user_login}</option>
+									</foreach>
+								</notempty>
 							</select>
-						</td>
-					</tr>
-					<tr>
-						<th>备货名</th>
-						<td>
-							<input type="text" style="width: 400px;" id="name" name="name" value="{$name}" placeholder="请输入备货名"/>
 							<span class="form-required" style="color:red;"> *</span>
 						</td>
 					</tr>
 					<tr>
-						<th>类别</th>
+						<th>姓名</th>
 						<td>
-							<select id="cid" name="cid">
-								<foreach name="category" item="c">
-									<if condition="$c.id == $cid">
-										<option value="{$c.id}" selected>{$c.name}</option>
-										<else/>
-										<option value="{$c.id}">{$c.name}</option>
-									</if>
-								</foreach>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<th>规格</th>
-						<td>
-							<select id="sid" name="sid">
-								<foreach name="spec" item="s">
-									<if condition="$s.id == $sid">
-										<option value="{$s.id}" selected>{$s.name}</option>
-										<else/>
-										<option value="{$s.id}">{$s.name}</option>
-									</if>
-								</foreach>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<th>库存</th>
-						<td>
-							<input type="text" style="width: 200px;" id="storage" name="storage" value="{$storage}" placeholder="请输入库存"/>
+							<input type="text" style="width: 200px;" id="name" name="name" value="{$name}" placeholder="请输入姓名"/>
 							<span class="form-required" style="color:red;"> *</span>
 						</td>
 					</tr>
 					<tr>
-						<th>状态</th>
+						<th>性别</th>
 						<td>
-							<input type="text" style="width: 200px;" id="status" name="status" value="{$status}" placeholder="请输入状态"/>
+							<select id="sex" name="sex" style="width: 150px;">
+								<if condition="$sex == 1">
+									<option value="1" selected>男</option>
+									<option value="2">女</option>
+									<else/>
+									<option value="1" >男</option>
+									<option value="2" selected>女</option>
+								</if>
+							</select>
 							<span class="form-required" style="color:red;"> *</span>
 						</td>
 					</tr>
 					<tr>
-						<th>备注</th>
+						<th>年龄</th>
 						<td>
-							<script type="text/plain" id="remarks" name="remarks">{$remarks}</script>
+							<input type="number" style="width: 133px;" id="age" name="age" value="{$age}" placeholder="请输入年龄"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+					<tr>
+						<th>联系方式</th>
+						<td>
+							<input type="text" style="width: 200px;" id="contact" name="contact" value="{$contact}" placeholder="请输入联系方式"/>
+							<span class="form-required" style="color:red;"> *</span>
+						</td>
+					</tr>
+					<tr>
+						<th>出生日期</th>
+						<td>
+							<input type="text" style="width: 200px;" id="birthday" name="birthday" value="{$birthday}" class="js-date" placeholder="请输入出生日期"/>
+							<span class="form-required" style="color:red;"> *</span>
 						</td>
 					</tr>
 				</table>
@@ -85,18 +78,11 @@
 		</div>
 		<div class="form-actions">
 			<button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
-			<a class="btn" href="{:U('stock/index')}">返回</a>
+			<a class="btn" href="{:U('agent/index')}">返回</a>
 		</div>
 	</form>
 </div>
 <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
-<script type="text/javascript">
-    //编辑器路径定义
-    var editorURL = GV.WEB_ROOT;
-
-</script>
-<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
 <script type="text/javascript">
     $(function() {
         $(".js-ajax-close-btn").on('click', function(e) {
@@ -120,20 +106,6 @@
         });
         /////---------------------
         Wind.use('validate','ajaxForm','artDialog',function() {
-            //编辑器
-            editorcontent = new baidu.editor.ui.Editor();
-            editorcontent.render('remarks');
-            try {
-                editorcontent.sync();
-            } catch (err) {}
-            //增加编辑器验证规则
-            jQuery.validator.addMethod('editorcontent',function() {
-                try {
-                    editorcontent.sync();
-                } catch (err) {}
-                return editorcontent.hasContents();
-            });
-
             var form = $('form.js-ajax-forms');
             //ie处理placeholder提交问题
             if ($.browser && $.browser.msie) {
@@ -178,9 +150,17 @@
                 },
                 //验证规则
                 rules : {
+                    'name' : { required : 1 },
+                    'sex' : { required : 1 },
+                    'age' : { required : 1 },
+                    'contact' : { required : 1 }
                 },
                 //验证未通过提示消息
                 messages : {
+                    'name' : { required : "请输入姓名" },
+                    'sex' : { required : "请输入性别" },
+                    'age' : { required : "请输入年龄" },
+                    'contact' : { required : "请输入联系方式" }
                 },
                 //给未通过验证的元素加效果,闪烁等
                 highlight : false,
@@ -219,7 +199,7 @@
                                             {
                                                 name : "返回列表",
                                                 callback : function() {
-                                                    location.href = "{:U('stock/index')}";
+                                                    location.href = "{:U('agent/index')}";
                                                     return true;
                                                 }
                                             }

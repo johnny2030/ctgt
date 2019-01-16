@@ -79,8 +79,14 @@ class PublicController extends AdminbaseController {
     				if( $result["id"]!=1 && ( empty($groups) || empty($result['user_status']) ) ){
     					$this->error(L('USE_DISABLED'));
     				}
+
     				//登入成功页面跳转
     				session('ADMIN_ID',$result["id"]);
+    				if ($groups){
+                        session('role_id',$groups[0]);
+                    }else{
+                        session('role_id',1);
+                    }
     				session('name',$result["user_login"]);
     				$result['last_login_ip']=get_client_ip(0,true);
     				$result['last_login_time']=date("Y-m-d H:i:s");

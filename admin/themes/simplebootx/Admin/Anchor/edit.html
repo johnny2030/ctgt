@@ -3,108 +3,86 @@
 <body>
 <div class="wrap js-check-wrap">
 	<ul class="nav nav-tabs">
-		<li><a href="{:U('customer/index')}">客户信息</a></li>
-		<li class="active"><a href="javascript:void(0);">编辑客户</a></li>
+		<li><a href="{:U('anchor/index')}">主播信息</a></li>
+		<li class="active"><a href="javascript:void(0);">编辑主播</a></li>
 	</ul>
 	<form method="post" class="form-horizontal js-ajax-forms" enctype="multipart/form-data">
 		<input type="hidden" name="id" value="{$id}">
 		<div class="row-fluid">
 			<div class="span9">
 				<table class="table table-bordered">
+					<if condition="$role_id != 2">
+						<tr>
+							<th width="100">隶属经纪人</th>
+							<td>
+								<select id="agent_id" name="agent_id" style="width: 217px;">
+									<foreach name="list" item="l">
+										<if condition="$l.login_id == $agent_id">
+											<option value="{$l.login_id}" selected>{$l.name}</option>
+											<else />
+											<option value="{$l.login_id}">{$l.name}</option>
+										</if>
+									</foreach>
+								</select>
+								<span class="form-required" style="color:red;"> *</span>
+							</td>
+						</tr>
+					</if>
 					<tr>
-						<th width="100">用户名</th>
+						<th width="100">姓名</th>
 						<td>
-							<input type="text" style="width: 300px;" id="user" name="user" value="{$user}" placeholder="请输入用户名"/>
+							<input type="text" style="width: 200px;" id="name" name="name" value="{$name}" placeholder="请输入姓名"/>
 							<span class="form-required" style="color:red;"> *</span>
 						</td>
 					</tr>
 					<tr>
-						<th>密码</th>
+						<th>性别</th>
 						<td>
-							<input type="text" style="width: 300px;" id="password" name="password" value="{$password}" placeholder="请输入密码"/>
+							<select id="sex" name="sex" style="width: 150px;">
+								<if condition="$sex == 1">
+									<option value="1" selected>男</option>
+									<option value="2">女</option>
+									<else/>
+									<option value="1" >男</option>
+									<option value="2" selected>女</option>
+								</if>
+							</select>
 							<span class="form-required" style="color:red;"> *</span>
 						</td>
 					</tr>
 					<tr>
-						<th>公司名</th>
+						<th>年龄</th>
 						<td>
-							<input type="text" style="width: 200px;" id="company_name" name="company_name" value="{$company_name}" placeholder="请输入公司名"/>
+							<input type="number" style="width: 133px;" id="age" name="age" value="{$age}" placeholder="请输入年龄"/>
 							<span class="form-required" style="color:red;"> *</span>
 						</td>
 					</tr>
 					<tr>
-						<th>公司地址</th>
+						<th>联系方式</th>
 						<td>
-							<input type="text" style="width: 150px;" id="company_address" name="company_address" value="{$company_address}" placeholder="请输入公司地址"/>
+							<input type="text" style="width: 200px;" id="contact" name="contact" value="{$contact}" placeholder="请输入联系方式"/>
 							<span class="form-required" style="color:red;"> *</span>
 						</td>
 					</tr>
 					<tr>
-						<th>公司电话</th>
+						<th>业绩</th>
 						<td>
-							<input type="text" style="width: 100px;" id="company_phone" name="company_phone" value="{$company_phone}" placeholder="请输入公司电话"/>
+							<input type="text" style="width: 200px;" id="achievement" name="achievement" value="{$achievement}" placeholder="请输入业绩"/>
 							<span class="form-required" style="color:red;"> *</span>
 						</td>
 					</tr>
 					<tr>
-						<th>联系人姓名</th>
+						<th>开播时长</th>
 						<td>
-							<input type="text" style="width: 100px;" id="name" name="name" value="{$name}" placeholder="请输入联系人姓名"/>
+							<input type="text" style="width: 200px;" id="time" name="time" value="{$time}" placeholder="请输入开播时长"/>
 							<span class="form-required" style="color:red;"> *</span>
 						</td>
 					</tr>
 					<tr>
-						<th>联系人性别</th>
+						<th>出生日期</th>
 						<td>
-							<if condition="$sex eq '男'">
-								<input type="radio" id="sex" name="sex" value="男" checked/>男&nbsp;&nbsp;
-								<input type="radio" id="sex" name="sex" value="女" />女
-							<else />
-								<input type="radio" id="sex" name="sex" value="男" />男&nbsp;&nbsp;
-								<input type="radio" id="sex" name="sex" value="女" checked/>女
-							</if>
+							<input type="text" style="width: 200px;" id="birthday" name="birthday" value="{$birthday}" class="js-date" placeholder="请输入出生日期"/>
 							<span class="form-required" style="color:red;"> *</span>
-						</td>
-					</tr>
-					<tr>
-						<th>联系人年龄</th>
-						<td>
-							<input type="text" style="width: 200px;" id="age" name="age" value="{$age}" placeholder="请输入联系人年龄"/>
-							<span class="form-required" style="color:red;"> *</span>
-						</td>
-					</tr>
-					<tr>
-						<th>联系人电话</th>
-						<td>
-							<input type="text" style="width: 200px;" id="phone" name="phone" value="{$phone}" placeholder="请输入联系人电话"/>
-							<span class="form-required" style="color:red;"> *</span>
-						</td>
-					</tr>
-					<!--<tr>
-						<th>客户级别</th>
-						<td>
-							<if condition="$status eq '一级'">
-								<input type="radio" id="status" name="status" value="一级" checked/>一级&nbsp;&nbsp;
-								<input type="radio" id="status" name="status" value="二级" />二级&nbsp;&nbsp;
-								<input type="radio" id="status" name="status" value="三级" />三级
-							</if>
-							<if condition="$status eq '二级'">
-								<input type="radio" id="status" name="status" value="一级" />一级&nbsp;&nbsp;
-								<input type="radio" id="status" name="status" value="二级" checked/>二级&nbsp;&nbsp;
-								<input type="radio" id="status" name="status" value="三级" />三级
-							</if>
-							<if condition="$status eq '三级'">
-								<input type="radio" id="status" name="status" value="一级" />一级&nbsp;&nbsp;
-								<input type="radio" id="status" name="status" value="二级" />二级&nbsp;&nbsp;
-								<input type="radio" id="status" name="status" value="三级" checked/>三级
-							</if>
-							<span class="form-required" style="color:red;"> *</span>
-						</td>
-					</tr>-->
-					<tr>
-						<th>备注</th>
-						<td>
-							<script type="text/plain" id="introduce" name="introduce">{$introduce}</script>
 						</td>
 					</tr>
 				</table>
@@ -112,18 +90,11 @@
 		</div>
 		<div class="form-actions">
 			<button class="btn btn-primary js-ajax-submit" type="submit">提交</button>
-			<a class="btn" href="{:U('customer/index')}">返回</a>
+			<a class="btn" href="{:U('anchor/index')}">返回</a>
 		</div>
 	</form>
 </div>
 <script type="text/javascript" src="__PUBLIC__/js/common.js"></script>
-<script type="text/javascript">
-    //编辑器路径定义
-    var editorURL = GV.WEB_ROOT;
-
-</script>
-<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.config.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/ueditor/ueditor.all.min.js"></script>
 <script type="text/javascript">
     $(function() {
         $(".js-ajax-close-btn").on('click', function(e) {
@@ -147,20 +118,6 @@
         });
         /////---------------------
         Wind.use('validate','ajaxForm','artDialog',function() {
-            //编辑器
-            editorcontent = new baidu.editor.ui.Editor();
-            editorcontent.render('introduce');
-            try {
-                editorcontent.sync();
-            } catch (err) {}
-            //增加编辑器验证规则
-            jQuery.validator.addMethod('editorcontent',function() {
-                try {
-                    editorcontent.sync();
-                } catch (err) {}
-                return editorcontent.hasContents();
-            });
-
             var form = $('form.js-ajax-forms');
             //ie处理placeholder提交问题
             if ($.browser && $.browser.msie) {
@@ -205,9 +162,17 @@
                 },
                 //验证规则
                 rules : {
+                    'name' : { required : 1 },
+                    'sex' : { required : 1 },
+                    'age' : { required : 1 },
+                    'contact' : { required : 1 }
                 },
                 //验证未通过提示消息
                 messages : {
+                    'name' : { required : "请输入姓名" },
+                    'sex' : { required : "请输入性别" },
+                    'age' : { required : "请输入年龄" },
+                    'contact' : { required : "请输入联系方式" }
 				},
                 //给未通过验证的元素加效果,闪烁等
                 highlight : false,
@@ -246,7 +211,7 @@
                                             {
                                                 name : "返回列表",
                                                 callback : function() {
-                                                    location.href = "{:U('customer/index')}";
+                                                    location.href = "{:U('anchor/index')}";
                                                     return true;
                                                 }
                                             }

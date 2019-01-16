@@ -1,43 +1,56 @@
 <?php
 /**
- * 客户管理
+ * 主播管理
  */
 namespace Admin\Controller;
 
 use Common\Controller\AdminbaseController;
 
-class CustomerController extends AdminbaseController {
+class AnchorController extends AdminbaseController {
 
-    private $common_user_model;
+    private $common_anchor_model;
+    private $common_agent_model;
 	
 	function _initialize() {
 		parent::_initialize();
 
-		$this->common_user_model = D( 'Common_user' );
+		$this->common_anchor_model = D( 'Common_anchor' );
+        $this->common_agent_model = D( 'Common_agent' );
 	}
-	//客户信息列表
+	//主播信息列表
 	function index() {
-		$where = array();
-		//公司名/姓名
-		$name=I('name');
+        $role_id = session('role_id');
+        $admin_id = session('ADMIN_ID');
+        $name=I('name');
+        $where = array();
         if ( $name ){
-            $where['company_name|name'] = array('like',"%$name%");
+            $where['a.name'] = array('like',"%$name%");
             $this->assign( 'name', $name );
         }
-        $where['del_flg'] = array('eq',0);
-		$count = $this->common_user_model->where($where)->count();
+	    if ($role_id == 2){
+            $where['a.agent_id'] = array('eq',$admin_id);
+
+        }
+        $where['a.del_flg'] = array('eq',0);
+		$count = $this->common_anchor_model->alias('a')->where($where)->count();
 		$page = $this->page($count, 20);
-		$list = $this->common_user_model->where($where)->limit( $page->firstRow, $page->listRows )->select();
+		$list = $this->common_anchor_model->alias('a')->field('a.*,g.name as gname')->join('__COMMON_AGENT__ g ON a.agent_id=g.login_id')->where($where)->limit( $page->firstRow, $page->listRows )->order("a.create_time desc")->select();
 		$this->assign("page", $page->show('Admin'));
+        $this->assign( 'role_id', $role_id );
 		$this->assign( 'list', $list );
 		$this->display();
 	}
 
-	//添加客户信息
+	//添加主播信息
 	function add() {
 		if ( IS_POST ) {
+            $admin_id = session('ADMIN_ID');
+            $role_id = session('role_id');
+            if ($role_id == 2){
+                $_POST['agent_id'] = $admin_id;
+            }
             $_POST['create_time'] = date('Y-m-d H:i:s',time());
-			$result = $this->common_user_model->add($_POST);
+			$result = $this->common_anchor_model->add($_POST);
 			if ($result) {
                 //记录日志
                 LogController::log_record($result,1);
@@ -46,15 +59,21 @@ class CustomerController extends AdminbaseController {
 				$this->error('添加失败！');
 			}
 		} else {
+            $role_id = session('role_id');
+            if ($role_id != 2){
+                $list = $this->common_agent_model->alias('a')->field('a.name as name,a.login_id as login_id,u.user_login as user_login')->join('__USERS__ u ON u.id=a.login_id')->order("a.create_time desc")->select();
+                $this->assign( 'list', $list );
+            }
+            $this->assign( 'role_id', $role_id );
 			$this->display();
 		}
 	}
-	//编辑客户信息
+	//编辑主播信息
 	function edit() {
 		if ( IS_POST ) {
 			$id = (int)$_POST['id'];
             $_POST['update_time'] = date('Y-m-d H:i:s',time());
-			$result = $this->common_user_model->where(array('id' => $id))->save($_POST);
+			$result = $this->common_anchor_model->where(array('id' => $id))->save($_POST);
 			if ($result) {
                 //记录日志
                 LogController::log_record($id,2);
@@ -64,18 +83,25 @@ class CustomerController extends AdminbaseController {
 			}
 		} else {
 			$id = intval( I( 'get.id' ) );
-			$customer = $this->common_user_model->find($id);
-			$this->assign($customer);
+            $role_id = session('role_id');
+			$anchor = $this->common_anchor_model->find($id);
+			$this->assign($anchor);
+
+            if ($role_id != 2){
+                $list = $this->common_agent_model->alias('a')->field('a.name as name,a.login_id as login_id,u.user_login as user_login')->join('__USERS__ u ON u.id=a.login_id')->order("a.create_time desc")->select();
+                $this->assign( 'list', $list );
+            }
+            $this->assign( 'role_id', $role_id );
 			$this->display();
 		}
 	}
-    //删除客户信息
+    //删除主播信息
     function delete() {
         if ( isset( $_POST['ids'] ) ) {//批量逻辑删除
             $ids = implode( ',', $_POST['ids'] );
             $data['del_flg'] = 1;
             $data['update_time'] = date('Y-m-d H:i:s',time());
-            if ( $this->common_user_model->where( "id in ($ids)" )->save( $data ) !== false ) {
+            if ( $this->common_anchor_model->where( "id in ($ids)" )->save( $data ) !== false ) {
                 //记录日志
                 LogController::log_record($ids,3);
                 $this->success('删除成功');
@@ -87,7 +113,7 @@ class CustomerController extends AdminbaseController {
             $log_id = $_GET['id'];
             $data['del_flg'] = 0;
             $data['update_time'] = date('Y-m-d H:i:s',time());
-            if ( $this->common_user_model->where( "id in ($object)" )->save( $data ) !== false ) {
+            if ( $this->common_anchor_model->where( "id in ($object)" )->save( $data ) !== false ) {
                 //记录日志
                 LogController::modify_log_type($log_id, 4);
                 $this->success('恢复成功');
@@ -97,7 +123,7 @@ class CustomerController extends AdminbaseController {
         } else if ( isset( $_GET['id'] ) && $_GET['complete_delete'] ) {//彻底物理删除
             $object = $_GET['object'];
             $log_id = $_GET['id'];
-            if ( $this->common_user_model->where( "id in ($object)" )->delete() !== false ) {
+            if ( $this->common_anchor_model->where( "id in ($object)" )->delete() !== false ) {
                 //记录日志
                 LogController::modify_log_type($log_id, 5);
                 $this->success('彻底删除成功');
@@ -108,7 +134,7 @@ class CustomerController extends AdminbaseController {
             $id = intval( I( 'get.id' ) );
             $data['del_flg'] = 1;
             $data['update_time'] = date('Y-m-d H:i:s',time());
-            if ( $this->common_user_model->where(array('id' => $id))->save($data) !== false ) {
+            if ( $this->common_anchor_model->where(array('id' => $id))->save($data) !== false ) {
                 //记录日志
                 LogController::log_record($id,3);
                 $this->success('删除成功');
@@ -117,7 +143,7 @@ class CustomerController extends AdminbaseController {
             }
         }
     }
-    //导入客户信息
+    //导入主播信息
     function upload() {
         if ( IS_POST ) {
             $uploadConfig = array(
@@ -165,7 +191,7 @@ class CustomerController extends AdminbaseController {
                 );
             }
             foreach ($doctor_info_add as $table_doctor) {
-                $this->doctor_user_model->add($table_doctor);
+                /*$this->doctor_user_model->add($table_doctor);*/
             }
             @unlink( $file );
             $this->success( '成功导入'.$importCount.'条记录', U( 'doctor/index' ) );
