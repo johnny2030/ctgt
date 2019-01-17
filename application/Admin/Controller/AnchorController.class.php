@@ -10,22 +10,24 @@ class AnchorController extends AdminbaseController {
 
     private $common_anchor_model;
     private $common_agent_model;
+    private $common_live_model;
 	
 	function _initialize() {
 		parent::_initialize();
 
 		$this->common_anchor_model = D( 'Common_anchor' );
         $this->common_agent_model = D( 'Common_agent' );
+        $this->common_live_model = D( 'Common_live' );
 	}
 	//主播信息列表
 	function index() {
         $role_id = session('role_id');
         $admin_id = session('ADMIN_ID');
-        $name=I('name');
+        $room_id=I('room_id');
         $where = array();
-        if ( $name ){
-            $where['a.name'] = array('like',"%$name%");
-            $this->assign( 'name', $name );
+        if ( $room_id ){
+            $where['a.room_id'] = array('like',"%$room_id%");
+            $this->assign( 'room_id', $room_id );
         }
 	    if ($role_id == 2){
             $where['a.agent_id'] = array('eq',$admin_id);
@@ -143,58 +145,127 @@ class AnchorController extends AdminbaseController {
             }
         }
     }
+    //开播时长与业绩
+    function live(){
+        $id = intval( I( 'get.id' ) );
+        $start_time=I('start_time');
+        $end_time=I('end_time');
+        //主播信息
+        $anchor = $this->common_anchor_model->find($id);
+        $this->assign('anchor',$anchor);
+        //时长与业绩
+        $where = array();
+        if ($start_time) $where['time'] = array('egt',$start_time);$this->assign('start_time',$start_time);
+        if ($end_time) $where['time'] = array('elt',$end_time);$this->assign('end_time',$end_time);
+        $where['user_id'] = array('eq',$id);
+        $where['del_flg'] = array('eq',0);
+        //总数
+        $sumDay = $this->common_live_model->where($where)->sum('day');
+        if (empty($sumDay)) $sumDay = 0;
+        $sumHour = $this->common_live_model->where($where)->sum('hour');
+        if (empty($sumHour)) $sumHour = 0;
+        $sumMinute = $this->common_live_model->where($where)->sum('minute');
+        if (empty($sumMinute)) $sumMinute = 0;
+        $sumMoney = $this->common_live_model->where($where)->sum('money');
+        if (empty($sumMoney)) $sumMoney = 0;
+        $this->assign('sumDay',$sumDay);
+        $this->assign('sumHour',$sumHour);
+        $this->assign('sumMinute',$sumMinute);
+        $this->assign('sumMoney',$sumMoney);
+
+        $count = $this->common_live_model->where($where)->count();
+        $page = $this->page($count, 10);
+        $list = $this->common_live_model->where($where)->limit( $page->firstRow, $page->listRows )->order("time desc")->select();
+        $this->assign("page", $page->show('Admin'));
+        $this->assign( 'list', $list );
+        $this->display();
+    }
+    //添加时长与业绩
+    function live_add() {
+        if ( IS_POST ) {
+            $_POST['time'] = date('Y-m-d H:i:s',time());
+            $result = $this->common_live_model->add($_POST);
+            if ($result) {
+                //记录日志
+                LogController::log_record($result,1);
+                $this->success('添加成功！');
+            } else {
+                $this->error('添加失败！');
+            }
+        } else {
+            $id = intval( I( 'get.id' ) );
+            //主播信息
+            $anchor = $this->common_anchor_model->find($id);
+            $this->assign('anchor',$anchor);
+            $this->display();
+        }
+    }
+    //编辑时长与业绩
+    function live_edit() {
+        if ( IS_POST ) {
+            $_POST['time'] = date('Y-m-d H:i:s',time());
+            $result = $this->common_live_model->add($_POST);
+            if ($result) {
+                //记录日志
+                LogController::log_record($result,1);
+                $this->success('添加成功！');
+            } else {
+                $this->error('添加失败！');
+            }
+        } else {
+            $id = intval( I( 'get.id' ) );
+            $anchor = $this->common_live_model->find($id);
+            $this->assign($anchor);
+            $this->display();
+        }
+    }
     //导入主播信息
     function upload() {
         if ( IS_POST ) {
             $uploadConfig = array(
                 'FILE_UPLOAD_TYPE' => sp_is_sae() ? 'Sae' : 'Local',
                 'rootPath' => './'.C( 'UPLOADPATH' ),
-                'savePath' => './excel/doctor/',
+                'savePath' => './excel/anchor/',
                 'saveName' => array( 'uniqid', '' ),
                 'exts' => array( 'xls', 'xlsx' ),
                 'autoSub' => false
             );
             $upload = new \Think\Upload( $uploadConfig );
             $info = $upload->upload();
-            $file = './'.C( 'UPLOADPATH' ).$info['doctor']['savepath'].$info['doctor']['savename'];
+            $file = './'.C( 'UPLOADPATH' ).$info['anchor_file']['savepath'].$info['anchor_file']['savename'];
 
             require_once 'today/excel/PHPExcel.php';
             require_once 'today/excel/PHPExcel/IOFactory.php';
             require_once 'today/excel/PHPExcel/Reader/Excel5.php';
             require_once 'today/excel/PHPExcel/Reader/Excel2007.php';
 
-            //医生信息读取
             $reader = \PHPExcel_IOFactory::createReader( end( explode( '.', $file ) ) == 'xls' ? 'Excel5' : 'Excel2007' );
             $obj = $reader->load( $file );
             $sheet = $obj->getSheet(0);
             $rowCount = $sheet->getHighestRow();
             $realRowCount = 0;
             $importCount = 0;
-            $doctor_info_add = array();
+            $anchor_info_add = array();
             $time = date('Y-m-d H:i:s',time());
             for ( $i = 2; $i <= $rowCount; $i++ ) {
-                $practice_number = $sheet->getCell( 'A'.$i )->getValue();
-                $name = $sheet->getCell( 'B'.$i )->getValue();
-                $sex = $sheet->getCell( 'C'.$i )->getValue();
-                $age = $sheet->getCell( 'D'.$i )->getValue();
-                $money = $sheet->getCell( 'E'.$i )->getValue();
-                $hospital = $sheet->getCell( 'F'.$i )->getValue();
-                $office = $sheet->getCell( 'G'.$i )->getValue();
-                $tag = $sheet->getCell( 'H'.$i )->getValue();
-                $area = $sheet->getCell( 'I'.$i )->getValue();
-                $speciality = $sheet->getCell( 'J'.$i )->getValue();
+                $name = $sheet->getCell( 'A'.$i )->getValue();
+                $phone = $sheet->getCell( 'B'.$i )->getValue();
+                $platform = $sheet->getCell( 'C'.$i )->getValue();
+                $room_id = $sheet->getCell( 'D'.$i )->getValue();
+                $nickname = $sheet->getCell( 'E'.$i )->getValue();
+                $address = $sheet->getCell( 'F'.$i )->getValue();
+                $id_card = $sheet->getCell( 'G'.$i )->getValue();
                 $realRowCount++;
                 $importCount++;
-                $doctor_info_add[] = array(
-                    "practice_number" => $practice_number, "name" => $name, "sex" => $sex, "age" => $age, "money" => $money, "hospital" => $hospital, "office" => $office,
-                    "tag" => $tag, "area" => $area, "speciality" => $speciality, "create_time" => $time
+                $anchor_info_add[] = array(
+                    "name" => $name, "phone" => $phone, "platform" => $platform, "room_id" => $room_id, "nickname" => $nickname, "address" => $address, "id_card" => $id_card, "create_time" => $time
                 );
             }
-            foreach ($doctor_info_add as $table_doctor) {
-                /*$this->doctor_user_model->add($table_doctor);*/
+            foreach ($anchor_info_add as $table_anchor) {
+                $this->common_anchor_model->add($table_anchor);
             }
             @unlink( $file );
-            $this->success( '成功导入'.$importCount.'条记录', U( 'doctor/index' ) );
+            $this->success( '成功导入'.$importCount.'条记录', U( 'anchor/index' ) );
         } else {
             $this->display();
         }

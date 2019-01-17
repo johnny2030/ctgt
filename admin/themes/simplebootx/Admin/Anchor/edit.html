@@ -36,52 +36,44 @@
 						</td>
 					</tr>
 					<tr>
-						<th>性别</th>
+						<th>手机号</th>
 						<td>
-							<select id="sex" name="sex" style="width: 150px;">
-								<if condition="$sex == 1">
-									<option value="1" selected>男</option>
-									<option value="2">女</option>
-									<else/>
-									<option value="1" >男</option>
-									<option value="2" selected>女</option>
-								</if>
-							</select>
+							<input type="text" style="width: 200px;" id="phone" name="phone" value="{$phone}" placeholder="请输入手机号"/>
 							<span class="form-required" style="color:red;"> *</span>
 						</td>
 					</tr>
 					<tr>
-						<th>年龄</th>
+						<th>平台</th>
 						<td>
-							<input type="number" style="width: 133px;" id="age" name="age" value="{$age}" placeholder="请输入年龄"/>
+							<input type="text" style="width: 200px;" id="platform" name="platform" value="{$platform}" placeholder="请输入平台"/>
 							<span class="form-required" style="color:red;"> *</span>
 						</td>
 					</tr>
 					<tr>
-						<th>联系方式</th>
+						<th>房间号</th>
 						<td>
-							<input type="text" style="width: 200px;" id="contact" name="contact" value="{$contact}" placeholder="请输入联系方式"/>
+							<input type="text" style="width: 200px;" id="room_id" name="room_id" value="{$room_id}" placeholder="请输入房间号"/>
 							<span class="form-required" style="color:red;"> *</span>
 						</td>
 					</tr>
 					<tr>
-						<th>业绩</th>
+						<th>昵称</th>
 						<td>
-							<input type="text" style="width: 200px;" id="achievement" name="achievement" value="{$achievement}" placeholder="请输入业绩"/>
+							<input type="text" style="width: 200px;" id="nickname" name="nickname" value="{$nickname}" placeholder="请输入昵称"/>
 							<span class="form-required" style="color:red;"> *</span>
 						</td>
 					</tr>
 					<tr>
-						<th>开播时长</th>
+						<th>地址</th>
 						<td>
-							<input type="text" style="width: 200px;" id="time" name="time" value="{$time}" placeholder="请输入开播时长"/>
+							<input type="text" style="width: 200px;" id="address" name="address" value="{$address}" placeholder="请输入地址"/>
 							<span class="form-required" style="color:red;"> *</span>
 						</td>
 					</tr>
 					<tr>
-						<th>出生日期</th>
+						<th>身份证号</th>
 						<td>
-							<input type="text" style="width: 200px;" id="birthday" name="birthday" value="{$birthday}" class="js-date" placeholder="请输入出生日期"/>
+							<input type="text" style="width: 200px;" id="id_card" name="id_card" value="{$id_card}" placeholder="请输入身份证号"/>
 							<span class="form-required" style="color:red;"> *</span>
 						</td>
 					</tr>
@@ -163,16 +155,22 @@
                 //验证规则
                 rules : {
                     'name' : { required : 1 },
-                    'sex' : { required : 1 },
-                    'age' : { required : 1 },
-                    'contact' : { required : 1 }
+                    'phone' : { required : 1 },
+                    'platform' : { required : 1 },
+                    'room_id' : { required : 1 },
+                    'nickname' : { required : 1 },
+                    'address' : { required : 1 },
+                    'id_card' : { required : 1 }
                 },
                 //验证未通过提示消息
                 messages : {
                     'name' : { required : "请输入姓名" },
-                    'sex' : { required : "请输入性别" },
-                    'age' : { required : "请输入年龄" },
-                    'contact' : { required : "请输入联系方式" }
+                    'phone' : { required : "请输入手机号" },
+                    'platform' : { required : "请输入平台" },
+                    'room_id' : { required : "请输入房间号" },
+                    'nickname' : { required : "请输入昵称" },
+                    'address' : { required : "请输入地址" },
+                    'id_card' : { required : "请输入身份证号" }
 				},
                 //给未通过验证的元素加效果,闪烁等
                 highlight : false,

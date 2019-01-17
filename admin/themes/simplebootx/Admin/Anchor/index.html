@@ -7,9 +7,10 @@
 			<li><a href="{:U('anchor/add')}">添加主播</a></li>
 		</ul>
 		<form class="well form-search" method="post" id="cid-form" >
-			<input type="text" name="name" style="width: 200px;" value="{$name}" placeholder="请输入姓名">
+			<input type="text" name="room_id" style="width: 200px;" value="{$room_id}" placeholder="请输入房间号">
 			<button class="btn btn-primary">搜索</button>
 			<a class="btn btn-danger" href="{:U('anchor/index')}">清空</a>
+			<a class="btn btn-warning" href="javascript:open_iframe_dialog('{:U('anchor/upload')}','批量导入主播信息')">批量导入</a>
 		</form>
 		<form class="js-ajax-form" method="post">
 			<div class="table-actions">
@@ -20,19 +21,19 @@
 					<tr>
 						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
 						<th width="50">ID</th>
-						<th width="150">姓名</th>
-						<th width="80">性别</th>
-						<th width="80">年龄</th>
-						<th width="100">联系方式</th>
-						<th width="100">业绩</th>
-						<th width="100">开播时长</th>
-						<th width="100">出生日期</th>
-						<th width="150">更新时间</th>
-						<th width="150">入驻时间</th>
+						<th width="100">姓名</th>
+						<th width="100">手机号</th>
+						<th width="100">平台</th>
+						<th width="100">房间号</th>
+						<th width="100">昵称</th>
+						<th width="200">地址</th>
+						<th width="100">身份证号</th>
+						<th width="100">更新时间</th>
+						<th width="100">入驻时间</th>
 						<if condition="$role_id == 1">
 							<th width="100">经纪人</th>
 						</if>
-						<th width="150">操作</th>
+						<th width="100">操作</th>
 					</tr>
 				</thead>
 				<foreach name="list" item="vo">
@@ -40,24 +41,19 @@
 						<td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]" value="{$vo.id}"></td>
 						<td>{$vo.id}</td>
 						<td>{$vo.name}</td>
-						<td>
-							<if condition="$vo.sex == 1">
-								男
-								<else/>
-								女
-							</if>
-						</td>
-						<td>{$vo.age}</td>
-						<td>{$vo.contact}</td>
-						<td>{$vo.achievement}</td>
-						<td>{$vo.time}</td>
-						<td>{$vo.birthday}</td>
+						<td>{$vo.phone}</td>
+						<td>{$vo.platform}</td>
+						<td>{$vo.room_id}</td>
+						<td>{$vo.nickname}</td>
+						<td>{$vo.address}</td>
+						<td>{$vo.id_card}</td>
 						<td>{$vo.update_time}</td>
 						<td>{$vo.create_time}</td>
 						<if condition="$role_id == 1">
 							<td>{$vo.gname}</td>
 						</if>
 						<td>
+							<a href="javascript:open_iframe_dialog('{:U('anchor/live',array('id'=>$vo['id']))}','{$vo.name}')" class="btn btn-warning btn-small">开播时长与业绩</a>
 							<a style="margin-top: 5px;" href="{:U('anchor/edit',array('id'=>$vo['id']))}" class="btn btn-success btn-small">编辑</a>
 							<a style="margin-top: 5px;" href="{:U('anchor/delete',array('id'=>$vo['id']))}" class="btn btn-danger btn-small js-ajax-delete" data-msg="确定删除？">删除</a>
 						</td>
@@ -67,19 +63,19 @@
 					<tr>
 						<th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x" data-checklist="js-check-x"></label></th>
 						<th width="50">ID</th>
-						<th width="150">姓名</th>
-						<th width="80">性别</th>
-						<th width="80">年龄</th>
-						<th width="100">联系方式</th>
-						<th width="100">业绩</th>
-						<th width="100">开播时长</th>
-						<th width="100">出生日期</th>
-						<th width="150">更新时间</th>
-						<th width="150">入驻时间</th>
+						<th width="100">姓名</th>
+						<th width="100">手机号</th>
+						<th width="100">平台</th>
+						<th width="100">房间号</th>
+						<th width="100">昵称</th>
+						<th width="200">地址</th>
+						<th width="100">身份证号</th>
+						<th width="100">更新时间</th>
+						<th width="100">入驻时间</th>
 						<if condition="$role_id == 1">
 							<th width="100">经纪人</th>
 						</if>
-						<th width="150">操作</th>
+						<th width="100">操作</th>
 					</tr>
 				</tfoot>
 			</table>
