@@ -147,6 +147,7 @@ class AnchorController extends AdminbaseController {
     }
     //开播时长与业绩
     function live(){
+        $role_id = session('role_id');
         $id = intval( I( 'get.id' ) );
         $start_time=I('start_time');
         $end_time=I('end_time');
@@ -178,6 +179,7 @@ class AnchorController extends AdminbaseController {
         $list = $this->common_live_model->where($where)->limit( $page->firstRow, $page->listRows )->order("time desc")->select();
         $this->assign("page", $page->show('Admin'));
         $this->assign( 'list', $list );
+        $this->assign( 'role_id', $role_id );
         $this->display();
     }
     //添加时长与业绩

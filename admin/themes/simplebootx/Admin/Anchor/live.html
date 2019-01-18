@@ -5,7 +5,9 @@
 	<div class="wrap js-check-wrap">
 		<ul class="nav nav-tabs">
 			<li class="active"><a href="{:U('anchor/live',array('id'=>$anchor['id']))}">时长与业绩</a></li>
-			<li><a class="btn-danger" href="{:U('anchor/live_add',array('id'=>$anchor['id']))}">添加时长与业绩</a></li>
+			<if condition="$role_id == 1">
+				<li><a class="btn-danger" href="{:U('anchor/live_add',array('id'=>$anchor['id']))}">添加时长与业绩</a></li>
+			</if>
 		</ul>
 		<div class="row-fluid">
 			<form class="well form-search" method="post" id="cid-form" >
@@ -41,8 +43,10 @@
 							<td>{$vo.money}</td>
 							<td>{$vo.time}</td>
 							<td>
-								<a style="margin-top: 5px;" href="{:U('anchor/live_edit',array('id'=>$vo['id']))}" class="btn btn-success btn-small">编辑</a>
-								<a style="margin-top: 5px;" href="{:U('anchor/live_delete',array('id'=>$vo['id']))}" class="btn btn-danger btn-small js-ajax-delete" data-msg="确定删除？">删除</a>
+								<if condition="$role_id == 1">
+									<a style="margin-top: 5px;" href="{:U('anchor/live_edit',array('id'=>$vo['id']))}" class="btn btn-success btn-small">编辑</a>
+									<a style="margin-top: 5px;" href="{:U('anchor/live_delete',array('id'=>$vo['id']))}" class="btn btn-danger btn-small js-ajax-delete" data-msg="确定删除？">删除</a>
+								</if>
 							</td>
 						</tr>
 					</foreach>
